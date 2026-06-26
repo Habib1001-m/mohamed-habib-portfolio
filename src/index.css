@@ -3,20 +3,33 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-display: "Anton", "Inter", sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
   --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Cairo", "Tajawal", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: geometricPrecision;
 }
 
 body {
   background-color: #050505;
   color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .display-text {
   font-family: var(--font-display);
-  line-height: 0.85;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.font-arabic .display-text,
+[dir="rtl"] .display-text {
+  font-family: var(--font-arabic);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
 }
 
 .glass {
@@ -34,4 +47,3 @@ body {
   height: 100%;
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
-
