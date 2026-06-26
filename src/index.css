@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-display: "Geist", "Inter", sans-serif;
   --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Cairo", "Tajawal", sans-serif;
 }
 
@@ -21,15 +21,22 @@ body {
 
 .display-text {
   font-family: var(--font-display);
-  line-height: 1.02;
-  letter-spacing: -0.045em;
+  font-weight: 650;
+  line-height: 0.98;
+  letter-spacing: -0.058em;
+  text-wrap: balance;
 }
 
-.font-arabic .display-text,
 [dir="rtl"] .display-text {
   font-family: var(--font-arabic);
-  line-height: 1.14;
-  letter-spacing: -0.025em;
+  font-weight: 650;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero-copy {
+  text-wrap: pretty;
 }
 
 .glass {
