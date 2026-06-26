@@ -282,13 +282,16 @@ export default function ThreeCanvas({
 
     // 8. Animation & Render Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
+    let previousTime = startTime;
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      const elapsedTime = clock.getElapsedTime();
-      const delta = clock.getDelta();
+      const currentTime = performance.now();
+      const elapsedTime = (currentTime - startTime) / 1000;
+      const delta = Math.min((currentTime - previousTime) / 1000, 0.05);
+      previousTime = currentTime;
 
       // Smooth inertia physics interpolation
       state.currentRotationX += (state.targetRotationX - state.currentRotationX) * 0.1;
