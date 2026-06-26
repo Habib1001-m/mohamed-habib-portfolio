@@ -3,71 +3,71 @@ import { ExperienceItem } from "../types/portfolio";
 export const EXPERIENCE_LIST: ExperienceItem[] = [
   {
     id: "indie-dev",
-    role: { en: "Product Builder & Systems Architect", ar: "مهندس أنظمة ومطور منتجات مستقل" },
-    company: { en: "Self-Employed", ar: "عمل مستقل" },
-    location: { en: "Cairo, Egypt", ar: "القاهرة، جمهورية مصر العربية" },
-    period: { en: "2022 — Present", ar: "2022 — الحالي" },
+    role: { en: "Full-Stack Developer & Systems Builder", ar: "مطور Full-Stack وباني أنظمة" },
+    company: { en: "Independent Work", ar: "عمل مستقل" },
+    location: { en: "Cairo, Egypt", ar: "القاهرة، مصر" },
+    period: { en: "2022 — Present", ar: "2022 — الآن" },
     badgeColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     points: [
       {
-        en: "Architected and built QuickShed, an extensive client-side framework with 90+ tools using Next.js and TypeScript, shifting intensive computation to the browser for robust user privacy.",
-        ar: "تصميم وبناء كويك شيد (QuickShed)، وهي حزمة متكاملة تضم أكثر من 90 أداة في المتصفح باستخدام Next.js و TypeScript، ومعالجة البيانات محلياً دون الحاجة لخادم خارجي للحفاظ على خصوصية المستخدم."
+        en: "Built QuickShed as a browser-first utility workspace for developers who need fast text and data tools without exposing sensitive inputs to third-party servers.",
+        ar: "بناء QuickShed كمساحة أدوات داخل المتصفح للمطورين الذين يحتاجون أدوات سريعة للنصوص والبيانات دون تعريض مدخلات حساسة لخوادم خارجية."
       },
       {
-        en: "Created SIEVE Research OS, an academic and industrial evidence screening system with a 10-phase logic gate using React, Vite, and Recharts, mapping unstructured research ideas into logical evaluation sheets.",
-        ar: "تطوير نظام تشغيل الأبحاث غربال (SIEVE Research OS) الممتد عبر 10 مراحل علمية تفاعلية باستخدام React و Vite لإدارة وتقييم الفرضيات الأكاديمية وتحويل البيانات العشوائية إلى جداول حوكمة موثقة."
+        en: "Designed SIEVE Research OS to turn scattered research ideas into phased reviews, scoring views, and clearer decision paths.",
+        ar: "تصميم SIEVE Research OS لتحويل الأفكار البحثية المتناثرة إلى مراجعات مرحلية، طرق تقييم، ومسارات قرار أوضح."
       },
       {
-        en: "Constructed low-latency event-driven data pipelines utilizing Python, NATS JetStream, Redis caching, and PostgreSQL (asyncpg), coordinating structured modules under tight performance requirements.",
-        ar: "بناء وتصميم محركات تدفق البيانات الخلفية بلغة Python باستخدام NATS JetStream و Redis و PostgreSQL، وإدارة بيئة برمجية منظمة مع الالتزام بقيود أداء تشغيلية عالية الدقة والسرعة."
+        en: "Built backend workflow patterns using Python, queues, cache layers, and databases to keep processing steps observable and easier to recover.",
+        ar: "بناء أنماط مسارات خلفية باستخدام Python والطوابير والكاش وقواعد البيانات لجعل خطوات المعالجة قابلة للمراقبة وأسهل في التعافي."
       },
       {
-        en: "Contributed to NousResearch's Hermes WebUI open-source repository to expand private local LLM orchestration and Model Context Protocol (MCP) tool bindings.",
-        ar: "المساهمة البرمجية في Hermes WebUI التابع لمؤسسة الأبحاث NousResearch لتوسيع قدرات الاتصال المحلي بنماذج الذكاء الاصطناعي وتجهيز بروتوكولات MCP لاستدعاء الأدوات للعملاء الأذكياء."
+        en: "Experimented with local AI workflows, MCP-style tool access, and structured memory patterns for practical AI-assisted execution.",
+        ar: "تجربة مسارات ذكاء اصطناعي محلية، واستدعاء أدوات بأسلوب MCP، وأنماط ذاكرة منظمة للتنفيذ العملي المدعوم بالذكاء الاصطناعي."
       }
     ]
   },
   {
     id: "marketing",
-    role: { en: "Digital Marketing Specialist", ar: "أخصائي تسويق رقمي وصناعة محتوى" },
+    role: { en: "Digital Marketing & Content Specialist", ar: "أخصائي تسويق رقمي وصناعة محتوى" },
     company: { en: "Freelance", ar: "عمل مستقل" },
     location: { en: "Egypt", ar: "مصر" },
-    period: { en: "Nov 2020 — Present", ar: "نوفمبر 2020 — الحالي" },
+    period: { en: "Nov 2020 — Present", ar: "نوفمبر 2020 — الآن" },
     badgeColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
     points: [
       {
-        en: "Executed digital marketing and search engine optimization (SEO) campaigns, significantly enhancing organic visibility and user conversion rates for business platforms.",
-        ar: "تنفيذ حملات تحسين محركات البحث (SEO) والتهيئة لمواقع التواصل الاجتماعي (SMO)، مما أدى إلى زيادة معدلات الوصول العضوي وتفاعل الجمهور."
+        en: "Worked on SEO, social content, and campaign execution with a practical focus on visibility, conversion paths, and measurable user behavior.",
+        ar: "العمل على تحسين محركات البحث، محتوى المنصات، وتنفيذ الحملات مع تركيز عملي على الظهور، مسارات التحويل، وسلوك المستخدم القابل للقياس."
       },
       {
-        en: "Created analytics-backed copywriting, email automations, and carried out detailed Google Analytics conversion funnel audits for local businesses.",
-        ar: "صياغة نصوص تسويقية مبنية على البيانات، وتصميم سلاسل رسائل البريد الإلكتروني الآلية، وتحليل قنوات التحويل في Google Analytics للشركات المحلية."
+        en: "Created copy, landing-page structures, and email workflows informed by analytics and real user actions.",
+        ar: "صياغة محتوى، هياكل صفحات هبوط، ومسارات بريدية مبنية على التحليلات وأفعال المستخدمين الحقيقية."
       },
       {
-        en: "Designed optimized user landing pages, driving engagement tracking, higher conversions, and coherent conversion paths.",
-        ar: "التعاون مع الفرق البرمجية والإبداعية لبناء صفحات هبوط ذات معدلات تحويل مرتفعة، وتتبع مباشر للتفاعل، وتصميم رحلات مستخدم مثالية."
+        en: "Carried product and user-flow thinking from marketing work into software, automation, and portfolio systems.",
+        ar: "نقل فهم المنتج ومسارات المستخدم من العمل التسويقي إلى البرمجة، الأتمتة، وبناء الأنظمة."
       }
     ]
   },
   {
     id: "technical-support",
-    role: { en: "Senior Technical Support Specialist", ar: "أخصائي دعم فني متقدم وشبكات" },
-    company: { en: "Orange Egypt", ar: "شركة أورانج مصر (Orange)" },
-    location: { en: "Cairo, Egypt", ar: "القاهرة، جمهورية مصر العربية" },
+    role: { en: "Senior Technical Support Specialist", ar: "أخصائي دعم فني متقدم" },
+    company: { en: "Orange Egypt", ar: "Orange Egypt" },
+    location: { en: "Cairo, Egypt", ar: "القاهرة، مصر" },
     period: { en: "Jan 2016 — Jan 2020", ar: "يناير 2016 — يناير 2020" },
     badgeColor: "bg-amber-500/10 text-amber-400 border-amber-500/20",
     points: [
       {
-        en: "Performed advanced network diagnostics, system configuration, and LAN/WAN troubleshooting for enterprise operations and premium client accounts.",
-        ar: "إجراء تشخيصات متقدمة للعتاد والبرمجيات وحل مشكلات الشبكات المعقدة (LAN/WAN) للمؤسسات والعملاء المميزين بمهارة عالية وسرعة استجابة فائقة."
+        en: "Handled network diagnostics, configuration issues, and LAN/WAN troubleshooting for operational and customer-facing environments.",
+        ar: "التعامل مع تشخيص الشبكات، مشكلات الإعداد، وحل أعطال LAN/WAN في بيئات تشغيلية وبيئات مواجهة للعملاء."
       },
       {
-        en: "Managed corporate user directories, secure domain setups, and permissions group structures utilizing Active Directory and corporate consoles.",
-        ar: "إدارة وتأمين حسابات المستخدمين، وصلاحيات المجموعات، وسياسات الوصول للشبكة عبر Active Directory ولوحات تحكم الخوادم والأنظمة المعتمدة."
+        en: "Worked with user accounts, access structures, and internal support consoles, building a practical understanding of reliability and support workflows.",
+        ar: "العمل مع حسابات المستخدمين، هياكل الوصول، ولوحات الدعم الداخلية، مما كوّن فهمًا عمليًا للاعتمادية ومسارات الدعم."
       },
       {
-        en: "Maintained critical communications, ensuring internal system tools met high availability objectives and ran with reliable uptime.",
-        ar: "تقديم الدعم الفني والتشغيلي عالي المستوى لضمان عمل عقد الاتصالات والأدوات الداخلية للشركة على مدار الساعة (24/7) دون أي توقف."
+        en: "Developed a systems mindset around uptime, clear escalation paths, and tools that should make operational work easier.",
+        ar: "تكوين عقلية أنظمة حول استمرارية التشغيل، وضوح مسارات التصعيد، والأدوات التي يجب أن تجعل العمل التشغيلي أسهل."
       }
     ]
   }
