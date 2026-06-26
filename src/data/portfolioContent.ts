@@ -1,130 +1,131 @@
 export const PORTFOLIO_DATA = {
   navigation: {
     about: { en: "About", ar: "من أنا" },
-    projects: { en: "Projects", ar: "المشاريع" },
-    experience: { en: "Experience", ar: "الخبرات" },
+    projects: { en: "Work", ar: "الأعمال" },
+    experience: { en: "Experience", ar: "الخبرة" },
     stack: { en: "Stack", ar: "التقنيات" },
-    contact: { en: "Contact", ar: "اتصل بي" }
+    contact: { en: "Contact", ar: "تواصل" }
   },
   hero: {
-    badge: { en: "Available for collaborations", ar: "متاح للمشاريع الجديدة" },
-    title1: { en: "I BUILD", ar: "أبني" },
-    title2: { en: " SYSTEMS,", ar: "أنظمة برمجية،" },
-    title3: { en: "NOT JUST CODE.", ar: "لا مجرد كود." },
+    badge: { en: "Available for selected collaborations", ar: "متاح لتعاونات مختارة" },
+    title1: { en: "I build digital systems", ar: "أبني أنظمة رقمية" },
+    title2: { en: "that make products", ar: "تجعل المنتجات" },
+    title3: { en: "faster, smarter, easier to run.", ar: "أسرع، أذكى، وأسهل في التشغيل." },
+    roleLine: { en: "Full-Stack Developer • Automation & AI Systems", ar: "مطور Full-Stack • أنظمة الأتمتة والذكاء الاصطناعي" },
     subtitle: {
-      en: "Product builder crafting resilient backend workflows, privacy-first tools, and automated system pipelines.",
-      ar: "مطور ومهندس أنظمة أبني أدوات عملية في الويب، الأتمتة، والذكاء الاصطناعي — بتركيز على الخصوصية، الأداء، وحل المشكلات الحقيقية."
+      en: "I design and build web products, automation workflows, and AI-powered tools — with a focus on usability, performance, and pragmatic engineering.",
+      ar: "أصمّم وأبني منتجات ويب، ومسارات أتمتة، وأدوات مدعومة بالذكاء الاصطناعي — مع تركيز على سهولة الاستخدام، الأداء، والهندسة العملية."
     },
-    ctaPrimary: { en: "Explore My Work", ar: "تصفح مشاريعي" },
-    ctaSecondary: { en: "Get In Touch", ar: "تواصل معي" },
+    ctaPrimary: { en: "View selected work", ar: "استعرض الأعمال" },
+    ctaSecondary: { en: "Start a conversation", ar: "ابدأ محادثة" },
     statusLocation: { en: "Cairo, EG", ar: "القاهرة، مصر" },
-    statusExperience: { en: "4+ yrs building", ar: "أكثر من 4 سنوات من البناء" },
-    pillarTitle1: { en: "Full-Stack Dev", ar: "تطوير متكامل" },
-    pillarDesc1: { en: "Client-side speed & scale", ar: "أداء فائق واستجابة سريعة" },
-    pillarTitle2: { en: "Automation", ar: "الأتمتة والأنظمة" },
-    pillarDesc2: { en: "Event-driven architecture", ar: "أنظمة متينة تعتمد على الأحداث" },
-    pillarTitle3: { en: "AI & Agents", ar: "الذكاء الاصطناعي" },
-    pillarDesc3: { en: "Orchestration & MCP", ar: "تنسيق العملاء والربط الذكي" }
+    statusExperience: { en: "4+ years building", ar: "أكثر من 4 سنوات بناء" },
+    pillarTitle1: { en: "Web Products", ar: "منتجات ويب" },
+    pillarDesc1: { en: "Clean interfaces, scalable foundations", ar: "واجهات نظيفة وبنية قابلة للتوسع" },
+    pillarTitle2: { en: "Automation Workflows", ar: "أتمتة العمليات" },
+    pillarDesc2: { en: "Systems that reduce repetitive work", ar: "أنظمة تقلّل العمل المتكرر" },
+    pillarTitle3: { en: "AI Tools", ar: "أدوات ذكاء اصطناعي" },
+    pillarDesc3: { en: "Practical integrations, real user value", ar: "تكاملات عملية بقيمة حقيقية للمستخدم" }
   },
   about: {
     sectionNum: "01.",
-    title: { en: "About Me", ar: "من أنا" },
+    title: { en: "I build with a systems mindset.", ar: "أبني بعقلية الأنظمة." },
     paragraph1: {
-      en: "I build software that resolves real operational problems. Over the past few years, I have transitioned from digital marketing and technical support roles into engineering production-grade systems, focusing on client-side security, automation tools, and structured decision workflows.",
-      ar: "أقوم ببناء برمجيات تحل مشكلات تشغيلية حقيقية. خلال السنوات القليلة الماضية، انتقلت من مجالات التسويق الرقمي والدعم الفني المتقدم إلى هندسة أنظمة برمجية متكاملة، مع التركيز على أمان تطبيقات الويب، وأدوات الأتمتة، ومسارات اتخاذ القرار المنظمة."
+      en: "My work sits between product thinking, software engineering, and automation. I care about building tools that are useful, maintainable, and clear enough for real people to operate.",
+      ar: "عملي يقع بين التفكير المنتج، هندسة البرمجيات، والأتمتة. ما يهمني هو بناء أدوات مفيدة، قابلة للصيانة، وواضحة بما يكفي ليستخدمها الناس فعلاً."
     },
     paragraph2: {
-      en: "I prioritize user privacy by executing application logic client-side when possible, utilizing structured data models, and focusing on stable deployments that deliver clear utility rather than visual fluff.",
-      ar: "أضع خصوصية المستخدم كأولوية من خلال تنفيذ منطق التطبيق بالكامل في جهة العميل كلما أمكن ذلك، مستفيداً من نماذج البيانات المنظمة، والتركيز على استقرار البرمجيات وكفاءتها في بيئة العمل الفعلي."
+      en: "I started from practical digital work, then moved deeper into software, workflows, and AI-assisted systems. That path shaped how I build today: not just interfaces, but complete flows that connect data, logic, user experience, and operations.",
+      ar: "بدأت من العمل الرقمي العملي، ثم تعمّقت تدريجيًا في البرمجة، مسارات التشغيل، والأنظمة المدعومة بالذكاء الاصطناعي. هذا المسار أثّر على طريقة بنائي اليوم: لا أصمّم واجهات فقط، بل أبني تدفقات كاملة تربط البيانات، المنطق، تجربة المستخدم، والتشغيل."
     },
     paragraph3: {
-      en: "My background includes managing digital marketing campaigns and handling advanced network and system diagnostics at Orange. This experience provided me with invaluable insights into user patterns, system scalability under load, and network resilience.",
-      ar: "تشمل خلفيتي المهنية إدارة الحملات التسويقية الرقمية وتقديم الدعم الفني المتقدم للشبكات والأنظمة في شركة أورانج (Orange). منحتني هذه التجربة رؤية عميقة لكيفية تفاعل المستخدمين، ومرونة الشبكات، والتعامل مع التوسع والأحمال التشغيلية."
+      en: "I’m especially interested in projects where technology removes friction — dashboards, internal tools, automation layers, privacy-conscious workflows, and AI features that serve a real purpose instead of adding noise.",
+      ar: "أهتم خصوصًا بالمشاريع التي تقلّل الاحتكاك: لوحات تحكم، أدوات داخلية، طبقات أتمتة، مسارات تراعي الخصوصية، وخصائص ذكاء اصطناعي لها فائدة حقيقية لا تضيف ضوضاء."
     },
-    statsLabelTools: { en: "Tools Built", ar: "أدوات مدمجة" },
+    statsLabelTools: { en: "Tools Built", ar: "أدوات مبنية" },
     statsLabelFiles: { en: "Source Files", ar: "ملفات برمجية" },
-    statsLabelPhases: { en: "Dev Phases", ar: "مراحل التطوير" },
-    statsLabelYears: { en: "Years Building", ar: "سنوات الخبرة" },
-    drivesTitle: { en: "What Drives My Architecture", ar: "فلسفتي الهندسية" },
-    driveItem1: { en: "Privacy-focused: run logic client-side to safeguard user data.", ar: "الخصوصية أولاً: تنفيذ المعالجة محلياً لتعزيز حماية بيانات المستخدمين." },
-    driveItem2: { en: "Structured Governance: designing clean, audit-ready data models and pipeline logs.", ar: "الحوكمة والشفافية: تخطيط نماذج بيانات نظيفة وسجلات تتبع واضحة وقابلة للمراجعة." },
-    driveItem3: { en: "Real execution: prioritizing robust error-handling and resilience over visual fluff.", ar: "التشغيل المستقر: التركيز على معالجة الأخطاء وبناء برمجيات مرنة بدلاً من التعقيد البصري." },
-    driveItem4: { en: "Bilingual Design: thorough optimization for both LTR & RTL layouts.", ar: "التصميم ثنائي اللغة: تحسين شامل لتصميمات اليسار إلى اليمين واليمين إلى اليسار بشكل انسيابي." }
+    statsLabelPhases: { en: "Dev Phases", ar: "مراحل تطوير" },
+    statsLabelYears: { en: "Years Building", ar: "سنوات بناء" },
+    drivesTitle: { en: "What guides my work", ar: "ما يوجّه طريقة عملي" },
+    driveItem1: { en: "Product-minded development: build around the actual workflow, not the demo.", ar: "تطوير بفهم المنتج: البناء حول مسار العمل الحقيقي، لا حول العرض فقط." },
+    driveItem2: { en: "Automation-first thinking: reduce repeated manual work where it matters.", ar: "تفكير قائم على الأتمتة: تقليل العمل اليدوي المتكرر حيث توجد قيمة حقيقية." },
+    driveItem3: { en: "Practical AI integration: use models to support the system, not distract from it.", ar: "دمج عملي للذكاء الاصطناعي: استخدام النماذج لدعم النظام، لا لصناعة ضوضاء إضافية." },
+    driveItem4: { en: "Performance and usability: keep tools fast, understandable, and maintainable.", ar: "الأداء وسهولة الاستخدام: أدوات سريعة، مفهومة، وقابلة للصيانة." }
   },
   projects: {
     sectionNum: "02.",
-    title: { en: "Featured Products", ar: "أبرز المشاريع والمنتجات" },
+    title: { en: "Projects built around real workflows.", ar: "مشاريع مبنية حول مسارات عمل حقيقية." },
     subtitle: {
-      en: "Refined, highly reliable systems across AI infrastructure, privacy-focused tools, and data-driven architectures.",
-      ar: "أنظمة برمجية متطورة ومستقرة تغطي مجالات البنية التحتية للذكاء الاصطناعي، وأدوات تعزيز الخصوصية، والأنظمة الموجهة بالبيانات."
+      en: "A selection of systems, tools, and experiments focused on automation, data flow, product interfaces, and AI-assisted operations.",
+      ar: "مجموعة مختارة من الأنظمة والأدوات والتجارب التي تركز على الأتمتة، تدفق البيانات، واجهات المنتجات، والتشغيل المدعوم بالذكاء الاصطناعي."
     },
-    visitDemo: { en: "Visit Live Demo", ar: "زيارة الموقع المباشر" },
-    viewSource: { en: "View Codebase", ar: "تصفح مستودع الكود" },
-    closeDetails: { en: "Close Details", ar: "إغلاق التفاصيل" },
-    specsHeader: { en: "System Specifications", ar: "المواصفات الفنية للنظام" }
+    visitDemo: { en: "Visit live demo", ar: "زيارة النسخة المباشرة" },
+    viewSource: { en: "View codebase", ar: "تصفح الكود" },
+    closeDetails: { en: "Close details", ar: "إغلاق التفاصيل" },
+    specsHeader: { en: "System notes", ar: "ملاحظات النظام" }
   },
   experience: {
     sectionNum: "03.",
-    title: { en: "Professional Timeline", ar: "المسيرة المهنية" },
+    title: { en: "A path shaped by building, testing, and improving systems.", ar: "مسار تشكّل من البناء، التجربة، وتحسين الأنظمة." },
     subtitle: {
-      en: "From advanced technical support to engineering independent scalable architectures.",
-      ar: "من تقديم الدعم الفني المعقد للشبكات إلى تصميم وهندسة أنظمة برمجية مستقلة وقابلة للتوسع."
+      en: "My experience combines hands-on development, digital operations, automation, and continuous experimentation with AI-assisted workflows.",
+      ar: "تجمع خبرتي بين التطوير العملي، التشغيل الرقمي، الأتمتة، والتجربة المستمرة مع مسارات العمل المدعومة بالذكاء الاصطناعي."
     }
   },
   skills: {
     sectionNum: "04.",
-    title: { en: "Core Technology Stack", ar: "الحزمة البرمجية والتقنية" },
+    title: { en: "Tools I use to build clear, reliable systems.", ar: "أدوات أستخدمها لبناء أنظمة واضحة وقابلة للاعتماد." },
     subtitle: {
-      en: "The tools, frameworks, and patterns I leverage to construct highly resilient backend pipelines and interactive interfaces.",
-      ar: "الأدوات وإطارات العمل والنماذج الهندسية التي أستخدمها لبناء قنوات معالجة خلفية متينة وواجهات مستخدم تفاعلية متطورة."
+      en: "My stack is selected around speed, maintainability, and the ability to move from idea to working product without unnecessary complexity.",
+      ar: "أختار الأدوات بناءً على السرعة، قابلية الصيانة، والقدرة على تحويل الفكرة إلى منتج يعمل بدون تعقيد غير ضروري."
     }
   },
   playground3D: {
-    title: { en: "Interactive 3D Node Sandbox", ar: "مختبر العقد ثلاثية الأبعاد التفاعلي" },
+    title: { en: "Interactive systems visualizer", ar: "مخطط أنظمة تفاعلي" },
     subtitle: {
-      en: "Interact with the Three.js 3D box representing Habib's architecture. Toggle settings on the right to visualize systems logic in real-time.",
-      ar: "تفاعل مع المجسم ثلاثي الأبعاد (Three.js) الذي يمثل البنية الهندسية لمشاريع حبيب. استخدم لوحة التحكم الجانبية لتعديل خصائص العقدة في الوقت الفعلي."
+      en: "A small Three.js visual layer for exploring system presets. It is decorative, but built to stay lightweight and responsive.",
+      ar: "طبقة عرض تفاعلية صغيرة باستخدام Three.js لاستكشاف قوالب الأنظمة. هي عنصر بصري مساعد، لكنها مبنية لتبقى خفيفة وسريعة الاستجابة."
     },
-    controlWireframe: { en: "Wireframe Mode", ar: "عرض الهيكل (Wireframe)" },
-    controlColor: { en: "Node Core Color", ar: "لون العقدة الرئيسي" },
-    controlSpeed: { en: "Rotation Velocity", ar: "سرعة الدوران" },
-    controlParticle: { en: "Particle Core Matrix", ar: "حقل الجسيمات المحيطة" },
-    controlPreset: { en: "Select Architecture Node Preset", ar: "اختر قالب النظام المسبق" },
-    presetQuickShed: { en: "QuickShed Node (Utility tools)", ar: "عقدة كويك شيد (الأدوات الخدمية)" },
-    presetSieve: { en: "SIEVE Node (10-Phase logic gate)", ar: "عقدة غربال (بوابات التصفية)" },
-    presetAI: { en: "AI Engine Node (MCP & LLM pipelines)", ar: "عقدة محرك الذكاء الاصطناعي (أنابيب MCP)" },
-    presetData: { en: "Data Pipeline Node (NATS & Redis streams)", ar: "عقدة أنابيب البيانات (تدفق NATS و Redis)" },
+    controlWireframe: { en: "Wireframe mode", ar: "عرض الهيكل" },
+    controlColor: { en: "Core color", ar: "لون النواة" },
+    controlSpeed: { en: "Rotation speed", ar: "سرعة الدوران" },
+    controlParticle: { en: "Particle field", ar: "حقل الجسيمات" },
+    controlPreset: { en: "Architecture preset", ar: "قالب النظام" },
+    presetQuickShed: { en: "QuickShed — Utility tools", ar: "QuickShed — أدوات خدمية" },
+    presetSieve: { en: "SIEVE — Evaluation logic", ar: "SIEVE — منطق التقييم" },
+    presetAI: { en: "AI Systems — MCP & LLM workflows", ar: "أنظمة الذكاء الاصطناعي — MCP ومسارات LLM" },
+    presetData: { en: "Data Pipeline — Streams & queues", ar: "مسار بيانات — تدفقات وطوابير" },
     interactiveTip: {
-      en: "Drag on the 3D space to rotate the scene. Hover to activate deep glowing neural energy lines.",
-      ar: "اسحب الفأرة على المساحة ثلاثية الأبعاد لتدوير المشهد. مرر المؤشر لتنشيط قنوات الطاقة الضوئية المتوهجة."
+      en: "Drag the scene to rotate it. Keep the interaction simple: the visual should support the content, not compete with it.",
+      ar: "اسحب المشهد لتدويره. الهدف أن يدعم العنصر البصري المحتوى، لا أن ينافسه."
     }
   },
   contact: {
     sectionNum: "05.",
-    title: { en: "Get In Touch", ar: "تواصل معي" },
+    title: { en: "Have a system worth building? Let’s talk.", ar: "لديك نظام يستحق البناء؟ لنتحدث." },
     subtitle: {
-      en: "Let's construct something robust. Open for collaborations in AI infrastructure, backend pipelines, and interactive engineering.",
-      ar: "لنقم ببناء شيء قوي ومميز معاً. أنا منفتح دائماً للتعاون في البنية التحتية للذكاء الاصطناعي، وأنابيب البيانات الخلفية، والحلول البرمجية التفاعلية."
+      en: "I’m open to selected collaborations around web products, automation workflows, AI-powered tools, and internal systems that need clearer structure or better execution.",
+      ar: "أنا متاح لتعاونات مختارة حول منتجات الويب، مسارات الأتمتة، الأدوات المدعومة بالذكاء الاصطناعي، والأنظمة الداخلية التي تحتاج إلى وضوح أفضل أو تنفيذ أقوى."
     },
-    formName: { en: "Name", ar: "الاسم الكريم" },
-    formNamePlaceholder: { en: "Your Name", ar: "اكتب اسمك الكريم هنا" },
-    formEmail: { en: "Email Address", ar: "البريد الإلكتروني" },
-    formEmailPlaceholder: { en: "you@example.com", ar: "اكتب بريدك هنا للتواصل" },
+    formName: { en: "Name", ar: "الاسم" },
+    formNamePlaceholder: { en: "Your name", ar: "اكتب اسمك" },
+    formEmail: { en: "Email address", ar: "البريد الإلكتروني" },
+    formEmailPlaceholder: { en: "you@example.com", ar: "you@example.com" },
     formSubject: { en: "Subject", ar: "عنوان الرسالة" },
-    formSubjectPlaceholder: { en: "Collaboration proposal / Project idea", ar: "مثل: عرض تعاون متبادل / فكرة مشروع" },
-    formMessage: { en: "Message Text", ar: "محتوى الرسالة" },
-    formMessagePlaceholder: { en: "Tell me about your system requirements and timeline...", ar: "اكتب هنا تفاصيل فكرتك، متطلبات النظام، والجدول الزمني..." },
-    formSubmit: { en: "Open Email Client", ar: "فتح برنامج البريد" },
-    formSending: { en: "Redirecting...", ar: "جاري الانتقال لبرنامج البريد..." },
+    formSubjectPlaceholder: { en: "Project brief / Collaboration idea", ar: "Brief مشروع / فكرة تعاون" },
+    formMessage: { en: "Message", ar: "الرسالة" },
+    formMessagePlaceholder: { en: "Share the problem, current workflow, and what success should look like...", ar: "اكتب المشكلة، مسار العمل الحالي، وشكل النجاح المطلوب..." },
+    formSubmit: { en: "Start a conversation", ar: "ابدأ محادثة" },
+    formSending: { en: "Opening email draft...", ar: "جاري فتح مسودة البريد..." },
     formSuccess: { en: "Your email app should now open with a prepared draft. Please review and send it manually.", ar: "من المفترض أن يفتح تطبيق البريد برسالة جاهزة. راجعها ثم أرسلها يدويًا." },
-    formError: { en: "Failed to open email client. Please review the fields and try again.", ar: "عذراً، فشل فتح تطبيق البريد. يرجى مراجعة الحقول وإعادة المحاولة." },
-    locationLabel: { en: "Deployment Core", ar: "مقر البناء الميداني" },
-    locationValue: { en: "Cairo, Egypt (GMT+2)", ar: "القاهرة، جمهورية مصر العربية (GMT+2)" }
+    formError: { en: "Failed to open email client. Please review the fields and try again.", ar: "تعذر فتح تطبيق البريد. راجع الحقول وحاول مرة أخرى." },
+    locationLabel: { en: "Based in", ar: "الموقع" },
+    locationValue: { en: "Cairo, Egypt", ar: "القاهرة، مصر" }
   },
   footer: {
-    author: { en: "Designed & Engineered by Habib", ar: "تم التصميم والهندسة البرمجية بواسطة حبيب" },
-    rights: { en: "All systems operational. © 2026", ar: "جميع الأنظمة تعمل بكفاءة. © 2026" },
-    shlogan: { en: "BUILD · AUTOMATE · SCALE", ar: "بناء · أتمتة · توسيع" }
+    author: { en: "Built with a systems mindset by Mohamed Habib.", ar: "بُني بعقلية الأنظمة بواسطة محمد حبيب." },
+    rights: { en: "Cairo-based. Building for the web, automation, and practical AI.", ar: "من القاهرة، أبني للويب، الأتمتة، والذكاء الاصطناعي العملي." },
+    shlogan: { en: "WEB · AUTOMATION · AI SYSTEMS", ar: "ويب · أتمتة · أنظمة ذكاء اصطناعي" }
   }
 };
 export default PORTFOLIO_DATA;
