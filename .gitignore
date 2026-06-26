@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Windows downloaded file metadata
+*:Zone.Identifier
