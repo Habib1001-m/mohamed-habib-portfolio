@@ -8,13 +8,13 @@ export const PORTFOLIO_DATA = {
   },
   hero: {
     badge: { en: "Available for selected collaborations", ar: "متاح لتعاونات مختارة" },
-    title1: { en: "I build digital systems", ar: "أبني أنظمة رقمية" },
+    title1: { en: "I build systems", ar: "أبني أنظمة" },
     title2: { en: "that make products", ar: "تجعل المنتجات" },
-    title3: { en: "faster, smarter, easier to run.", ar: "أسرع، أذكى، وأسهل في التشغيل." },
-    roleLine: { en: "Full-Stack Developer • Automation & AI Systems", ar: "مطور Full-Stack • أنظمة الأتمتة والذكاء الاصطناعي" },
+    title3: { en: "easier to run.", ar: "أسهل في التشغيل." },
+    roleLine: { en: "Full-Stack Developer • Automation • Practical AI", ar: "مطور Full-Stack • أتمتة • ذكاء اصطناعي عملي" },
     subtitle: {
-      en: "I design and build web products, automation workflows, and AI-powered tools — with a focus on usability, performance, and pragmatic engineering.",
-      ar: "أصمّم وأبني منتجات ويب، ومسارات أتمتة، وأدوات مدعومة بالذكاء الاصطناعي — مع تركيز على سهولة الاستخدام، الأداء، والهندسة العملية."
+      en: "Web products, automation workflows, and practical AI tools — designed with clarity, speed, and maintainability in mind.",
+      ar: "منتجات ويب، مسارات أتمتة، وأدوات ذكاء اصطناعي عملية — مبنية بوضوح، أداء، وقابلية للصيانة."
     },
     ctaPrimary: { en: "View selected work", ar: "استعرض الأعمال" },
     ctaSecondary: { en: "Start a conversation", ar: "ابدأ محادثة" },
