@@ -4,92 +4,104 @@ export const PROJECTS_LIST: Project[] = [
   {
     id: "quickshed",
     title: { en: "QuickShed", ar: "كويك شيد" },
-    tagline: { en: "Privacy-focused client-side utility suite with a rich set of formatting and development tools.", ar: "صندوق أدوات متكامل يضم مجموعة واسعة من أدوات التطوير التي تعمل بالكامل داخل المتصفح لتعزيز الخصوصية والأمان." },
+    tagline: {
+      en: "A client-side utility workspace for formatting, encoding, and working with sensitive text without sending it to a server.",
+      ar: "مساحة أدوات داخل المتصفح لتنسيق النصوص والبيانات الحساسة والعمل عليها دون إرسالها إلى خادم خارجي."
+    },
     description: {
-      en: "A developer toolkit running directly in the client's browser. Safe from external network tracking, highly responsive in Arabic and English.",
-      ar: "مجموعة أدوات برمجية للمطورين تعمل مباشرة على متصفح العميل دون تتبع البيانات الخارجية. دعم متميز للعربية والإنجليزية."
+      en: "A practical browser-based toolkit that keeps common developer utilities fast, private, and available in Arabic and English.",
+      ar: "صندوق أدوات عملي يعمل داخل المتصفح، يوفّر أدوات المطورين اليومية بسرعة وخصوصية وبدعم عربي وإنجليزي."
     },
     longDescription: {
-      en: "QuickShed provides developers with safe tools to format, parse, encode, and minify sensitive data (such as JSON structure, tokens, or configuration keys) without exposing them to remote servers. By executing all processing within a highly optimized client-only Single Page App using Web Workers, QuickShed processes data with robust client-side privacy. It includes a PWA setup for offline-first usage with an elegant, responsive interface.",
-      ar: "يحل كويك شيد مشكلة اضطرار المطورين إلى معالجة بيانات حساسة (مثل ملفات JSON أو الرموز البرمجية) في خوادم طرف ثالث غير موثوقة. من خلال تنفيذ جميع عمليات المعالجة (تنسيق، تشفير، فك ضغط) داخل المتصفح عبر Web Workers، يضمن النظام حماية فائقة للخصوصية والبيانات محلياً. كما يدعم العمل دون اتصال بالشبكة كـ PWA مع واجهة مستخدم متجاوبة."
+      en: "QuickShed is built for moments when developers need to format, parse, encode, decode, or clean up sensitive data without pasting it into unknown online tools. Processing runs in the browser, with a PWA setup for fast repeat use and a bilingual interface for everyday work.",
+      ar: "تم بناء QuickShed للحالات التي يحتاج فيها المطور إلى تنسيق JSON، أو معالجة نصوص، أو تحويل بيانات حساسة دون وضعها في أدوات خارجية غير موثوقة. تتم المعالجة داخل المتصفح، مع دعم PWA للاستخدام السريع والمتكرر وواجهة ثنائية اللغة للعمل اليومي."
     },
-    category: { en: "Privacy Tooling", ar: "أدوات الخصوصية" },
-    status: { en: "Live / Production", ar: "متاح ومستقر للإنتاج" },
+    category: { en: "Privacy Tooling", ar: "أدوات خصوصية" },
+    status: { en: "Live", ar: "متاح" },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Web Workers", "WebAssembly"],
     image: "/images/ai_infrastructure_visual_1782504890769.jpg",
     stats: [
-      { label: { en: "Tools Included", ar: "الأدوات المدمجة" }, value: "90+" },
-      { label: { en: "Server Transmission", ar: "إرسال البيانات للخادم" }, value: "None" },
-      { label: { en: "Processing Time", ar: "زمن معالجة الواجهة" }, value: "Instant" }
+      { label: { en: "Tools Included", ar: "الأدوات" }, value: "90+" },
+      { label: { en: "Server Uploads", ar: "رفع للخادم" }, value: "None" },
+      { label: { en: "Workflow", ar: "مسار العمل" }, value: "Instant" }
     ],
     links: { github: "https://github.com/Habib1001-m/quickshed", demo: "https://quickshed.vercel.app" }
   },
   {
     id: "sieve",
-    title: { en: "SIEVE Research OS", ar: "غربال: نظام تشغيل الأبحاث" },
-    tagline: { en: "Ten-phase evidence screening and structured evaluation matrix.", ar: "محرك معالجة وبوابات حوكمة ممتدة على 10 مراحل لتصفية وفحص الأدلة." },
+    title: { en: "SIEVE Research OS", ar: "SIEVE: نظام تشغيل الأبحاث" },
+    tagline: {
+      en: "A structured evaluation system for turning scattered ideas into clearer decision paths.",
+      ar: "نظام تقييم منظم يحوّل الأفكار المتناثرة إلى مسارات قرار أوضح."
+    },
     description: {
-      en: "An academic and industrial decision matrix, taking research ideas through strict evaluation phases to produce structured, actionable outcomes.",
-      ar: "مصفوفة اتخاذ قرار أكاديمية وصناعية متطورة، تنقل الأفكار والأبحاث عبر بوابات حوكمة صارمة ومصفوفات فحص لإنتاج مخرجات موثوقة وعالية الدقة."
+      en: "A research and decision workflow that helps screen ideas through phases, criteria, and visible evidence trails.",
+      ar: "مسار عمل بحثي لاتخاذ القرار يساعد على فحص الأفكار عبر مراحل ومعايير وأثر واضح للأدلة."
     },
     longDescription: {
-      en: "SIEVE Research OS is an evidence-based selection engine designed to filter high-value insights from chaotic streams of raw hypotheses. Spanning across 10 structured execution phases, it includes active visual matrices, grading cards, analytical screening maps, and governance gates. Built with clean state modularity using React, TypeScript, and Recharts, it assists research teams in maintaining a logical and audit-ready log of scientific selections.",
-      ar: "غربال هو محرك تصفية أبحاث مخصص لتصفية الأفكار والفرضيات العلمية والصناعية وفصل الإشارات المفيدة عن الضوضاء. من خلال 10 مراحل تشغيلية فريدة، يوفر النظام مصفوفات تصفية تفاعلية، ولوحات تقييم مخصصة، ومخططات بيانية تحليلة للتحقق من المخرجات وتوثيق عملية اتخاذ القرار للفرق الأكاديمية والتقنية بما يحقق أقصى دقة قابلة للمراجعة والتدقيق."
+      en: "SIEVE is an evidence-screening workspace designed for research-heavy thinking. It organizes raw hypotheses into phases, review cards, scoring views, and decision gates so that teams can see why an idea should move forward, pause, or be rejected.",
+      ar: "SIEVE هو مساحة عمل لفحص الأدلة في السياقات البحثية. ينظّم الفرضيات الأولية داخل مراحل وبطاقات مراجعة وطرق تقييم وبوابات قرار، بحيث يصبح سبب قبول الفكرة أو إيقافها أو رفضها واضحًا وقابلًا للمراجعة."
     },
-    category: { en: "Decision Systems", ar: "أنظمة اتخاذ القرار" },
-    status: { en: "10-Phase Active", ar: "مكتمل المراحل الـ 10" },
+    category: { en: "Decision Systems", ar: "أنظمة قرار" },
+    status: { en: "Structured workflow", ar: "مسار منظم" },
     tech: ["React", "TypeScript", "Vite", "Recharts", "TanStack Table", "Tailwind CSS"],
     image: "/images/ai_infrastructure_visual_1782504890769.jpg",
     stats: [
-      { label: { en: "Evaluation Phases", ar: "مراحل التصفية" }, value: "10" },
-      { label: { en: "Data Auditability", ar: "جاهزية تدقيق البيانات" }, value: "High" },
-      { label: { en: "State Interactivity", ar: "تفاعلية واجهة التحكم" }, value: "High" }
+      { label: { en: "Evaluation Phases", ar: "مراحل التقييم" }, value: "10" },
+      { label: { en: "Evidence Trail", ar: "أثر الأدلة" }, value: "Visible" },
+      { label: { en: "Review Flow", ar: "مسار المراجعة" }, value: "Structured" }
     ],
     links: { github: "https://github.com/Habib1001-m", demo: "https://quickshed.vercel.app" }
   },
   {
     id: "ai-agent",
-    title: { en: "AI Agent Orchestration", ar: "بنية تنسيق العملاء الأذكياء" },
-    tagline: { en: "Multi-agent systems, knowledge graphs, and custom MCP integrations.", ar: "تنسيق مجموعة من عملاء الذكاء الاصطناعي مع بروتوكولات سياق MCP ومخازن المتجهات." },
+    title: { en: "AI Workflow Orchestration", ar: "تنسيق مسارات الذكاء الاصطناعي" },
+    tagline: {
+      en: "Practical experiments with agents, local model tooling, memory, and MCP-style integrations.",
+      ar: "تجارب عملية مع العملاء الأذكياء، أدوات النماذج المحلية، الذاكرة، وتكاملات MCP."
+    },
     description: {
-      en: "Plumbing and framework integration for complex LLM behaviors, orchestrating system tools, persistent memory, and context databases.",
-      ar: "البنية التحتية والربط البرمجي لتعزيز تصرفات النماذج اللغوية الكبيرة. تنسيق الأدوات، الذاكرة المستمرة للمستخدم، وقواعد بيانات السياق المتكاملة."
+      en: "A systems layer for connecting AI tools to real workflows: context, memory, routing, and tool access.",
+      ar: "طبقة أنظمة لربط أدوات الذكاء الاصطناعي بمسارات عمل حقيقية: سياق، ذاكرة، توجيه، واستدعاء أدوات."
     },
     longDescription: {
-      en: "This infrastructure enables practical utilizing of AI agents by introducing custom Model Context Protocol (MCP) server integrations, semantic vector routing, dynamic knowledge graphs, and persistent memory structures. It includes active contributions to open-source tools like NousResearch's Hermes WebUI, facilitating production workflows with local LLM backends.",
-      ar: "تركز هذه البنية التحتية على تمكين الاستخدام الفعلي والمؤسسي لعملاء الذكاء الاصطناعي، متجاوزة أنظمة الدردشة التقليدية البسيطة. تدعم تكاملاً لبروتوكول سياق النموذج (MCP)، وتوجيه المتجهات بين عدة عملاء، والإنشاء الديناميكي للرسوم البيانية الدلالية، والذاكرة المؤسسية المستديمة. يشارك حبيب بنشاط في تطوير واجهة Hermes WebUI الخاصة بمجموعة أبحاث NousResearch لدمج تدفقات العمل البرمجية مع خوادم LLM المحلية."
+      en: "This work explores how AI agents can support operating systems of work rather than remain isolated chat boxes. It includes MCP integrations, local model workflows, knowledge routing, and structured memory patterns for tool-assisted execution.",
+      ar: "يركز هذا العمل على جعل العملاء الأذكياء جزءًا من نظام تشغيل العمل، لا مجرد نافذة دردشة منفصلة. يشمل ذلك تكاملات MCP، مسارات النماذج المحلية، توجيه المعرفة، وأنماط ذاكرة منظمة تساعد على التنفيذ المدعوم بالأدوات."
     },
-    category: { en: "AI Infrastructure", ar: "البنية التحتية للذكاء الاصطناعي" },
-    status: { en: "Open Source Contributor", ar: "مساهم برمجيات حرة" },
+    category: { en: "AI Systems", ar: "أنظمة ذكاء اصطناعي" },
+    status: { en: "Active exploration", ar: "استكشاف نشط" },
     tech: ["Python", "Ollama", "Qdrant Vector DB", "MCP Protocol", "FastAPI", "Docker"],
     image: "/images/ai_infrastructure_visual_1782504890769.jpg",
     stats: [
-      { label: { en: "Semantic Retrieval", ar: "دقة مطابقة المتجهات" }, value: "Optimized" },
-      { label: { en: "Context Window Guard", ar: "مراقب نافذة السياق" }, value: "Active" },
-      { label: { en: "Execution Flow", ar: "مسار التنسيق" }, value: "Async" }
+      { label: { en: "Context Routing", ar: "توجيه السياق" }, value: "Structured" },
+      { label: { en: "Tool Access", ar: "استدعاء الأدوات" }, value: "MCP" },
+      { label: { en: "Execution Flow", ar: "مسار التنفيذ" }, value: "Async" }
     ],
     links: { github: "https://github.com/Habib1001-m" }
   },
   {
     id: "event-driven",
-    title: { en: "Event-Driven Stream Engines", ar: "محركات التدفق الفوري الموجه بالأحداث" },
-    tagline: { en: "Real-time automated data processing with risk control.", ar: "معالجة تدفقات البيانات الضخمة بشكل فوري مع بوابات حماية مدمجة للتحكم بالمخاطر." },
+    title: { en: "Event-Driven Stream Engines", ar: "محركات تدفق موجهة بالأحداث" },
+    tagline: {
+      en: "Backend workflows for coordinating streams, queues, checks, and logged processing steps.",
+      ar: "مسارات خلفية لتنسيق التدفقات، الطوابير، الفحوصات، وخطوات المعالجة الموثقة."
+    },
     description: {
-      en: "A highly modular backend system managing structured modules for fast, automated, and fully logged pipelines.",
-      ar: "بنية تحتية متكاملة للخوادم الخلفية تدير وتنسق ملفات برمجية منظمة لمعالجة البيانات الفورية ومخاطر المعاملات بدقة وموثوقية."
+      en: "A modular backend approach for moving data through clear, observable, event-driven pipelines.",
+      ar: "نهج خلفي معياري لتحريك البيانات داخل مسارات واضحة، قابلة للمراقبة، ومبنية على الأحداث."
     },
     longDescription: {
-      en: "An event-driven backend engine coordinating real-time data streams. Leveraging a decoupled architecture with NATS message broker and Redis caching, it implements procedural checks, automated mathematical triggers, risk controls, and persistent storage using asyncpg on PostgreSQL. Built for reliability, it features automated crash recovery and comprehensive telemetry logs.",
-      ar: "يعمل هذا المحرك البرمجي على تنسيق التحديثات المستمرة للبيانات الفورية. باستخدام بنية تحتية مفككة تعتمد على الأحداث مع وسيط الرسائل فائق السرعة NATS وذاكرة الكاش Redis، ينفذ النظام حوكمة صارمة للمخاطر مع قواعد بيانات PostgreSQL عالية الاستجابة عبر بروتوكول asyncpg. صُمم النظام لتحقيق الاعتمادية العالية والتشغيل المستقر."
+      en: "This backend architecture coordinates stream processing with message queues, cache layers, database writes, procedural checks, and telemetry. The focus is not only speed, but clarity: every processing path should be understandable, observable, and recoverable.",
+      ar: "تنسق هذه البنية الخلفية معالجة التدفقات عبر طوابير رسائل، طبقات كاش، كتابة في قواعد البيانات، فحوصات إجرائية، وسجلات مراقبة. التركيز ليس على السرعة فقط، بل على الوضوح: كل مسار معالجة يجب أن يكون مفهومًا، قابلًا للمراقبة، وقابلًا للتعافي."
     },
-    category: { en: "Backend & Systems", ar: "الخوادم الخلفية والأنظمة" },
-    status: { en: "Deployed Core", ar: "مستقر قيد التشغيل" },
+    category: { en: "Backend & Systems", ar: "الخلفية والأنظمة" },
+    status: { en: "Core pattern", ar: "نمط أساسي" },
     tech: ["Python", "FastAPI", "NATS JetStream", "Redis Cache", "PostgreSQL", "Docker Compose"],
     image: "/images/ai_infrastructure_visual_1782504890769.jpg",
     stats: [
-      { label: { en: "Managed Modules", ar: "الوحدات البرمجية" }, value: "Structured" },
-      { label: { en: "Processing Latency", ar: "زمن توصيل الحدث" }, value: "Low Latency" },
-      { label: { en: "Queue Management", ar: "سعة طابور الأحداث" }, value: "Dynamic" }
+      { label: { en: "Modules", ar: "الوحدات" }, value: "Structured" },
+      { label: { en: "Latency Goal", ar: "هدف الاستجابة" }, value: "Low" },
+      { label: { en: "Observability", ar: "المراقبة" }, value: "Logged" }
     ],
     links: { github: "https://github.com/Habib1001-m" }
   }
