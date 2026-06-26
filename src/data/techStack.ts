@@ -2,34 +2,34 @@ import { TechCategory } from "../types/portfolio";
 
 export const TECH_STACK: TechCategory[] = [
   {
-    id: "languages",
-    title: { en: "Languages", ar: "لغات البرمجة" },
-    items: ["Python", "TypeScript", "JavaScript (ES6+)", "SQL (Postgres)", "HTML5 / CSS3", "Bash Scripting"]
+    id: "frontend",
+    title: { en: "Frontend", ar: "الواجهة" },
+    items: ["React", "TypeScript", "Vite", "Tailwind CSS", "Three.js", "Responsive UI", "RTL/LTR layouts"]
   },
   {
-    id: "frameworks",
-    title: { en: "Frameworks & UI", ar: "إطارات العمل والواجهات" },
-    items: ["FastAPI", "React (v18/19)", "Next.js (App Router)", "Vite", "Tailwind CSS", "Three.js", "Framer Motion", "Recharts"]
+    id: "backend-data",
+    title: { en: "Backend & Data", ar: "الخلفية والبيانات" },
+    items: ["Python", "FastAPI", "Node.js", "REST APIs", "PostgreSQL", "Redis", "Data processing"]
+  },
+  {
+    id: "automation-ai",
+    title: { en: "AI & Automation", ar: "الذكاء الاصطناعي والأتمتة" },
+    items: ["MCP Protocol", "Ollama", "Qdrant", "Workflow orchestration", "Prompt systems", "Knowledge routing", "AI-assisted tools"]
   },
   {
     id: "infrastructure",
-    title: { en: "Infrastructure & Data", ar: "البنية التحتية والبيانات" },
-    items: ["Docker", "Docker Compose", "NATS JetStream", "Redis Caching", "PostgreSQL", "Nginx Proxy", "Linux Server Admin", "Git / GitHub"]
+    title: { en: "Infrastructure", ar: "البنية والنشر" },
+    items: ["GitHub", "Vercel", "Docker", "Docker Compose", "Linux", "WSL", "Deployment pipelines"]
   },
   {
-    id: "ai-ml",
-    title: { en: "AI & ML Stack", ar: "تقنيات الذكاء الاصطناعي" },
-    items: ["MCP Protocol", "Ollama LLMs", "Qdrant Vector DB", "LangChain Routing", "RAG Pipeline Setup", "Nous Hermes Integrations"]
+    id: "systems-practices",
+    title: { en: "Systems Practices", ar: "ممارسات الأنظمة" },
+    items: ["Event-driven workflows", "Privacy-conscious design", "Observable pipelines", "Structured logs", "Recovery paths", "Maintainable architecture"]
   },
   {
-    id: "practices",
-    title: { en: "Engineering Practices", ar: "الأساليب الهندسية" },
-    items: ["Event-Driven Arch", "Privacy-First / Local State", "Decoupled Server Microservices", "REST API Engineering", "Audit-Ready Logs", "Asynchronous I/O"]
-  },
-  {
-    id: "marketing-support",
-    title: { en: "Marketing & Support", ar: "التسويق والدعم الفني" },
-    items: ["Network Diagnostics", "Active Directory Security", "LAN/WAN Systems", "SEO & SMO Optimization", "Analytics & Conversion Funnels", "Technical Copywriting"]
+    id: "product-ops",
+    title: { en: "Product & Operations", ar: "المنتج والتشغيل" },
+    items: ["User workflows", "Landing pages", "SEO basics", "Analytics thinking", "Technical support", "Network diagnostics"]
   }
 ];
 export default TECH_STACK;
