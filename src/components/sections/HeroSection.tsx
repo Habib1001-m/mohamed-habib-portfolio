@@ -84,10 +84,10 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             <div className="absolute inset-[-3px] rounded-full bg-gradient-to-r from-orange-600 via-amber-400 to-red-500 opacity-45 blur-md group-hover:opacity-65 transition-opacity duration-500" />
             <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-[22rem] xl:h-[22rem] rounded-full overflow-hidden border-4 border-[#050505] relative z-10 bg-zinc-900">
               <img
-                src="/images/mohamed-habib-profile.webp"
+                src="/images/mohamed-habib-hero.webp"
                 alt={isRtl ? "صورة شخصية حقيقية لمحمد حبيب" : "Real portrait of Mohamed Habib"}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover brightness-95 hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-cover object-center grayscale brightness-90 contrast-105 group-hover:grayscale-0 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700"
               />
             </div>
             <div className={`absolute top-1/2 ${isRtl ? "-left-6" : "-right-6"} -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
