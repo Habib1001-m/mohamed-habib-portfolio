@@ -21,12 +21,12 @@ export const PORTFOLIO_DATA = {
     ctaCv: { en: "Download CV", ar: "تحميل السيرة" },
     statusLocation: { en: "Cairo, EG", ar: "القاهرة، مصر" },
     statusExperience: { en: "4+ years building", ar: "أكثر من 4 سنوات بناء" },
-    pillarTitle1: { en: "Web Products", ar: "منتجات ويب" },
-    pillarDesc1: { en: "Clean interfaces, scalable foundations", ar: "واجهات نظيفة وبنية قابلة للتوسع" },
-    pillarTitle2: { en: "Automation Workflows", ar: "أتمتة العمليات" },
-    pillarDesc2: { en: "Systems that reduce repetitive work", ar: "أنظمة تقلّل العمل المتكرر" },
-    pillarTitle3: { en: "AI Tools", ar: "أدوات ذكاء اصطناعي" },
-    pillarDesc3: { en: "Practical integrations, real user value", ar: "تكاملات عملية بقيمة حقيقية للمستخدم" }
+    pillarTitle1: { en: "Product Systems", ar: "أنظمة منتجات" },
+    pillarDesc1: { en: "Interfaces connected to real workflows", ar: "واجهات متصلة بمسارات عمل حقيقية" },
+    pillarTitle2: { en: "Operational Clarity", ar: "وضوح تشغيلي" },
+    pillarDesc2: { en: "Tools that reduce repeated manual work", ar: "أدوات تقلّل العمل اليدوي المتكرر" },
+    pillarTitle3: { en: "Practical AI", ar: "ذكاء اصطناعي عملي" },
+    pillarDesc3: { en: "Useful model-assisted flows, not noise", ar: "مسارات مدعومة بالنماذج بدون ضوضاء" }
   },
   about: {
     sectionNum: "01.",
@@ -43,10 +43,28 @@ export const PORTFOLIO_DATA = {
       en: "I’m especially interested in projects where technology removes friction — dashboards, internal tools, automation layers, privacy-conscious workflows, and AI features that serve a real purpose instead of adding noise.",
       ar: "أهتم خصوصًا بالمشاريع التي تقلّل الاحتكاك: لوحات تحكم، أدوات داخلية، طبقات أتمتة، مسارات تراعي الخصوصية، وخصائص ذكاء اصطناعي لها فائدة حقيقية لا تضيف ضوضاء."
     },
-    statsLabelTools: { en: "Tools Built", ar: "أدوات مبنية" },
-    statsLabelFiles: { en: "Source Files", ar: "ملفات برمجية" },
-    statsLabelPhases: { en: "Dev Phases", ar: "مراحل تطوير" },
-    statsLabelYears: { en: "Years Building", ar: "سنوات بناء" },
+    outcomeMetrics: [
+      {
+        value: "3",
+        label: { en: "Proof-backed projects", ar: "مشاريع موثقة" },
+        note: { en: "Live or visually verified work", ar: "أعمال مباشرة أو موثقة بصريًا" }
+      },
+      {
+        value: "AR/EN",
+        label: { en: "Bilingual interfaces", ar: "واجهات ثنائية اللغة" },
+        note: { en: "Arabic and English product flows", ar: "مسارات منتج عربية وإنجليزية" }
+      },
+      {
+        value: "Local-first",
+        label: { en: "Privacy workflows", ar: "مسارات تراعي الخصوصية" },
+        note: { en: "Browser-side utility patterns", ar: "أنماط أدوات داخل المتصفح" }
+      },
+      {
+        value: "Resend",
+        label: { en: "Production contact flow", ar: "تواصل جاهز للإنتاج" },
+        note: { en: "Form delivery to inbox", ar: "إرسال النموذج إلى البريد" }
+      }
+    ],
     drivesTitle: { en: "What guides my work", ar: "ما يوجّه طريقة عملي" },
     driveItem1: { en: "Product-minded development: build around the actual workflow, not the demo.", ar: "تطوير بفهم المنتج: البناء حول مسار العمل الحقيقي، لا حول العرض فقط." },
     driveItem2: { en: "Automation-first thinking: reduce repeated manual work where it matters.", ar: "تفكير قائم على الأتمتة: تقليل العمل اليدوي المتكرر حيث توجد قيمة حقيقية." },
@@ -63,7 +81,7 @@ export const PORTFOLIO_DATA = {
     visitDemo: { en: "Visit live demo", ar: "زيارة النسخة المباشرة" },
     viewSource: { en: "View codebase", ar: "تصفح الكود" },
     closeDetails: { en: "Close details", ar: "إغلاق التفاصيل" },
-    specsHeader: { en: "System notes", ar: "ملاحظات النظام" }
+    specsHeader: { en: "Outcome signals", ar: "مؤشرات النتيجة" }
   },
   experience: {
     sectionNum: "03.",
