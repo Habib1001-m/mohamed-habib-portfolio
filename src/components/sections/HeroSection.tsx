@@ -56,7 +56,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               {h.ctaSecondary[lang]}
             </a>
             <a
-              href="/api/cv?type=one-page"
+              href="/cv/Mohamed_Habib_One_Page_CV.pdf"
               className={`px-6 py-3 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-300 hover:text-white text-xs rounded-xl hover:bg-emerald-500/[0.04] transition-all ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}
             >
               {h.ctaCv[lang]}
