@@ -87,7 +87,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                 src="/images/mohamed-habib-hero.webp"
                 alt={isRtl ? "صورة شخصية حقيقية لمحمد حبيب" : "Real portrait of Mohamed Habib"}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center origin-center -translate-x-[7%] scale-[1.10] grayscale brightness-90 contrast-105 group-hover:-translate-x-[7%] group-hover:scale-[1.15] group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700"
+                className="w-full h-full object-cover object-center origin-center -translate-x-[7%] scale-[1.15] grayscale brightness-90 contrast-105 group-hover:-translate-x-[7%] group-hover:scale-[1.18] group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700"
               />
             </div>
             <div className={`absolute top-1/2 ${isRtl ? "-left-6" : "-right-6"} -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
