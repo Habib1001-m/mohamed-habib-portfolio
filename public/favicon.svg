@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="habib.systems favicon">
+  <defs>
+    <linearGradient id="g" x1="12" y1="12" x2="116" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff3e00"/>
+      <stop offset="1" stop-color="#ffbe00"/>
+    </linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#ff3e00" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#050505"/>
+  <rect x="18" y="18" width="92" height="92" rx="24" fill="url(#g)" filter="url(#s)"/>
+  <path d="M42 38h13v20h18V38h13v52H73V70H55v20H42V38z" fill="#050505"/>
+</svg>
