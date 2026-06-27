@@ -16,6 +16,7 @@ export interface Project {
   image: string;
   gallery?: ProjectGalleryItem[];
   stats?: { label: { en: string; ar: string }; value: string }[];
+  verificationNote?: { en: string; ar: string };
   links?: { github?: string; demo?: string };
 }
 
