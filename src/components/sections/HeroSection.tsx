@@ -11,9 +11,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
   return (
     <header id="hero-section" className="min-h-screen relative flex items-center pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-14 xl:gap-20 items-center relative z-10">
-        {/* Text Column */}
         <div className={`lg:col-span-7 flex flex-col justify-center text-center ${isRtl ? "lg:text-right font-arabic" : "lg:text-left"}`}>
-          {/* Availability */}
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 bg-orange-500/[0.08] border border-orange-500/20 text-orange-300 rounded-full w-fit mb-8 mx-auto ${isRtl ? "lg:mx-0 lg:mr-0" : "lg:mx-0"}`}>
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-30" />
@@ -24,7 +22,6 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             </span>
           </div>
 
-          {/* Headline */}
           <h1 className={`display-text max-w-[700px] mx-auto ${isRtl ? "lg:mr-0 lg:ml-auto" : "lg:ml-0 lg:mr-auto"} text-[2.85rem] sm:text-[4rem] md:text-[4.8rem] xl:text-[5.55rem] text-white`}>
             <span className="block text-slate-50">{h.title1[lang]}</span>
             <span className="block bg-gradient-to-r from-[#FF3E00] to-[#FFBE00] bg-clip-text text-transparent py-1">
@@ -33,7 +30,6 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             <span className="block text-slate-100">{h.title3[lang]}</span>
           </h1>
 
-          {/* Role line */}
           <div className={`mt-7 mb-6 text-sm sm:text-base text-orange-300/95 flex items-center justify-center ${isRtl ? "lg:justify-end font-arabic" : "lg:justify-start font-mono"}`}>
             {!isRtl && <span className="text-slate-500 select-none mr-2">›</span>}
             <span>{h.roleLine[lang]}</span>
@@ -43,7 +39,6 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             {h.subtitle[lang]}
           </p>
 
-          {/* CTAs */}
           <div className={`flex flex-wrap items-center gap-4 justify-center ${isRtl ? "lg:justify-end" : "lg:justify-start"} mb-12`}>
             <a
               href="#projects-section"
@@ -60,9 +55,14 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             >
               {h.ctaSecondary[lang]}
             </a>
+            <a
+              href="/api/cv?type=one-page"
+              className={`px-6 py-3 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-300 hover:text-white text-xs rounded-xl hover:bg-emerald-500/[0.04] transition-all ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}
+            >
+              {h.ctaCv[lang]}
+            </a>
           </div>
 
-          {/* 3 Core Architecture Pillars */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl border-t border-white/10 pt-8 mx-auto lg:mx-0">
             <div className={`p-4 rounded-xl bg-white/[0.012] border border-white/5 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
               <div className={`text-orange-300 text-xs mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle1[lang]}</div>
@@ -79,11 +79,9 @@ export default function HeroSection({ lang }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Hero Profile Illustration Column */}
         <div className="lg:col-span-5 flex justify-center">
           <div className="relative group">
             <div className="absolute inset-[-3px] rounded-full bg-gradient-to-r from-orange-600 via-amber-400 to-red-500 opacity-45 blur-md group-hover:opacity-65 transition-opacity duration-500" />
-            
             <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-[22rem] xl:h-[22rem] rounded-full overflow-hidden border-4 border-[#050505] relative z-10 bg-zinc-900">
               <img
                 src="/images/developer_profile_art_1782504875526.jpg"
@@ -92,12 +90,10 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                 className="w-full h-full object-cover grayscale brightness-95 hover:grayscale-0 hover:scale-105 transition-all duration-700"
               />
             </div>
-
             <div className={`absolute top-1/2 ${isRtl ? "-left-6" : "-right-6"} -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
               <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusLocation[lang]}</span>
             </div>
-
             <div className={`absolute bottom-2 ${isRtl ? "-right-4" : "-left-4"} flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
               <span className="text-orange-400 text-xs">⚡</span>
               <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusExperience[lang]}</span>
