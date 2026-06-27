@@ -13,7 +13,7 @@ export default function AboutSection({ lang }: AboutSectionProps) {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center gap-4 mb-12">
           <span className="font-mono text-orange-500 text-sm font-bold">{ab.sectionNum}</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">{ab.title[lang]}</h2>
+          <h2 className={`text-2xl sm:text-3xl font-black text-white tracking-tight ${isRtl ? "font-arabic" : "uppercase"}`}>{ab.title[lang]}</h2>
           <div className="flex-1 h-px bg-gradient-to-r from-orange-500/20 to-transparent"></div>
         </div>
 
@@ -29,28 +29,23 @@ export default function AboutSection({ lang }: AboutSectionProps) {
               {ab.paragraph3[lang]}
             </p>
 
-            {/* Inline numeric displays */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
-              <div className="p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass text-center sm:text-left">
-                <div className="text-2xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">90+</div>
-                <div className={`text-[10px] text-slate-500 uppercase tracking-wider font-mono ${isRtl ? "font-arabic" : ""}`}>{ab.statsLabelTools[lang]}</div>
-              </div>
-              <div className="p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass text-center sm:text-left">
-                <div className="text-2xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">600+</div>
-                <div className={`text-[10px] text-slate-500 uppercase tracking-wider font-mono ${isRtl ? "font-arabic" : ""}`}>{ab.statsLabelFiles[lang]}</div>
-              </div>
-              <div className="p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass text-center sm:text-left">
-                <div className="text-2xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">10</div>
-                <div className={`text-[10px] text-slate-500 uppercase tracking-wider font-mono ${isRtl ? "font-arabic" : ""}`}>{ab.statsLabelPhases[lang]}</div>
-              </div>
-              <div className="p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass text-center sm:text-left">
-                <div className="text-2xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">4+</div>
-                <div className={`text-[10px] text-slate-500 uppercase tracking-wider font-mono ${isRtl ? "font-arabic" : ""}`}>{ab.statsLabelYears[lang]}</div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
+              {ab.outcomeMetrics.map((metric) => (
+                <div key={metric.label.en} className={`p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass ${isRtl ? "text-right" : "text-left"}`}>
+                  <div className="text-xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">
+                    {metric.value}
+                  </div>
+                  <div className={`text-[10px] text-slate-300 uppercase tracking-wider font-mono mb-1 ${isRtl ? "font-arabic tracking-normal" : ""}`}>
+                    {metric.label[lang]}
+                  </div>
+                  <div className={`text-[11px] text-slate-500 leading-snug ${isRtl ? "font-arabic" : ""}`}>
+                    {metric.note[lang]}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Drives sidebar bullet container */}
           <div className="lg:col-span-5 p-6 rounded-2xl bg-zinc-900/60 border border-white/10 glass shadow-xl">
             <h3 className={`text-white font-bold text-base mb-4 flex items-center gap-2 ${isRtl ? "font-arabic" : ""}`}>
               <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
