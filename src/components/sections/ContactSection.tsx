@@ -23,14 +23,14 @@ const contactCards = [
   {
     label: { en: "CV", ar: "السيرة الذاتية" },
     value: { en: "Download one-page CV", ar: "تحميل السيرة المختصرة" },
-    href: "/api/cv?type=one-page",
+    href: "/cv/Mohamed_Habib_One_Page_CV.pdf",
     tone: "emerald",
     icon: "CV",
   },
   {
     label: { en: "CV", ar: "السيرة الذاتية" },
     value: { en: "Download detailed CV", ar: "تحميل السيرة التفصيلية" },
-    href: "/api/cv?type=detailed",
+    href: "/cv/Mohamed_Habib_Detailed_CV.pdf",
     tone: "emerald",
     icon: "PDF",
   },
