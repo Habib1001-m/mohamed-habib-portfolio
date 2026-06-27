@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { getArchitecturePreset } from "../data/architecturePresets";
 
 interface ThreeCanvasProps {
   lang: "en" | "ar";
@@ -8,6 +9,17 @@ interface ThreeCanvasProps {
   rotationSpeed: number;
   showParticles: boolean;
   activePreset: string;
+}
+
+const statusScale: Record<string, number> = {
+  active: 1,
+  guarded: 0.9,
+  blocked: 0.82,
+  review: 0.95,
+};
+
+function toVector(x: number, y: number, index: number) {
+  return new THREE.Vector3((x - 50) / 10, (50 - y) / 10, ((index % 3) - 1) * 0.42);
 }
 
 export default function ThreeCanvas({
@@ -20,390 +32,228 @@ export default function ThreeCanvas({
 }: ThreeCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // References to update Three.js objects on prop changes without recreating the scene
-  const rotationSpeedRef = useRef(rotationSpeed);
+  const speedRef = useRef(rotationSpeed);
 
   useEffect(() => {
-    rotationSpeedRef.current = rotationSpeed;
+    speedRef.current = rotationSpeed;
   }, [rotationSpeed]);
-
-  const materialsRef = useRef<{
-    outerMesh: THREE.MeshBasicMaterial | THREE.MeshPhysicalMaterial;
-    outerWire: THREE.LineBasicMaterial;
-    innerMesh: THREE.MeshBasicMaterial;
-    innerWire: THREE.LineBasicMaterial;
-    particles: THREE.PointsMaterial;
-  } | null>(null);
-
-  const sceneStateRef = useRef({
-    targetRotationX: 0,
-    targetRotationY: 0,
-    currentRotationX: 0,
-    currentRotationY: 0,
-    isDragging: false,
-    prevMouseX: 0,
-    prevMouseY: 0,
-    hoverScale: 1.0,
-  });
-
-  // Dynamic props update effect
-  useEffect(() => {
-    if (!materialsRef.current) return;
-    const threeColor = new THREE.Color(color);
-
-    // Update outer box material
-    const mat = materialsRef.current.outerMesh;
-    mat.color.copy(threeColor);
-    if ("wireframe" in mat) {
-      mat.wireframe = wireframe;
-    }
-
-    // Update wires and inner box
-    materialsRef.current.outerWire.color.copy(threeColor);
-    materialsRef.current.innerMesh.color.copy(threeColor).multiplyScalar(0.7);
-    materialsRef.current.innerWire.color.copy(threeColor).multiplyScalar(1.2);
-    materialsRef.current.particles.color.copy(threeColor).multiplyScalar(1.5);
-  }, [color, wireframe]);
 
   useEffect(() => {
     if (!containerRef.current || !canvasRef.current) return;
 
+    const architecture = getArchitecturePreset(activePreset);
     const container = containerRef.current;
     const canvas = canvasRef.current;
+    let width = container.clientWidth || 640;
+    let height = container.clientHeight || 480;
 
-    // Get parent dimensions
-    let width = container.clientWidth || 400;
-    let height = container.clientHeight || 400;
-
-    // 1. Scene Setup
+    const accent = new THREE.Color(color || architecture.accent);
     const scene = new THREE.Scene();
-    // Soft ambient fog to match Bold Typography pitch-black background
-    scene.fog = new THREE.FogExp2(0x050505, 0.08);
+    scene.fog = new THREE.FogExp2(0x050505, 0.06);
 
-    // 2. Camera Setup
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 8;
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    camera.position.set(0, 0.35, 10);
 
-    // 3. Renderer Setup
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 4. Create Glowing Nested 3D Cube System
-    const outerGeo = new THREE.BoxGeometry(2, 2, 2);
-    const innerGeo = new THREE.BoxGeometry(1.1, 1.1, 1.1);
+    const root = new THREE.Group();
+    root.rotation.x = -0.15;
+    scene.add(root);
 
-    // Color instances
-    const baseColor = new THREE.Color(color);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+    scene.add(ambient);
 
-    // Outer Mesh - Glassy translucent physical mesh
-    const outerMeshMat = new THREE.MeshPhysicalMaterial({
-      color: baseColor,
-      transparent: true,
-      opacity: wireframe ? 0.05 : 0.25,
-      wireframe: wireframe,
-      roughness: 0.1,
-      metalness: 0.8,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      transmission: 0.6,
-      thickness: 1.2,
-      side: THREE.DoubleSide,
+    const point = new THREE.PointLight(accent, 3.2, 18);
+    point.position.set(0, 0, 3);
+    scene.add(point);
+
+    const grid = new THREE.GridHelper(9.5, 18, accent, 0x1f2937);
+    grid.position.y = -3.5;
+    grid.material.opacity = 0.18;
+    grid.material.transparent = true;
+    root.add(grid);
+
+    const nodePosition = new Map<string, THREE.Vector3>();
+    architecture.nodes.forEach((node, index) => {
+      nodePosition.set(node.id, toVector(node.x, node.y, index));
     });
 
-    const outerMesh = new THREE.Mesh(outerGeo, outerMeshMat);
-    scene.add(outerMesh);
+    const lineMaterial = new THREE.LineBasicMaterial({ color: accent, transparent: true, opacity: 0.5 });
+    const packetMaterial = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.92 });
+    const packetGeometry = new THREE.SphereGeometry(0.055, 16, 16);
+    const packets: { mesh: THREE.Mesh; from: THREE.Vector3; to: THREE.Vector3; offset: number }[] = [];
 
-    // Outer Wireframe overlay - Bright crisp neon outline
-    const outerEdges = new THREE.EdgesGeometry(outerGeo);
-    const outerWireMat = new THREE.LineBasicMaterial({
-      color: baseColor,
-      linewidth: 2,
-    });
-    const outerWireframe = new THREE.LineSegments(outerEdges, outerWireMat);
-    outerMesh.add(outerWireframe);
+    architecture.links.forEach((link, index) => {
+      const from = nodePosition.get(link.from);
+      const to = nodePosition.get(link.to);
+      if (!from || !to) return;
 
-    // Inner Mesh - Smaller core node representing core algorithmic processing
-    const innerMeshMat = new THREE.MeshBasicMaterial({
-      color: baseColor.clone().multiplyScalar(0.7),
-      transparent: true,
-      opacity: 0.45,
-    });
-    const innerMesh = new THREE.Mesh(innerGeo, innerMeshMat);
-    scene.add(innerMesh);
+      const curve = new THREE.CatmullRomCurve3([
+        from,
+        new THREE.Vector3((from.x + to.x) / 2, (from.y + to.y) / 2, Math.max(from.z, to.z) + 0.42),
+        to,
+      ]);
+      const points = curve.getPoints(32);
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(geometry, lineMaterial);
+      root.add(line);
 
-    // Inner Wireframe
-    const innerEdges = new THREE.EdgesGeometry(innerGeo);
-    const innerWireMat = new THREE.LineBasicMaterial({
-      color: baseColor.clone().multiplyScalar(1.2),
-      linewidth: 1,
-    });
-    const innerWireframe = new THREE.LineSegments(innerEdges, innerWireMat);
-    innerMesh.add(innerWireframe);
-
-    // Store materials reference for reactive updates
-    materialsRef.current = {
-      outerMesh: outerMeshMat,
-      outerWire: outerWireMat,
-      innerMesh: innerMeshMat,
-      innerWire: innerWireMat,
-      particles: new THREE.PointsMaterial(), // initialized below
-    };
-
-    // 5. Surrounding Swirling Particle Field (Starfield Matrix)
-    const particleCount = 650;
-    const particleGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      // Position particles in a spherical layout around the box
-      const radius = 3.5 + Math.random() * 4.5;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-
-      positions[i] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i + 2] = radius * Math.cos(phi);
-    }
-
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    // Particle texture
-    const particleMat = new THREE.PointsMaterial({
-      color: baseColor.clone().multiplyScalar(1.5),
-      size: 0.045,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
+      const packet = new THREE.Mesh(packetGeometry, packetMaterial);
+      packet.userData.curve = curve;
+      packets.push({ mesh: packet, from, to, offset: index / Math.max(architecture.links.length, 1) });
+      root.add(packet);
     });
 
-    materialsRef.current.particles = particleMat;
+    const nodeGeometry = new THREE.SphereGeometry(0.16, 28, 28);
+    const haloGeometry = new THREE.SphereGeometry(0.3, 28, 28);
+    const nodeMaterial = new THREE.MeshBasicMaterial({ color: accent, wireframe });
+    const haloMaterial = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.11, depthWrite: false });
 
-    const particles = new THREE.Points(particleGeo, particleMat);
+    architecture.nodes.forEach((node, index) => {
+      const position = nodePosition.get(node.id);
+      if (!position) return;
+
+      const group = new THREE.Group();
+      group.position.copy(position);
+      const scale = statusScale[node.status] ?? 1;
+      group.scale.setScalar(scale);
+
+      const halo = new THREE.Mesh(haloGeometry, haloMaterial);
+      const core = new THREE.Mesh(nodeGeometry, nodeMaterial);
+      group.add(halo, core);
+
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(0.28, 0.006, 8, 48),
+        new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.45 })
+      );
+      ring.rotation.x = Math.PI / 2;
+      group.add(ring);
+
+      group.userData.index = index;
+      root.add(group);
+    });
+
+    let stars: THREE.Points | null = null;
+    let starGeometry: THREE.BufferGeometry | null = null;
+    let starMaterial: THREE.PointsMaterial | null = null;
     if (showParticles) {
-      scene.add(particles);
+      const count = 520;
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count; i += 1) {
+        positions[i * 3] = (Math.random() - 0.5) * 12;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 7;
+      }
+      starGeometry = new THREE.BufferGeometry();
+      starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      starMaterial = new THREE.PointsMaterial({ color: accent, size: 0.025, transparent: true, opacity: 0.65, blending: THREE.AdditiveBlending });
+      stars = new THREE.Points(starGeometry, starMaterial);
+      root.add(stars);
     }
 
-    // 6. Professional Studio Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
-    scene.add(ambientLight);
-
-    const dirLight1 = new THREE.DirectionalLight(0x3b82f6, 2.5);
-    dirLight1.position.set(5, 5, 5);
-    scene.add(dirLight1);
-
-    const dirLight2 = new THREE.DirectionalLight(0x22d3ee, 1.8);
-    dirLight2.position.set(-5, -5, 2);
-    scene.add(dirLight2);
-
-    const pointLight = new THREE.PointLight(color, 2, 12);
-    pointLight.position.set(0, 0, 0);
-    scene.add(pointLight);
-
-    // 7. Interactive Controls & Mouse Handlers
-    const state = sceneStateRef.current;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      state.isDragging = true;
-      state.prevMouseX = e.clientX;
-      state.prevMouseY = e.clientY;
+    const state = { dragging: false, px: 0, py: 0, tx: 0, ty: 0, rx: -0.15, ry: 0 };
+    const onDown = (event: MouseEvent) => { state.dragging = true; state.px = event.clientX; state.py = event.clientY; };
+    const onMove = (event: MouseEvent) => {
+      if (!state.dragging) return;
+      const dx = event.clientX - state.px;
+      const dy = event.clientY - state.py;
+      state.ty += dx * 0.008;
+      state.tx += dy * 0.006;
+      state.px = event.clientX;
+      state.py = event.clientY;
     };
+    const onUp = () => { state.dragging = false; };
+    container.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (state.isDragging) {
-        const deltaX = e.clientX - state.prevMouseX;
-        const deltaY = e.clientY - state.prevMouseY;
-
-        state.targetRotationY += deltaX * 0.007;
-        state.targetRotationX += deltaY * 0.007;
-
-        state.prevMouseX = e.clientX;
-        state.prevMouseY = e.clientY;
-      } else {
-        // Soft tilt on normal mouse move over container
-        const rect = canvas.getBoundingClientRect();
-        const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const normY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-        state.targetRotationY = normX * 0.4;
-        state.targetRotationX = -normY * 0.4;
-      }
-    };
-
-    const handleMouseUp = () => {
-      state.isDragging = false;
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        state.isDragging = true;
-        state.prevMouseX = e.touches[0].clientX;
-        state.prevMouseY = e.touches[0].clientY;
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (state.isDragging && e.touches.length === 1) {
-        const deltaX = e.touches[0].clientX - state.prevMouseX;
-        const deltaY = e.touches[0].clientY - state.prevMouseY;
-
-        state.targetRotationY += deltaX * 0.009;
-        state.targetRotationX += deltaY * 0.009;
-
-        state.prevMouseX = e.touches[0].clientX;
-        state.prevMouseY = e.touches[0].clientY;
-      }
-    };
-
-    const handleMouseEnter = () => {
-      state.hoverScale = 1.15;
-    };
-
-    const handleMouseLeave = () => {
-      state.hoverScale = 1.0;
-      state.isDragging = false;
-    };
-
-    container.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    container.addEventListener("touchstart", handleTouchStart);
-    container.addEventListener("touchmove", handleTouchMove, { passive: true });
-    container.addEventListener("touchend", handleMouseUp);
-    container.addEventListener("mouseenter", handleMouseEnter);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
-    // 8. Animation & Render Loop
-    let animationFrameId: number;
-    const startTime = performance.now();
-    let previousTime = startTime;
-
+    let frame = 0;
+    const start = performance.now();
     const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
+      frame = requestAnimationFrame(animate);
+      const elapsed = (performance.now() - start) / 1000;
+      const speed = Math.max(speedRef.current, 0);
 
-      const currentTime = performance.now();
-      const elapsedTime = (currentTime - startTime) / 1000;
-      const delta = Math.min((currentTime - previousTime) / 1000, 0.05);
-      previousTime = currentTime;
+      state.rx += (state.tx - state.rx) * 0.06;
+      state.ry += (state.ty - state.ry) * 0.06;
+      root.rotation.x = state.rx + Math.sin(elapsed * 0.28) * 0.05;
+      root.rotation.y = state.ry + elapsed * speed * 0.045;
 
-      // Smooth inertia physics interpolation
-      state.currentRotationX += (state.targetRotationX - state.currentRotationX) * 0.1;
-      state.currentRotationY += (state.targetRotationY - state.currentRotationY) * 0.1;
+      packets.forEach((packet, index) => {
+        const curve = packet.mesh.userData.curve as THREE.CatmullRomCurve3;
+        const t = (elapsed * (0.13 + speed * 0.08) + packet.offset + index * 0.03) % 1;
+        packet.mesh.position.copy(curve.getPoint(t));
+        packet.mesh.scale.setScalar(1 + Math.sin((elapsed + index) * 3) * 0.18);
+      });
 
-      // Base rotators combined with user inputs and speed parameters
-      const baseSpeed = rotationSpeedRef.current * 0.08;
-
-      // Rotate meshes
-      outerMesh.rotation.x = state.currentRotationX + elapsedTime * baseSpeed;
-      outerMesh.rotation.y = state.currentRotationY + elapsedTime * (baseSpeed * 0.8);
-
-      // Rotate inner mesh in opposite direction for high-tech aesthetic
-      innerMesh.rotation.x = -(state.currentRotationX + elapsedTime * (baseSpeed * 1.5));
-      innerMesh.rotation.y = -(state.currentRotationY + elapsedTime * (baseSpeed * 1.2));
-
-      // Scale meshes on hover
-      const scaleSpeed = 6 * delta;
-      const currentScale = outerMesh.scale.x;
-      const scaleDiff = state.hoverScale - currentScale;
-      if (Math.abs(scaleDiff) > 0.001) {
-        const nextScale = currentScale + scaleDiff * scaleSpeed;
-        outerMesh.scale.set(nextScale, nextScale, nextScale);
-        innerMesh.scale.set(nextScale * 0.95, nextScale * 0.95, nextScale * 0.95);
+      if (stars) {
+        stars.rotation.y = elapsed * 0.018;
+        stars.rotation.x = elapsed * 0.01;
       }
-
-      // Rotate background particle field slowly
-      if (showParticles) {
-        particles.rotation.y = elapsedTime * 0.025;
-        particles.rotation.x = elapsedTime * 0.01;
-      }
-
-      // Animate PointLight intensity like a pulsing digital engine
-      pointLight.intensity = 2 + Math.sin(elapsedTime * 3) * 1.2;
-
-      // Render scene
+      point.intensity = 2.5 + Math.sin(elapsed * 2.2) * 0.7;
       renderer.render(scene, camera);
     };
-
     animate();
 
-    // 9. Resize Observer (as requested by system guidelines)
     const resizeObserver = new ResizeObserver((entries) => {
-      if (!entries || entries.length === 0) return;
-      window.requestAnimationFrame(() => {
-        if (!containerRef.current || !canvasRef.current) return;
-        const entry = entries[0];
-        const newWidth = entry.contentRect.width || width;
-        const newHeight = entry.contentRect.height || height;
-
-        camera.aspect = newWidth / newHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(newWidth, newHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      });
+      const entry = entries[0];
+      if (!entry) return;
+      width = entry.contentRect.width || width;
+      height = entry.contentRect.height || height;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
-
     resizeObserver.observe(container);
 
-    // 10. Clean-Up on Unmount
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(frame);
       resizeObserver.disconnect();
-
-      container.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      container.removeEventListener("touchstart", handleTouchStart);
-      container.removeEventListener("touchmove", handleTouchMove);
-      container.removeEventListener("touchend", handleMouseUp);
-      container.removeEventListener("mouseenter", handleMouseEnter);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-
-      // Dispose Geometries and Materials
-      outerGeo.dispose();
-      innerGeo.dispose();
-      outerEdges.dispose();
-      innerEdges.dispose();
-      particleGeo.dispose();
-
-      outerMeshMat.dispose();
-      outerWireMat.dispose();
-      innerMeshMat.dispose();
-      innerWireMat.dispose();
-      particleMat.dispose();
-
+      container.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      root.traverse((object) => {
+        const mesh = object as THREE.Mesh;
+        if (mesh.geometry) mesh.geometry.dispose();
+      });
+      lineMaterial.dispose();
+      packetMaterial.dispose();
+      packetGeometry.dispose();
+      nodeGeometry.dispose();
+      haloGeometry.dispose();
+      nodeMaterial.dispose();
+      haloMaterial.dispose();
+      starGeometry?.dispose();
+      starMaterial?.dispose();
       renderer.dispose();
     };
-  }, [showParticles]);
+  }, [activePreset, color, wireframe, showParticles]);
+
+  const architecture = getArchitecturePreset(activePreset);
 
   return (
     <div
       ref={containerRef}
       id="three-canvas-container"
       role="img"
-      aria-label={lang === "ar" ? "طبقة WebGL تفاعلية لمعاينة منطق معمارية الأنظمة" : "Interactive WebGL layer for previewing systems architecture logic"}
+      aria-label={lang === "ar" ? "مخطط WebGL تفاعلي لمعاينة معمارية الأنظمة" : "Interactive WebGL architecture graph"}
       className="relative w-full h-full min-h-[360px] md:min-h-[480px] bg-slate-950/30 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/10 flex items-center justify-center shadow-inner"
     >
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full block" />
-
       <div className="absolute top-3 left-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
-        PROOF_LAYER // WEBGL_READY
+        WEBGL_GRAPH // LIVE
       </div>
       <div className="absolute top-3 right-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
-        SCENARIO // {activePreset.toUpperCase()}
+        SCENARIO // {architecture.shortLabel.en.toUpperCase()}
       </div>
       <div className="absolute bottom-3 left-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
-        ARCH_MODE: PRESET_DRIVEN
+        PACKET_FLOW: ACTIVE
       </div>
       <div className="absolute bottom-3 right-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
-        GRAPH_REBUILD_READY
+        NODES:{architecture.nodes.length} / LINKS:{architecture.links.length}
       </div>
     </div>
   );
