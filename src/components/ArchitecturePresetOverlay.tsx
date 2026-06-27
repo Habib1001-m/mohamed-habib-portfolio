@@ -22,11 +22,11 @@ const statusCopy = {
 
 const mobilePositions = [
   { x: 18, y: 28 },
-  { x: 50, y: 24 },
-  { x: 80, y: 34 },
-  { x: 24, y: 64 },
-  { x: 58, y: 62 },
-  { x: 78, y: 76 },
+  { x: 50, y: 22 },
+  { x: 82, y: 34 },
+  { x: 22, y: 66 },
+  { x: 58, y: 64 },
+  { x: 80, y: 78 },
 ];
 
 export default function ArchitecturePresetOverlay({ lang, activePreset }: ArchitecturePresetOverlayProps) {
@@ -57,7 +57,7 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
                 x2={to.x}
                 y2={to.y}
                 stroke={architecture.accent}
-                strokeOpacity="0.32"
+                strokeOpacity="0.28"
                 strokeWidth="0.55"
                 strokeDasharray="2 1.8"
               />
@@ -70,11 +70,11 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
             key={`${node.id}-mobile`}
             type="button"
             onClick={() => setFocusedNodeId(node.id)}
-            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-[76px] rounded-lg border px-2 py-1.5 backdrop-blur-sm text-left transition-all active:scale-95 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/50" : ""}`}
+            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-[68px] rounded-lg border px-2 py-1.5 backdrop-blur-sm text-left transition-all active:scale-95 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/50" : ""}`}
             style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 20px ${architecture.accent}20` }}
             aria-label={node.label[lang]}
           >
-            <div className="text-[10px] font-semibold text-white leading-tight truncate">{node.label[lang]}</div>
+            <div className="text-[9px] font-semibold text-white leading-tight truncate">{node.label[lang]}</div>
           </button>
         ))}
       </div>
@@ -121,7 +121,7 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
       </div>
 
       {focusedNode && (
-        <div className="absolute left-3 right-3 bottom-10 md:left-auto md:right-4 md:bottom-12 md:w-[260px] rounded-2xl border border-white/10 bg-black/70 backdrop-blur px-4 py-3 pointer-events-none">
+        <div className="hidden md:block absolute right-4 bottom-12 w-[260px] rounded-2xl border border-white/10 bg-black/70 backdrop-blur px-4 py-3 pointer-events-none">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500 mb-1">
