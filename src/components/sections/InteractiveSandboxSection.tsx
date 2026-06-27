@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from "react";
+import React, { useState, useEffect, Suspense, lazy, useRef } from "react";
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
 import ThreeModelCustomizer from "../ThreeModelCustomizer";
 import ArchitecturePresetOverlay from "../ArchitecturePresetOverlay";
@@ -7,6 +7,10 @@ const ThreeCanvas = lazy(() => import("../ThreeCanvas"));
 
 interface InteractiveSandboxSectionProps {
   lang: "en" | "ar";
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
 }
 
 export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSectionProps) {
@@ -19,6 +23,8 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
   const [rotationSpeed, setRotationSpeed] = useState(1.15);
   const [showParticles, setShowParticles] = useState(true);
   const [activePreset, setActivePreset] = useState("portfolio");
+  const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0 });
+  const dragState = useRef({ active: false, x: 0, y: 0 });
 
   useEffect(() => {
     const element = document.getElementById("interactive-sandbox");
@@ -35,6 +41,37 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    setGraphOffset({ x: 0, y: 0 });
+  }, [activePreset]);
+
+  const handleGraphPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("[data-architecture-node='true']")) return;
+    dragState.current = { active: true, x: event.clientX, y: event.clientY };
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+
+  const handleGraphPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragState.current.active) return;
+    event.preventDefault();
+    const dx = event.clientX - dragState.current.x;
+    const dy = event.clientY - dragState.current.y;
+    dragState.current.x = event.clientX;
+    dragState.current.y = event.clientY;
+    setGraphOffset((current) => ({
+      x: clamp(current.x + dx, -24, 24),
+      y: clamp(current.y + dy, -20, 20),
+    }));
+  };
+
+  const handleGraphPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    dragState.current.active = false;
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
 
   const proofSignals = [t.proofSignal1[lang], t.proofSignal2[lang], t.proofSignal3[lang]];
 
@@ -81,7 +118,14 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
 
               <div className="w-full max-w-full h-[340px] sm:h-[390px] md:h-[430px] xl:h-[480px] p-3 overflow-hidden">
                 {isInViewport ? (
-                  <div className="relative w-full h-full max-w-full overflow-hidden">
+                  <div
+                    className="relative w-full h-full max-w-full overflow-hidden cursor-grab active:cursor-grabbing touch-none"
+                    onPointerDown={handleGraphPointerDown}
+                    onPointerMove={handleGraphPointerMove}
+                    onPointerUp={handleGraphPointerUp}
+                    onPointerCancel={handleGraphPointerUp}
+                    onDoubleClick={() => setGraphOffset({ x: 0, y: 0 })}
+                  >
                     <Suspense
                       fallback={
                         <div className="w-full h-full bg-white/[0.015] border border-white/10 rounded-2xl flex flex-col items-center justify-center font-mono text-xs text-slate-500 gap-3">
@@ -97,9 +141,11 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
                         rotationSpeed={rotationSpeed}
                         showParticles={showParticles}
                         activePreset={activePreset}
+                        offsetX={graphOffset.x}
+                        offsetY={graphOffset.y}
                       />
                     </Suspense>
-                    <ArchitecturePresetOverlay lang={lang} activePreset={activePreset} />
+                    <ArchitecturePresetOverlay lang={lang} activePreset={activePreset} offsetX={graphOffset.x} offsetY={graphOffset.y} />
                   </div>
                 ) : (
                   <div className="w-full h-full bg-white/[0.01] border border-white/5 rounded-2xl flex items-center justify-center font-mono text-xs text-slate-600">
