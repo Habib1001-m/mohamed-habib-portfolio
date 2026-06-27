@@ -94,4 +94,13 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
               <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusLocation[lang]}</span>
             </div>
-            <div className={`absolute bottom-2 ${isRtl ? "-right-4" : "-left-4
+            <div className={`absolute bottom-2 ${isRtl ? "-right-4" : "-left-4"} flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
+              <span className="text-orange-400 text-xs">⚡</span>
+              <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusExperience[lang]}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
