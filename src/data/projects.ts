@@ -65,7 +65,7 @@ export const PROJECTS_LIST: Project[] = [
       ar: "SIEVE هو مساحة عمل لفحص الأدلة في سياقات التقييم البحثي. يفصل بين الاختيار واتخاذ القرار، يمنع منطق التوصيات، ويجعل كل بوابة واضحة: صفوف الفحص، جاهزية قائمة المتابعة، ثقة الأدلة، فجوات المصادر، وصحة المعايرة. صُممت الواجهة لجعل التفكير قابلًا للمراجعة بدل أن يظل مخفيًا داخل جدول أو محادثة."
     },
     category: { en: "Decision systems", ar: "أنظمة قرار" },
-    status: { en: "Prototype", ar: "نموذج أولي" },
+    status: { en: "Private prototype", ar: "نموذج خاص" },
     tech: ["React", "TypeScript", "Vite", "Recharts", "TanStack Table", "Tailwind CSS"],
     image: "/images/projects/sieve-cover.webp",
     gallery: [
@@ -94,7 +94,11 @@ export const PROJECTS_LIST: Project[] = [
       { label: { en: "Role", ar: "الدور" }, value: "Selection" },
       { label: { en: "Evidence trail", ar: "مسار الأدلة" }, value: "Visible" },
       { label: { en: "Recommendations", ar: "التوصيات" }, value: "Blocked" }
-    ]
+    ],
+    verificationNote: {
+      en: "Private prototype — source and live walkthrough available on request.",
+      ar: "نموذج خاص — الكود والعرض المباشر متاحان عند الطلب."
+    }
   },
   {
     id: "portfolio",
