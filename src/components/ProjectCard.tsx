@@ -2,7 +2,6 @@ import { Project } from "../types/portfolio";
 import { PORTFOLIO_DATA } from "../data/portfolioContent";
 
 interface ProjectCardProps {
-  key?: string;
   project: Project;
   lang: "en" | "ar";
   onSelect: (p: Project) => void;
