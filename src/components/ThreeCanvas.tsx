@@ -83,7 +83,8 @@ export default function ThreeCanvas({
     const lineMaterial = new THREE.LineBasicMaterial({ color: accent, transparent: true, opacity: 0.5 });
     const packetMaterial = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.92 });
     const packetGeometry = new THREE.SphereGeometry(0.055, 16, 16);
-    const packets: { mesh: THREE.Mesh; from: THREE.Vector3; to: THREE.Vector3; offset: number }[] = [];
+    const packets: { mesh: THREE.Mesh; offset: number }[] = [];
+    const lineGeometries: THREE.BufferGeometry[] = [];
 
     architecture.links.forEach((link, index) => {
       const from = nodePosition.get(link.from);
@@ -97,12 +98,13 @@ export default function ThreeCanvas({
       ]);
       const points = curve.getPoints(32);
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      lineGeometries.push(geometry);
       const line = new THREE.Line(geometry, lineMaterial);
       root.add(line);
 
       const packet = new THREE.Mesh(packetGeometry, packetMaterial);
       packet.userData.curve = curve;
-      packets.push({ mesh: packet, from, to, offset: index / Math.max(architecture.links.length, 1) });
+      packets.push({ mesh: packet, offset: index / Math.max(architecture.links.length, 1) });
       root.add(packet);
     });
 
@@ -110,6 +112,8 @@ export default function ThreeCanvas({
     const haloGeometry = new THREE.SphereGeometry(0.3, 28, 28);
     const nodeMaterial = new THREE.MeshBasicMaterial({ color: accent, wireframe });
     const haloMaterial = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.11, depthWrite: false });
+    const ringGeometry = new THREE.TorusGeometry(0.28, 0.006, 8, 48);
+    const ringMaterial = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.45 });
 
     architecture.nodes.forEach((node, index) => {
       const position = nodePosition.get(node.id);
@@ -124,10 +128,7 @@ export default function ThreeCanvas({
       const core = new THREE.Mesh(nodeGeometry, nodeMaterial);
       group.add(halo, core);
 
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(0.28, 0.006, 8, 48),
-        new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.45 })
-      );
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
       ring.rotation.x = Math.PI / 2;
       group.add(ring);
 
@@ -154,9 +155,17 @@ export default function ThreeCanvas({
     }
 
     const state = { dragging: false, px: 0, py: 0, tx: 0, ty: 0, rx: -0.15, ry: 0 };
-    const onDown = (event: MouseEvent) => { state.dragging = true; state.px = event.clientX; state.py = event.clientY; };
-    const onMove = (event: MouseEvent) => {
+
+    const onPointerDown = (event: PointerEvent) => {
+      state.dragging = true;
+      state.px = event.clientX;
+      state.py = event.clientY;
+      container.setPointerCapture?.(event.pointerId);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
       if (!state.dragging) return;
+      event.preventDefault();
       const dx = event.clientX - state.px;
       const dy = event.clientY - state.py;
       state.ty += dx * 0.008;
@@ -164,10 +173,18 @@ export default function ThreeCanvas({
       state.px = event.clientX;
       state.py = event.clientY;
     };
-    const onUp = () => { state.dragging = false; };
-    container.addEventListener("mousedown", onDown);
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
+
+    const onPointerUp = (event: PointerEvent) => {
+      state.dragging = false;
+      if (container.hasPointerCapture?.(event.pointerId)) {
+        container.releasePointerCapture(event.pointerId);
+      }
+    };
+
+    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("pointercancel", onPointerUp);
 
     let frame = 0;
     const start = performance.now();
@@ -212,20 +229,20 @@ export default function ThreeCanvas({
     return () => {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
-      container.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-      root.traverse((object) => {
-        const mesh = object as THREE.Mesh;
-        if (mesh.geometry) mesh.geometry.dispose();
-      });
-      lineMaterial.dispose();
-      packetMaterial.dispose();
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerUp);
+      lineGeometries.forEach((geometry) => geometry.dispose());
       packetGeometry.dispose();
       nodeGeometry.dispose();
       haloGeometry.dispose();
+      ringGeometry.dispose();
+      lineMaterial.dispose();
+      packetMaterial.dispose();
       nodeMaterial.dispose();
       haloMaterial.dispose();
+      ringMaterial.dispose();
       starGeometry?.dispose();
       starMaterial?.dispose();
       renderer.dispose();
@@ -240,7 +257,7 @@ export default function ThreeCanvas({
       id="three-canvas-container"
       role="img"
       aria-label={lang === "ar" ? "مخطط WebGL تفاعلي لمعاينة معمارية الأنظمة" : "Interactive WebGL architecture graph"}
-      className="relative w-full h-full min-h-[360px] md:min-h-[480px] bg-slate-950/30 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/10 flex items-center justify-center shadow-inner"
+      className="relative w-full h-full min-h-[360px] md:min-h-[420px] bg-slate-950/30 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/10 flex items-center justify-center shadow-inner touch-none select-none"
     >
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full block" />
       <div className="absolute top-3 left-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
@@ -249,7 +266,7 @@ export default function ThreeCanvas({
       <div className="absolute top-3 right-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
         SCENARIO // {architecture.shortLabel.en.toUpperCase()}
       </div>
-      <div className="absolute bottom-3 left-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
+      <div className="hidden md:block absolute bottom-3 left-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
         PACKET_FLOW: ACTIVE
       </div>
       <div className="absolute bottom-3 right-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
