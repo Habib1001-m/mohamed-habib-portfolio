@@ -26,7 +26,7 @@ const mobilePositions = [
   { x: 82, y: 34 },
   { x: 22, y: 66 },
   { x: 58, y: 64 },
-  { x: 80, y: 78 },
+  { x: 80, y: 76 },
 ];
 
 export default function ArchitecturePresetOverlay({ lang, activePreset }: ArchitecturePresetOverlayProps) {
@@ -37,6 +37,10 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
   );
   const [focusedNodeId, setFocusedNodeId] = useState<string | null>(architecture.nodes[0]?.id ?? null);
   const focusedNode = architecture.nodes.find((node) => node.id === focusedNodeId) ?? architecture.nodes[0];
+
+  const focusNode = (nodeId: string) => {
+    setFocusedNodeId(nodeId);
+  };
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -57,8 +61,8 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
                 x2={to.x}
                 y2={to.y}
                 stroke={architecture.accent}
-                strokeOpacity="0.28"
-                strokeWidth="0.55"
+                strokeOpacity="0.24"
+                strokeWidth="0.5"
                 strokeDasharray="2 1.8"
               />
             );
@@ -69,9 +73,16 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
           <button
             key={`${node.id}-mobile`}
             type="button"
-            onClick={() => setFocusedNodeId(node.id)}
-            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-[68px] rounded-lg border px-2 py-1.5 backdrop-blur-sm text-left transition-all active:scale-95 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/50" : ""}`}
-            style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 20px ${architecture.accent}20` }}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              focusNode(node.id);
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              focusNode(node.id);
+            }}
+            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-[68px] rounded-lg border px-2 py-1.5 backdrop-blur-sm text-left transition-all active:scale-95 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/60 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/60" : ""}`}
+            style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 18px ${architecture.accent}18` }}
             aria-label={node.label[lang]}
           >
             <div className="text-[9px] font-semibold text-white leading-tight truncate">{node.label[lang]}</div>
@@ -94,8 +105,8 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
                 x2={to.x}
                 y2={to.y}
                 stroke={architecture.accent}
-                strokeOpacity="0.3"
-                strokeWidth="0.45"
+                strokeOpacity="0.26"
+                strokeWidth="0.42"
                 strokeDasharray="2 1.6"
               />
             );
@@ -106,50 +117,42 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
           <button
             key={node.id}
             type="button"
-            onClick={() => setFocusedNodeId(node.id)}
-            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 min-w-[104px] max-w-[118px] rounded-xl border px-3 py-2 backdrop-blur-sm text-left transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-white/60 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/50" : ""}`}
-            style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 24px ${architecture.accent}22` }}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              focusNode(node.id);
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              focusNode(node.id);
+            }}
+            className={`pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-[118px] rounded-xl border px-3 py-2 backdrop-blur-sm text-left transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-white/60 hover:border-white/35 ${statusStyles[node.status]} ${focusedNode?.id === node.id ? "ring-1 ring-white/60" : ""}`}
+            style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 22px ${architecture.accent}18` }}
             aria-label={node.label[lang]}
           >
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: architecture.accent }} />
-              <span className="font-mono text-[9px] uppercase tracking-widest opacity-70">{node.kind[lang]}</span>
+              <span className="font-mono text-[8px] uppercase tracking-widest opacity-70 truncate">{node.kind[lang]}</span>
             </div>
-            <div className="mt-1 text-[11px] font-semibold text-white leading-tight">{node.label[lang]}</div>
+            <div className="mt-1 text-[11px] font-semibold text-white leading-tight truncate">{node.label[lang]}</div>
           </button>
         ))}
       </div>
 
       {focusedNode && (
-        <div className="hidden md:block absolute right-4 bottom-12 w-[260px] rounded-2xl border border-white/10 bg-black/70 backdrop-blur px-4 py-3 pointer-events-none">
+        <div className="md:hidden absolute left-3 right-3 bottom-3 rounded-2xl border border-white/10 bg-black/72 backdrop-blur px-3 py-2 pointer-events-none">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500 mb-1">
+              <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-slate-500 mb-0.5">
                 {lang === "ar" ? "العقدة النشطة" : "Focused node"}
               </div>
-              <div className="text-sm font-bold text-white truncate">{focusedNode.label[lang]}</div>
+              <div className="text-xs font-bold text-white truncate">{focusedNode.label[lang]}</div>
             </div>
-            <span className={`shrink-0 px-2 py-1 rounded-md border text-[10px] ${statusStyles[focusedNode.status]}`}>
+            <span className={`shrink-0 px-2 py-1 rounded-md border text-[9px] ${statusStyles[focusedNode.status]}`}>
               {statusCopy[focusedNode.status][lang]}
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-slate-400 leading-relaxed">
-            {focusedNode.kind[lang]} · {architecture.mode[lang]}
-          </div>
         </div>
       )}
-
-      <div className="hidden md:block absolute left-4 bottom-12 md:bottom-14 max-w-[260px] rounded-2xl border border-white/10 bg-black/55 backdrop-blur px-4 py-3">
-        <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500 mb-2">Architecture signals</div>
-        <div className="space-y-1.5">
-          {architecture.signals.slice(0, 3).map((signal) => (
-            <div key={signal.en} className="flex items-center gap-2 text-[10px] text-slate-300">
-              <span className="w-1 h-1 rounded-full" style={{ backgroundColor: architecture.accent }} />
-              <span>{signal[lang]}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
