@@ -22,6 +22,39 @@ const COLORS = [
   { hex: "#a855f7", label: { en: "Purple", ar: "بنفسجي" } },
 ];
 
+const PRESET_META = {
+  quickshed: {
+    mode: { en: "Local-first utility system", ar: "نظام أدوات محلي" },
+    signal: { en: "Browser runtime · zero account path", ar: "تشغيل داخل المتصفح · بدون حساب" },
+    state: { en: "Privacy boundary active", ar: "حد الخصوصية نشط" },
+    tone: "yellow",
+  },
+  sieve: {
+    mode: { en: "Evidence screening gate", ar: "بوابة فحص الأدلة" },
+    signal: { en: "Selection engine · decision blocked", ar: "محرك اختيار · القرار محظور" },
+    state: { en: "Boundary enforcement visible", ar: "حدود النظام مرئية" },
+    tone: "cyan",
+  },
+  portfolio: {
+    mode: { en: "Lead capture pipeline", ar: "مسار التقاط تواصل" },
+    signal: { en: "Contact form · Resend · PDF assets", ar: "نموذج تواصل · Resend · ملفات PDF" },
+    state: { en: "Production path active", ar: "مسار إنتاجي نشط" },
+    tone: "orange",
+  },
+  "ai-agent": {
+    mode: { en: "Tool-assisted AI workflow", ar: "مسار AI مدعوم بالأدوات" },
+    signal: { en: "Context · tool layer · review loop", ar: "سياق · طبقة أدوات · مراجعة" },
+    state: { en: "Human-in-the-loop ready", ar: "جاهز لمراجعة بشرية" },
+    tone: "purple",
+  },
+  custom: {
+    mode: { en: "Custom inspection state", ar: "حالة فحص مخصصة" },
+    signal: { en: "Manual controls override preset", ar: "تحكم يدوي خارج السيناريو" },
+    state: { en: "Operator tuning", ar: "ضبط بواسطة المشغّل" },
+    tone: "slate",
+  },
+};
+
 export default function ThreeModelCustomizer({
   lang,
   color,
@@ -37,91 +70,71 @@ export default function ThreeModelCustomizer({
 }: ThreeModelCustomizerProps) {
   const t = PORTFOLIO_DATA.playground3D;
   const isRtl = lang === "ar";
+  const activeMeta = PRESET_META[activePreset as keyof typeof PRESET_META] ?? PRESET_META.custom;
+
+  const presets = [
+    { id: "portfolio", label: t.presetPortfolio[lang], activeClass: "bg-orange-500/10 border-orange-500/45 text-orange-300", color: "#FF3E00", wireframe: false, speed: 1.15, particles: true },
+    { id: "quickshed", label: t.presetQuickShed[lang], activeClass: "bg-yellow-500/10 border-yellow-500/45 text-yellow-300", color: "#FFBE00", wireframe: false, speed: 1.7, particles: true },
+    { id: "sieve", label: t.presetSieve[lang], activeClass: "bg-cyan-500/10 border-cyan-500/45 text-cyan-300", color: "#22d3ee", wireframe: true, speed: 0.65, particles: true },
+    { id: "ai-agent", label: t.presetAI[lang], activeClass: "bg-purple-500/10 border-purple-500/45 text-purple-300", color: "#a855f7", wireframe: false, speed: 1.35, particles: true },
+  ];
 
   const handlePresetChange = (presetId: string) => {
-    setActivePreset(presetId);
-    switch (presetId) {
-      case "quickshed":
-        setColor("#FFBE00");
-        setWireframe(false);
-        setRotationSpeed(2.0);
-        setShowParticles(true);
-        break;
-      case "sieve":
-        setColor("#22d3ee");
-        setWireframe(true);
-        setRotationSpeed(0.5);
-        setShowParticles(true);
-        break;
-      case "ai-agent":
-        setColor("#FF3E00");
-        setWireframe(false);
-        setRotationSpeed(1.2);
-        setShowParticles(false);
-        break;
-      case "data-stream":
-        setColor("#a855f7");
-        setWireframe(false);
-        setRotationSpeed(2.5);
-        setShowParticles(true);
-        break;
-      default:
-        break;
-    }
+    const preset = presets.find((p) => p.id === presetId);
+    if (!preset) return;
+    setActivePreset(preset.id);
+    setColor(preset.color);
+    setWireframe(preset.wireframe);
+    setRotationSpeed(preset.speed);
+    setShowParticles(preset.particles);
   };
 
   const labelClass = `text-[10px] text-slate-500 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`;
-  const buttonBase = `px-3 py-2 text-[11px] rounded-lg border transition-all ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
+  const buttonBase = `px-3 py-2.5 text-[11px] rounded-xl border transition-all ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
 
   return (
-    <div id="three-customizer" className={`flex flex-col gap-4 p-5 rounded-2xl bg-white/[0.025] border border-white/10 shadow-xl ${isRtl ? "font-arabic" : ""}`}>
+    <div id="three-customizer" className={`flex flex-col gap-4 p-5 rounded-[1.5rem] bg-zinc-950/80 border border-white/10 shadow-2xl glass ${isRtl ? "font-arabic" : ""}`}>
       <div>
-        <h3 className="text-white font-semibold text-base mb-1 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-orange-500" />
-          {t.title[lang]}
+        <h3 className="text-white font-bold text-base mb-1 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_16px_rgba(255,62,0,0.75)]" />
+          {t.consoleTitle[lang]}
         </h3>
         <p className="text-xs text-slate-500 leading-relaxed">
-          {t.subtitle[lang]}
+          {t.consoleSubtitle[lang]}
         </p>
       </div>
 
-      <div className="h-px bg-white/5" />
+      <div className="rounded-2xl bg-black/40 border border-white/10 p-4 space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <span className={labelClass}>{isRtl ? "حالة النظام" : "System state"}</span>
+          <span className={`px-2 py-1 rounded-md border text-[10px] ${activeMeta.tone === "orange" ? "border-orange-500/30 text-orange-300 bg-orange-500/10" : activeMeta.tone === "yellow" ? "border-yellow-500/30 text-yellow-300 bg-yellow-500/10" : activeMeta.tone === "cyan" ? "border-cyan-500/30 text-cyan-300 bg-cyan-500/10" : activeMeta.tone === "purple" ? "border-purple-500/30 text-purple-300 bg-purple-500/10" : "border-slate-500/30 text-slate-300 bg-slate-500/10"} ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>
+            {activePreset}
+          </span>
+        </div>
+        <div>
+          <p className="text-sm text-white font-semibold leading-relaxed">{activeMeta.mode[lang]}</p>
+          <p className="text-[11px] text-slate-400 leading-relaxed mt-1">{activeMeta.signal[lang]}</p>
+        </div>
+        <div className="flex items-center gap-2 text-[11px] text-emerald-300">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span className={isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}>{activeMeta.state[lang]}</span>
+        </div>
+      </div>
 
       <div className="flex flex-col gap-2">
         <label className={labelClass}>{t.controlPreset[lang]}</label>
         <div className="grid grid-cols-1 gap-2">
-          <button
-            id="preset-quickshed"
-            type="button"
-            onClick={() => handlePresetChange("quickshed")}
-            className={`${buttonBase} ${activePreset === "quickshed" ? "bg-yellow-500/10 border-yellow-500/45 text-yellow-300" : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"}`}
-          >
-            {t.presetQuickShed[lang]}
-          </button>
-          <button
-            id="preset-sieve"
-            type="button"
-            onClick={() => handlePresetChange("sieve")}
-            className={`${buttonBase} ${activePreset === "sieve" ? "bg-cyan-500/10 border-cyan-500/45 text-cyan-300" : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"}`}
-          >
-            {t.presetSieve[lang]}
-          </button>
-          <button
-            id="preset-ai-agent"
-            type="button"
-            onClick={() => handlePresetChange("ai-agent")}
-            className={`${buttonBase} ${activePreset === "ai-agent" ? "bg-orange-500/10 border-orange-500/45 text-orange-300" : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"}`}
-          >
-            {t.presetAI[lang]}
-          </button>
-          <button
-            id="preset-data-stream"
-            type="button"
-            onClick={() => handlePresetChange("data-stream")}
-            className={`${buttonBase} ${activePreset === "data-stream" ? "bg-purple-500/10 border-purple-500/45 text-purple-300" : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"}`}
-          >
-            {t.presetData[lang]}
-          </button>
+          {presets.map((preset) => (
+            <button
+              key={preset.id}
+              id={`preset-${preset.id}`}
+              type="button"
+              onClick={() => handlePresetChange(preset.id)}
+              className={`${buttonBase} ${activePreset === preset.id ? preset.activeClass : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
+            >
+              {preset.label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -207,7 +220,7 @@ export default function ThreeModelCustomizer({
           id="speed-range-slider"
           type="range"
           min="0.0"
-          max="4.0"
+          max="3.0"
           step="0.1"
           value={rotationSpeed}
           aria-label={t.controlSpeed[lang]}
