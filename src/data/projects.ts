@@ -5,25 +5,47 @@ export const PROJECTS_LIST: Project[] = [
     id: "quickshed",
     title: { en: "QuickShed", ar: "كويك شيد" },
     tagline: {
-      en: "A client-side utility workspace for formatting, encoding, and working with sensitive text without sending it to a server.",
-      ar: "مساحة أدوات داخل المتصفح لتنسيق النصوص والبيانات الحساسة والعمل عليها دون إرسالها إلى خادم خارجي."
+      en: "A privacy-focused browser workspace with 90+ tools that run directly on the user device.",
+      ar: "مساحة أدوات داخل المتصفح تضم أكثر من 90 أداة تعمل مباشرة على جهاز المستخدم."
     },
     description: {
-      en: "A practical browser-based toolkit that keeps common developer utilities fast, private, and available in Arabic and English.",
-      ar: "صندوق أدوات عملي يعمل داخل المتصفح، يوفّر أدوات المطورين اليومية بسرعة وخصوصية وبدعم عربي وإنجليزي."
+      en: "A practical toolkit for developers and everyday users who need formatters, calculators, generators, converters, and text utilities without accounts or server uploads.",
+      ar: "صندوق أدوات عملي للمطورين والمستخدمين اليوميين: تنسيق، حسابات، توليد، تحويل، وأدوات نصية بدون حسابات أو رفع بيانات للخادم."
     },
     longDescription: {
-      en: "QuickShed is built for moments when developers need to format, parse, encode, decode, or clean up sensitive data without pasting it into unknown online tools. Processing runs in the browser, with a PWA setup for fast repeat use and a bilingual interface for everyday work.",
-      ar: "تم بناء QuickShed للحالات التي يحتاج فيها المطور إلى تنسيق JSON، أو معالجة نصوص، أو تحويل بيانات حساسة دون وضعها في أدوات خارجية غير موثوقة. تتم المعالجة داخل المتصفح، مع دعم PWA للاستخدام السريع والمتكرر وواجهة ثنائية اللغة للعمل اليومي."
+      en: "QuickShed is built for repeat utility work: formatting JSON, generating passwords, converting data, counting text, calculating values, and handling sensitive snippets without pasting them into unknown third-party tools. The product emphasizes local processing, bilingual Arabic/English usage, category-based discovery, and quick access patterns for daily work.",
+      ar: "تم بناء QuickShed لأعمال الأدوات المتكررة: تنسيق JSON، توليد كلمات مرور، تحويل البيانات، عدّ النصوص، حساب القيم، والتعامل مع مقاطع حساسة دون وضعها داخل أدوات خارجية غير موثوقة. يركّز المنتج على المعالجة المحلية، دعم العربية والإنجليزية، اكتشاف الأدوات حسب التصنيف، والوصول السريع للاستخدام اليومي."
     },
-    category: { en: "Privacy Tooling", ar: "أدوات خصوصية" },
+    category: { en: "Privacy tooling", ar: "أدوات خصوصية" },
     status: { en: "Live", ar: "متاح" },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Web Workers", "WebAssembly"],
-    image: "/images/ai_infrastructure_visual_1782504890769.jpg",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Browser APIs", "RTL/LTR"],
+    image: "/images/projects/quickshed-cover.webp",
+    gallery: [
+      {
+        src: "/images/projects/quickshed-tool-password.webp",
+        label: { en: "Tool in use", ar: "أداة قيد الاستخدام" },
+        caption: { en: "Password generator with controls, generated output, and strength feedback.", ar: "مولد كلمات مرور مع إعدادات، نتيجة فورية، ومؤشر قوة." }
+      },
+      {
+        src: "/images/projects/quickshed-tool-arabic.webp",
+        label: { en: "Arabic tool flow", ar: "تدفق أداة بالعربية" },
+        caption: { en: "RTL interface proof inside an actual utility workflow.", ar: "دليل دعم RTL داخل أداة عملية حقيقية." }
+      },
+      {
+        src: "/images/projects/quickshed-features.webp",
+        label: { en: "Category system", ar: "نظام التصنيفات" },
+        caption: { en: "Category-based discovery across calculators, text tools, converters, PDF tools, and security utilities.", ar: "اكتشاف الأدوات عبر تصنيفات للحسابات، النصوص، التحويل، PDF، والأمان." }
+      },
+      {
+        src: "/images/projects/quickshed-mobile.webp",
+        label: { en: "Mobile proof", ar: "إثبات الموبايل" },
+        caption: { en: "Responsive mobile entry point for the toolbox.", ar: "واجهة موبايل متجاوبة لصندوق الأدوات." }
+      }
+    ],
     stats: [
-      { label: { en: "Tools Included", ar: "الأدوات" }, value: "90+" },
-      { label: { en: "Server Uploads", ar: "رفع للخادم" }, value: "None" },
-      { label: { en: "Workflow", ar: "مسار العمل" }, value: "Instant" }
+      { label: { en: "Tools", ar: "أدوات" }, value: "90+" },
+      { label: { en: "Categories", ar: "تصنيفات" }, value: "11+" },
+      { label: { en: "Server uploads", ar: "رفع للخادم" }, value: "None" }
     ],
     links: { github: "https://github.com/Habib1001-m/quickshed", demo: "https://quickshed.vercel.app" }
   },
@@ -31,76 +53,87 @@ export const PROJECTS_LIST: Project[] = [
     id: "sieve",
     title: { en: "SIEVE Research OS", ar: "SIEVE: نظام تشغيل الأبحاث" },
     tagline: {
-      en: "A structured evaluation system for turning scattered ideas into clearer decision paths.",
-      ar: "نظام تقييم منظم يحوّل الأفكار المتناثرة إلى مسارات قرار أوضح."
+      en: "A research console for screening ideas through evidence, boundary rules, and review states.",
+      ar: "واجهة بحثية لفحص الأفكار عبر الأدلة، حدود النظام، وحالات المراجعة."
     },
     description: {
-      en: "A research and decision workflow that helps screen ideas through phases, criteria, and visible evidence trails.",
-      ar: "مسار عمل بحثي لاتخاذ القرار يساعد على فحص الأفكار عبر مراحل ومعايير وأثر واضح للأدلة."
+      en: "A structured research workflow that turns scattered candidates into visible screening rows, watchlist states, evidence gaps, and governance boundaries.",
+      ar: "مسار بحثي منظم يحوّل المرشحات المتناثرة إلى صفوف فحص، حالات مراقبة، فجوات أدلة، وحدود حوكمة واضحة."
     },
     longDescription: {
-      en: "SIEVE is an evidence-screening workspace designed for research-heavy thinking. It organizes raw hypotheses into phases, review cards, scoring views, and decision gates so that teams can see why an idea should move forward, pause, or be rejected.",
-      ar: "SIEVE هو مساحة عمل لفحص الأدلة في السياقات البحثية. ينظّم الفرضيات الأولية داخل مراحل وبطاقات مراجعة وطرق تقييم وبوابات قرار، بحيث يصبح سبب قبول الفكرة أو إيقافها أو رفضها واضحًا وقابلًا للمراجعة."
+      en: "SIEVE is an evidence-screening workspace for research-heavy evaluation. It separates selection from decision-making, blocks recommendation logic, and makes every gate visible: screening rows, watchlist readiness, evidence confidence, source gaps, and calibration health. The interface is designed to make reasoning auditable instead of hidden in a spreadsheet or chat thread.",
+      ar: "SIEVE هو مساحة عمل لفحص الأدلة في سياقات التقييم البحثي. يفصل بين الاختيار واتخاذ القرار، يمنع منطق التوصيات، ويجعل كل بوابة واضحة: صفوف الفحص، جاهزية قائمة المتابعة، ثقة الأدلة، فجوات المصادر، وصحة المعايرة. صُممت الواجهة لجعل التفكير قابلًا للمراجعة بدل أن يظل مخفيًا داخل جدول أو محادثة."
     },
-    category: { en: "Decision Systems", ar: "أنظمة قرار" },
-    status: { en: "Structured workflow", ar: "مسار منظم" },
+    category: { en: "Decision systems", ar: "أنظمة قرار" },
+    status: { en: "Prototype", ar: "نموذج أولي" },
     tech: ["React", "TypeScript", "Vite", "Recharts", "TanStack Table", "Tailwind CSS"],
-    image: "/images/ai_infrastructure_visual_1782504890769.jpg",
+    image: "/images/projects/sieve-cover.webp",
+    gallery: [
+      {
+        src: "/images/projects/sieve-overview.webp",
+        label: { en: "Boundary overview", ar: "نظرة الحدود" },
+        caption: { en: "Current gate, source policy, and boundary enforcement in one view.", ar: "البوابة الحالية، سياسة المصادر، وحدود النظام في شاشة واحدة." }
+      },
+      {
+        src: "/images/projects/sieve-watchlist.webp",
+        label: { en: "Watchlist readiness", ar: "جاهزية قائمة المتابعة" },
+        caption: { en: "Qualified, watch, blocked, human-review, and confirmation states.", ar: "حالات مؤهل، مراقبة، محظور، مراجعة بشرية، وتأكيد خارجي." }
+      },
+      {
+        src: "/images/projects/sieve-evidence.webp",
+        label: { en: "Evidence board", ar: "لوحة الأدلة" },
+        caption: { en: "Evidence rows, conflicts, confidence, source reliability, and missing-data gaps.", ar: "صفوف الأدلة، التعارضات، الثقة، موثوقية المصدر، وفجوات البيانات." }
+      },
+      {
+        src: "/images/projects/sieve-calibration.webp",
+        label: { en: "Calibration", ar: "المعايرة" },
+        caption: { en: "Fixture health, sectors covered, tickers covered, and local workflow validation.", ar: "صحة البيانات التجريبية، القطاعات، الرموز، والتحقق المحلي من مسار العمل." }
+      }
+    ],
     stats: [
-      { label: { en: "Evaluation Phases", ar: "مراحل التقييم" }, value: "10" },
-      { label: { en: "Evidence Trail", ar: "أثر الأدلة" }, value: "Visible" },
-      { label: { en: "Review Flow", ar: "مسار المراجعة" }, value: "Structured" }
+      { label: { en: "Screening rows", ar: "صفوف الفحص" }, value: "10" },
+      { label: { en: "Evidence rows", ar: "صفوف الأدلة" }, value: "47" },
+      { label: { en: "Decision engine", ar: "محرك القرار" }, value: "Blocked" }
     ]
   },
   {
-    id: "ai-agent",
-    title: { en: "AI Workflow Orchestration", ar: "تنسيق مسارات الذكاء الاصطناعي" },
+    id: "portfolio",
+    title: { en: "Mohamed Habib Portfolio", ar: "بورتفوليو محمد حبيب" },
     tagline: {
-      en: "Practical experiments with agents, local model tooling, memory, and MCP-style integrations.",
-      ar: "تجارب عملية مع العملاء الأذكياء، أدوات النماذج المحلية، الذاكرة، وتكاملات MCP."
+      en: "A bilingual personal brand system with real contact delivery, CV access, and project proof.",
+      ar: "نظام علامة شخصية ثنائي اللغة مع إرسال حقيقي للتواصل، روابط للسيرة، وإثباتات للمشاريع."
     },
     description: {
-      en: "A systems layer for connecting AI tools to real workflows: context, memory, routing, and tool access.",
-      ar: "طبقة أنظمة لربط أدوات الذكاء الاصطناعي بمسارات عمل حقيقية: سياق، ذاكرة، توجيه، واستدعاء أدوات."
+      en: "A systems-focused portfolio built as a production SPA: bilingual content, responsive navigation, real project visuals, Resend contact delivery, CV downloads, and Vercel deployment.",
+      ar: "بورتفوليو يركز على الأنظمة ومبني كتطبيق SPA جاهز للنشر: محتوى عربي/إنجليزي، تنقل متجاوب، صور مشاريع حقيقية، إرسال تواصل عبر Resend، تحميل CV، ونشر عبر Vercel."
     },
     longDescription: {
-      en: "This work explores how AI agents can support operating systems of work rather than remain isolated chat boxes. It includes MCP integrations, local model workflows, knowledge routing, and structured memory patterns for tool-assisted execution.",
-      ar: "يركز هذا العمل على جعل العملاء الأذكياء جزءًا من نظام تشغيل العمل، لا مجرد نافذة دردشة منفصلة. يشمل ذلك تكاملات MCP، مسارات النماذج المحلية، توجيه المعرفة، وأنماط ذاكرة منظمة تساعد على التنفيذ المدعوم بالأدوات."
+      en: "This portfolio is treated as a product rather than a static page. It went through audit-driven sprints covering positioning, typography, mobile navigation, language persistence, contact delivery, CV endpoints, LinkedIn integration, and project visual proof. The goal is to make the site credible as a working system, not only a visual landing page.",
+      ar: "تم التعامل مع هذا البورتفوليو كمنتج، لا كصفحة ثابتة. مرّ بمراحل تحسين مبنية على مراجعات: التموضع، الخطوط، التنقل على الموبايل، حفظ اللغة، إرسال رسائل التواصل، نقاط تحميل السيرة، ربط LinkedIn، وإثباتات بصرية للمشاريع. الهدف أن يبدو الموقع كنظام عامل وموثوق، لا مجرد صفحة شكلية."
     },
-    category: { en: "AI Systems", ar: "أنظمة ذكاء اصطناعي" },
-    status: { en: "Active exploration", ar: "استكشاف نشط" },
-    tech: ["Python", "Ollama", "Qdrant Vector DB", "MCP Protocol", "FastAPI", "Docker"],
-    image: "/images/ai_infrastructure_visual_1782504890769.jpg",
+    category: { en: "Personal brand", ar: "علامة شخصية" },
+    status: { en: "Live", ar: "متاح" },
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Three.js", "Vercel"],
+    image: "/images/projects/portfolio-cover.webp",
+    gallery: [
+      {
+        src: "/images/projects/portfolio-contact.webp",
+        label: { en: "Conversion layer", ar: "طبقة التحويل" },
+        caption: { en: "Contact cards, LinkedIn, CV downloads, and Resend-backed form delivery.", ar: "كروت التواصل، LinkedIn، تحميل السيرة، ونموذج إرسال مدعوم بـ Resend." }
+      },
+      {
+        src: "/images/projects/portfolio-mobile-nav.webp",
+        label: { en: "Mobile navigation", ar: "تنقل الموبايل" },
+        caption: { en: "Hamburger navigation and mobile-first access to the core sections.", ar: "قائمة موبايل واضحة للوصول إلى الأقسام الأساسية." }
+      }
+    ],
     stats: [
-      { label: { en: "Context Routing", ar: "توجيه السياق" }, value: "Structured" },
-      { label: { en: "Tool Access", ar: "استدعاء الأدوات" }, value: "MCP" },
-      { label: { en: "Execution Flow", ar: "مسار التنفيذ" }, value: "Async" }
-    ]
-  },
-  {
-    id: "event-driven",
-    title: { en: "Event-Driven Stream Engines", ar: "محركات تدفق موجهة بالأحداث" },
-    tagline: {
-      en: "Backend workflows for coordinating streams, queues, checks, and logged processing steps.",
-      ar: "مسارات خلفية لتنسيق التدفقات، الطوابير، الفحوصات، وخطوات المعالجة الموثقة."
-    },
-    description: {
-      en: "A modular backend approach for moving data through clear, observable, event-driven pipelines.",
-      ar: "نهج خلفي معياري لتحريك البيانات داخل مسارات واضحة، قابلة للمراقبة، ومبنية على الأحداث."
-    },
-    longDescription: {
-      en: "This backend architecture coordinates stream processing with message queues, cache layers, database writes, procedural checks, and telemetry. The focus is not only speed, but clarity: every processing path should be understandable, observable, and recoverable.",
-      ar: "تنسق هذه البنية الخلفية معالجة التدفقات عبر طوابير رسائل، طبقات كاش، كتابة في قواعد البيانات، فحوصات إجرائية، وسجلات مراقبة. التركيز ليس على السرعة فقط، بل على الوضوح: كل مسار معالجة يجب أن يكون مفهومًا، قابلًا للمراقبة، وقابلًا للتعافي."
-    },
-    category: { en: "Backend & Systems", ar: "الخلفية والأنظمة" },
-    status: { en: "Core pattern", ar: "نمط أساسي" },
-    tech: ["Python", "FastAPI", "NATS JetStream", "Redis Cache", "PostgreSQL", "Docker Compose"],
-    image: "/images/ai_infrastructure_visual_1782504890769.jpg",
-    stats: [
-      { label: { en: "Modules", ar: "الوحدات" }, value: "Structured" },
-      { label: { en: "Latency Goal", ar: "هدف الاستجابة" }, value: "Low" },
-      { label: { en: "Observability", ar: "المراقبة" }, value: "Logged" }
-    ]
+      { label: { en: "Languages", ar: "اللغات" }, value: "AR/EN" },
+      { label: { en: "Contact flow", ar: "التواصل" }, value: "Resend" },
+      { label: { en: "Deploy", ar: "النشر" }, value: "Vercel" }
+    ],
+    links: { github: "https://github.com/Habib1001-m/mohamed-habib-portfolio", demo: "https://mohamed-habib-portfolio-opal.vercel.app" }
   }
 ];
+
 export default PROJECTS_LIST;
