@@ -37,9 +37,6 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
   }, []);
 
   const proofSignals = [t.proofSignal1[lang], t.proofSignal2[lang], t.proofSignal3[lang]];
-  const proofNote = isRtl
-    ? "مخطط WebGL مرتبط بالسيناريوهات. كل سيناريو يعرض عقدًا، مسارات، حزم بيانات، ومؤشرات تشغيل مستمدة من الأعمال المعروضة أعلاه."
-    : "Preset-aware WebGL graph. Each scenario maps real nodes, links, data packets, and operating signals from the work shown above.";
 
   return (
     <section id="interactive-sandbox" className="py-20 md:py-24 border-y border-white/5 bg-[#050505] relative overflow-hidden max-w-full">
@@ -110,10 +107,6 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
                   </div>
                 )}
               </div>
-            </div>
-
-            <div className={`mt-4 rounded-2xl bg-white/[0.018] border border-white/10 px-4 py-3 text-[11px] md:text-xs leading-relaxed text-slate-500 break-words ${isRtl ? "text-right font-arabic" : "font-mono"}`}>
-              {proofNote}
             </div>
           </div>
 
