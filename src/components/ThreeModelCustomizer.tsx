@@ -70,9 +70,10 @@ export default function ThreeModelCustomizer({
 
   const labelClass = `text-[10px] text-slate-500 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`;
   const presetButtonClass = `shrink-0 lg:shrink px-3 py-2.5 text-[11px] rounded-xl border transition-all w-[210px] max-w-[78vw] lg:w-auto lg:max-w-none ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
+  const proofTitle = isRtl ? "لماذا هذا مهم؟" : "Why this matters";
   const proofNote = isRtl
-    ? "مخطط WebGL مرتبط بالسيناريوهات. كل سيناريو يعرض عقدًا، مسارات، حزم بيانات، ومؤشرات تشغيل مستمدة من الأعمال المعروضة أعلاه."
-    : "Preset-aware WebGL graph. Each scenario maps real nodes, links, data packets, and operating signals from the work shown above.";
+    ? "هذا القسم يوضح طريقة تفكيري قبل التنفيذ: حدود النظام، تدفق البيانات، مسارات المستخدم، ونقاط الإثبات التي تجعل المنتج قابلًا للتشغيل لا مجرد واجهة جميلة."
+    : "This section demonstrates how I think before implementation: system boundaries, data flow, user paths, and proof points that make a product operational, not just visually polished.";
 
   return (
     <div id="three-customizer" className={`w-full max-w-full overflow-hidden flex flex-col gap-4 p-4 md:p-5 rounded-[1.5rem] bg-zinc-950/80 border border-white/10 shadow-2xl glass ${isRtl ? "font-arabic" : ""}`}>
@@ -116,19 +117,23 @@ export default function ThreeModelCustomizer({
 
       <div className="flex flex-col gap-2 min-w-0">
         <label className={labelClass}>{t.controlPreset[lang]}</label>
-        <div className="w-full max-w-full min-w-0 flex lg:grid lg:grid-cols-1 gap-2 overflow-x-auto overflow-y-hidden pb-1 lg:overflow-visible lg:pb-0">
-          {presets.map((preset) => (
-            <button
-              key={preset.id}
-              id={`preset-${preset.id}`}
-              type="button"
-              onClick={() => handlePresetChange(preset.id)}
-              className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
-            >
-              <span className="block truncate">{preset.label[lang]}</span>
-              <span className="block mt-1 text-[10px] opacity-70 truncate">{preset.state[lang]}</span>
-            </button>
-          ))}
+        <div className="relative min-w-0">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-zinc-950/90 to-transparent z-10 lg:hidden" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-zinc-950/90 to-transparent z-10 lg:hidden" />
+          <div className="w-full max-w-full min-w-0 flex lg:grid lg:grid-cols-1 gap-2 overflow-x-auto overflow-y-hidden pb-1 lg:overflow-visible lg:pb-0 scroll-smooth">
+            {presets.map((preset) => (
+              <button
+                key={preset.id}
+                id={`preset-${preset.id}`}
+                type="button"
+                onClick={() => handlePresetChange(preset.id)}
+                className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
+              >
+                <span className="block truncate">{preset.label[lang]}</span>
+                <span className="block mt-1 text-[10px] opacity-70 truncate">{preset.state[lang]}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -250,11 +255,18 @@ export default function ThreeModelCustomizer({
         </div>
       )}
 
-      <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl flex items-start gap-2.5 min-w-0">
-        <span className="text-orange-400 text-xs mt-0.5 select-none">•</span>
-        <p className="text-[11px] text-slate-500 leading-relaxed break-words">
-          {proofNote}
-        </p>
+      <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl min-w-0">
+        <div className="flex items-start gap-2.5">
+          <span className="text-orange-400 text-xs mt-0.5 select-none">•</span>
+          <div>
+            <p className={`text-[10px] text-orange-300 mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}>
+              {proofTitle}
+            </p>
+            <p className="text-[11px] text-slate-500 leading-relaxed break-words">
+              {proofNote}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
