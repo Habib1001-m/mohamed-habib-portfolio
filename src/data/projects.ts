@@ -50,8 +50,7 @@ export const PROJECTS_LIST: Project[] = [
       { label: { en: "Evaluation Phases", ar: "مراحل التقييم" }, value: "10" },
       { label: { en: "Evidence Trail", ar: "أثر الأدلة" }, value: "Visible" },
       { label: { en: "Review Flow", ar: "مسار المراجعة" }, value: "Structured" }
-    ],
-    links: { github: "https://github.com/Habib1001-m", demo: "https://quickshed.vercel.app" }
+    ]
   },
   {
     id: "ai-agent",
@@ -76,8 +75,7 @@ export const PROJECTS_LIST: Project[] = [
       { label: { en: "Context Routing", ar: "توجيه السياق" }, value: "Structured" },
       { label: { en: "Tool Access", ar: "استدعاء الأدوات" }, value: "MCP" },
       { label: { en: "Execution Flow", ar: "مسار التنفيذ" }, value: "Async" }
-    ],
-    links: { github: "https://github.com/Habib1001-m" }
+    ]
   },
   {
     id: "event-driven",
@@ -102,8 +100,7 @@ export const PROJECTS_LIST: Project[] = [
       { label: { en: "Modules", ar: "الوحدات" }, value: "Structured" },
       { label: { en: "Latency Goal", ar: "هدف الاستجابة" }, value: "Low" },
       { label: { en: "Observability", ar: "المراقبة" }, value: "Logged" }
-    ],
-    links: { github: "https://github.com/Habib1001-m" }
+    ]
   }
 ];
 export default PROJECTS_LIST;
