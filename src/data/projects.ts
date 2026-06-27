@@ -5,8 +5,8 @@ export const PROJECTS_LIST: Project[] = [
     id: "quickshed",
     title: { en: "QuickShed", ar: "كويك شيد" },
     tagline: {
-      en: "A privacy-focused browser workspace with 90+ tools that run directly on the user device.",
-      ar: "مساحة أدوات داخل المتصفح تضم أكثر من 90 أداة تعمل مباشرة على جهاز المستخدم."
+      en: "A privacy-focused browser workspace with local-first tools that run directly on the user device.",
+      ar: "مساحة أدوات داخل المتصفح تعمل بنمط محلي وتحافظ على بيانات المستخدم على جهازه."
     },
     description: {
       en: "A practical toolkit for developers and everyday users who need formatters, calculators, generators, converters, and text utilities without accounts or server uploads.",
@@ -43,9 +43,9 @@ export const PROJECTS_LIST: Project[] = [
       }
     ],
     stats: [
-      { label: { en: "Tools", ar: "أدوات" }, value: "90+" },
-      { label: { en: "Categories", ar: "تصنيفات" }, value: "11+" },
-      { label: { en: "Server uploads", ar: "رفع للخادم" }, value: "None" }
+      { label: { en: "Processing", ar: "المعالجة" }, value: "Local" },
+      { label: { en: "Interface", ar: "الواجهة" }, value: "AR/EN" },
+      { label: { en: "Accounts", ar: "الحسابات" }, value: "None" }
     ],
     links: { github: "https://github.com/Habib1001-m/quickshed", demo: "https://quickshed.vercel.app" }
   },
@@ -91,9 +91,9 @@ export const PROJECTS_LIST: Project[] = [
       }
     ],
     stats: [
-      { label: { en: "Screening rows", ar: "صفوف الفحص" }, value: "10" },
-      { label: { en: "Evidence rows", ar: "صفوف الأدلة" }, value: "47" },
-      { label: { en: "Decision engine", ar: "محرك القرار" }, value: "Blocked" }
+      { label: { en: "Role", ar: "الدور" }, value: "Selection" },
+      { label: { en: "Evidence trail", ar: "مسار الأدلة" }, value: "Visible" },
+      { label: { en: "Recommendations", ar: "التوصيات" }, value: "Blocked" }
     ]
   },
   {
@@ -128,9 +128,9 @@ export const PROJECTS_LIST: Project[] = [
       }
     ],
     stats: [
-      { label: { en: "Languages", ar: "اللغات" }, value: "AR/EN" },
+      { label: { en: "Identity", ar: "الهوية" }, value: "Real" },
       { label: { en: "Contact flow", ar: "التواصل" }, value: "Resend" },
-      { label: { en: "Deploy", ar: "النشر" }, value: "Vercel" }
+      { label: { en: "CV access", ar: "السيرة" }, value: "PDF" }
     ],
     links: { github: "https://github.com/Habib1001-m/mohamed-habib-portfolio", demo: "https://mohamed-habib-portfolio-opal.vercel.app" }
   }
