@@ -70,6 +70,9 @@ export default function ThreeModelCustomizer({
 
   const labelClass = `text-[10px] text-slate-500 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`;
   const presetButtonClass = `shrink-0 lg:shrink px-3 py-2.5 text-[11px] rounded-xl border transition-all min-w-[220px] lg:min-w-0 ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
+  const proofNote = isRtl
+    ? "مخطط WebGL مرتبط بالسيناريوهات. كل سيناريو يعرض عقدًا، مسارات، حزم بيانات، ومؤشرات تشغيل مستمدة من الأعمال المعروضة أعلاه."
+    : "Preset-aware WebGL graph. Each scenario maps real nodes, links, data packets, and operating signals from the work shown above.";
 
   return (
     <div id="three-customizer" className={`flex flex-col gap-4 p-4 md:p-5 rounded-[1.5rem] bg-zinc-950/80 border border-white/10 shadow-2xl glass ${isRtl ? "font-arabic" : ""}`}>
@@ -250,7 +253,7 @@ export default function ThreeModelCustomizer({
       <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl flex items-start gap-2.5">
         <span className="text-orange-400 text-xs mt-0.5 select-none">•</span>
         <p className="text-[11px] text-slate-500 leading-relaxed">
-          {t.interactiveTip[lang]}
+          {proofNote}
         </p>
       </div>
     </div>
