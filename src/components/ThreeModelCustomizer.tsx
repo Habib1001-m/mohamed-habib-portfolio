@@ -69,7 +69,7 @@ export default function ThreeModelCustomizer({
   };
 
   const labelClass = `text-[10px] text-slate-500 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`;
-  const presetButtonClass = `shrink-0 lg:shrink px-3 py-2.5 text-[11px] rounded-xl border transition-all w-[210px] max-w-[78vw] lg:w-auto lg:max-w-none ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
+  const presetButtonClass = `w-full px-3 py-2.5 text-[11px] rounded-xl border transition-all ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
   const proofTitle = isRtl ? "لماذا هذا مهم؟" : "Why this matters";
   const proofNote = isRtl
     ? "هذا القسم يوضح طريقة تفكيري قبل التنفيذ: حدود النظام، تدفق البيانات، مسارات المستخدم، ونقاط الإثبات التي تجعل المنتج قابلًا للتشغيل لا مجرد واجهة جميلة."
@@ -117,23 +117,19 @@ export default function ThreeModelCustomizer({
 
       <div className="flex flex-col gap-2 min-w-0">
         <label className={labelClass}>{t.controlPreset[lang]}</label>
-        <div className="relative min-w-0">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-zinc-950/90 to-transparent z-10 lg:hidden" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-zinc-950/90 to-transparent z-10 lg:hidden" />
-          <div className="w-full max-w-full min-w-0 flex lg:grid lg:grid-cols-1 gap-2 overflow-x-auto overflow-y-hidden pb-1 lg:overflow-visible lg:pb-0 scroll-smooth">
-            {presets.map((preset) => (
-              <button
-                key={preset.id}
-                id={`preset-${preset.id}`}
-                type="button"
-                onClick={() => handlePresetChange(preset.id)}
-                className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
-              >
-                <span className="block truncate">{preset.label[lang]}</span>
-                <span className="block mt-1 text-[10px] opacity-70 truncate">{preset.state[lang]}</span>
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-2 min-w-0">
+          {presets.map((preset) => (
+            <button
+              key={preset.id}
+              id={`preset-${preset.id}`}
+              type="button"
+              onClick={() => handlePresetChange(preset.id)}
+              className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
+            >
+              <span className="block truncate">{preset.label[lang]}</span>
+              <span className="block mt-1 text-[10px] opacity-70 truncate">{preset.state[lang]}</span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -169,10 +165,7 @@ export default function ThreeModelCustomizer({
                   key={c.hex}
                   id={`color-btn-${c.hex.substring(1)}`}
                   type="button"
-                  onClick={() => {
-                    setColor(c.hex);
-                    setActivePreset("custom");
-                  }}
+                  onClick={() => setColor(c.hex)}
                   style={{ backgroundColor: c.hex }}
                   title={c.label[lang]}
                   aria-label={c.label[lang]}
@@ -197,10 +190,7 @@ export default function ThreeModelCustomizer({
                 id="toggle-wireframe"
                 type="button"
                 aria-pressed={wireframe}
-                onClick={() => {
-                  setWireframe(!wireframe);
-                  setActivePreset("custom");
-                }}
+                onClick={() => setWireframe(!wireframe)}
                 className={`px-3 py-2 text-[11px] rounded-lg border transition-all ${isRtl ? "font-arabic" : "font-mono"} ${
                   wireframe
                     ? "bg-orange-500/10 border-orange-500/40 text-orange-300 font-semibold"
@@ -217,10 +207,7 @@ export default function ThreeModelCustomizer({
                 id="toggle-particles"
                 type="button"
                 aria-pressed={showParticles}
-                onClick={() => {
-                  setShowParticles(!showParticles);
-                  setActivePreset("custom");
-                }}
+                onClick={() => setShowParticles(!showParticles)}
                 className={`px-3 py-2 text-[11px] rounded-lg border transition-all ${isRtl ? "font-arabic" : "font-mono"} ${
                   showParticles
                     ? "bg-orange-500/10 border-orange-500/40 text-orange-300 font-semibold"
@@ -245,10 +232,7 @@ export default function ThreeModelCustomizer({
               step="0.1"
               value={rotationSpeed}
               aria-label={t.controlSpeed[lang]}
-              onChange={(e) => {
-                setRotationSpeed(parseFloat(e.target.value));
-                setActivePreset("custom");
-              }}
+              onChange={(e) => setRotationSpeed(parseFloat(e.target.value))}
               className="w-full max-w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-orange-500 focus:outline-none"
             />
           </div>
