@@ -11,12 +11,14 @@ export default function ContactForm({ lang }: ContactFormProps) {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  
+  const [company, setCompany] = useState("");
+
   const [isSending, setIsSending] = useState(false);
   const [success, setSuccess] = useState<boolean | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!name.trim() || !email.trim() || !message.trim()) {
       setSuccess(false);
       return;
@@ -25,31 +27,37 @@ export default function ContactForm({ lang }: ContactFormProps) {
     setIsSending(true);
     setSuccess(null);
 
-    // Immediate honest mailto draft opening with no fake database success logs or artificial delays
     try {
-      const bodyText = `Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`;
-      const mailtoLink = `mailto:mohamedhabib49.MH@gmail.com?subject=${encodeURIComponent(
-        subject.trim() || "Collaboration proposal / Project idea"
-      )}&body=${encodeURIComponent(bodyText)}`;
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          subject: subject.trim(),
+          message: message.trim(),
+          company: company.trim(),
+        }),
+      });
 
-      window.location.href = mailtoLink;
+      if (!response.ok) {
+        throw new Error("Contact request failed");
+      }
 
-      setIsSending(false);
       setSuccess(true);
-
-      // Reset form fields
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
+      setCompany("");
 
-      // Hide success notification after 10 seconds
       setTimeout(() => {
         setSuccess(null);
       }, 10000);
     } catch (err) {
-      setIsSending(false);
       setSuccess(false);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -59,6 +67,18 @@ export default function ContactForm({ lang }: ContactFormProps) {
       onSubmit={handleSubmit}
       className="p-6 sm:p-8 rounded-2xl bg-zinc-900/60 border border-white/10 shadow-2xl glass space-y-5 flex flex-col justify-between"
     >
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="input-company">Company</label>
+        <input
+          id="input-company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-5">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="input-name" className="text-xs font-mono text-slate-500 uppercase tracking-wider">
@@ -134,7 +154,6 @@ export default function ContactForm({ lang }: ContactFormProps) {
         )}
       </button>
 
-      {/* Success / Error notification */}
       {success === true && (
         <div id="contact-success-msg" aria-live="polite" className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs sm:text-sm text-center animate-fade-in font-mono">
           {t.formSuccess[lang]}
