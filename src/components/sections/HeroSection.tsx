@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
 
 interface HeroSectionProps {
@@ -7,6 +8,17 @@ interface HeroSectionProps {
 export default function HeroSection({ lang }: HeroSectionProps) {
   const h = PORTFOLIO_DATA.hero;
   const isRtl = lang === "ar";
+  const [isPortraitActive, setIsPortraitActive] = useState(false);
+
+  useEffect(() => {
+    if (!isPortraitActive) return;
+    const timeout = window.setTimeout(() => setIsPortraitActive(false), 3200);
+    return () => window.clearTimeout(timeout);
+  }, [isPortraitActive]);
+
+  const portraitStateClass = isPortraitActive
+    ? "-translate-x-[7%] scale-[1.18] grayscale-0 brightness-105"
+    : "-translate-x-[7%] scale-[1.15] grayscale brightness-90";
 
   return (
     <header id="hero-section" className="min-h-screen relative flex items-center pt-24 pb-16">
@@ -80,15 +92,24 @@ export default function HeroSection({ lang }: HeroSectionProps) {
         </div>
 
         <div className="lg:col-span-5 flex justify-center">
-          <div className="relative group">
-            <div className="absolute inset-[-3px] rounded-full bg-gradient-to-r from-orange-600 via-amber-400 to-red-500 opacity-45 blur-md group-hover:opacity-65 transition-opacity duration-500" />
+          <button
+            type="button"
+            onClick={() => setIsPortraitActive((value) => !value)}
+            className="relative group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70 rounded-full"
+            aria-pressed={isPortraitActive}
+            aria-label={isRtl ? "اضغط لإظهار الصورة الشخصية بالألوان" : "Tap to reveal the portrait in color"}
+          >
+            <div className={`absolute inset-[-3px] rounded-full bg-gradient-to-r from-orange-600 via-amber-400 to-red-500 blur-md transition-opacity duration-500 ${isPortraitActive ? "opacity-65" : "opacity-45 group-hover:opacity-65"}`} />
             <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-[22rem] xl:h-[22rem] rounded-full overflow-hidden border-4 border-[#050505] relative z-10 bg-zinc-900">
               <img
                 src="/images/mohamed-habib-hero.webp"
                 alt={isRtl ? "صورة شخصية حقيقية لمحمد حبيب" : "Real portrait of Mohamed Habib"}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center origin-center -translate-x-[7%] scale-[1.15] grayscale brightness-90 contrast-105 group-hover:-translate-x-[7%] group-hover:scale-[1.18] group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700"
+                className={`w-full h-full object-cover object-center origin-center contrast-105 transition-all duration-700 group-hover:-translate-x-[7%] group-hover:scale-[1.18] group-hover:grayscale-0 group-hover:brightness-105 ${portraitStateClass}`}
               />
+            </div>
+            <div className="md:hidden absolute -top-7 left-1/2 -translate-x-1/2 z-20 px-3 py-1 rounded-full bg-[#050505]/90 border border-white/10 text-[10px] text-slate-400 font-mono uppercase tracking-wider">
+              {isRtl ? "اضغط للألوان" : "Tap for color"}
             </div>
             <div className={`absolute top-1/2 ${isRtl ? "-left-6" : "-right-6"} -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
@@ -98,7 +119,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               <span className="text-orange-400 text-xs">⚡</span>
               <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusExperience[lang]}</span>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>
