@@ -39,10 +39,11 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
   const proofSignals = [t.proofSignal1[lang], t.proofSignal2[lang], t.proofSignal3[lang]];
 
   return (
-    <section id="interactive-sandbox" className="py-24 border-y border-white/5 bg-[#050505] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,62,0,0.08),transparent_35%),radial-gradient(circle_at_25%_70%,rgba(59,130,246,0.06),transparent_34%)] pointer-events-none" />
+    <section id="interactive-sandbox" className="py-20 md:py-24 border-y border-white/5 bg-[#050505] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,62,0,0.08),transparent_32%),radial-gradient(circle_at_20%_78%,rgba(59,130,246,0.06),transparent_34%)] pointer-events-none" />
+
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className={`grid lg:grid-cols-12 gap-8 lg:gap-10 items-end mb-10 ${isRtl ? "font-arabic" : ""}`}>
+        <div className={`grid lg:grid-cols-12 gap-7 lg:gap-10 items-end mb-8 ${isRtl ? "font-arabic" : ""}`}>
           <div className={`lg:col-span-7 ${isRtl ? "text-right" : "text-left"}`}>
             <span className={`text-[10px] text-orange-400 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.24em]"}`}>
               {t.eyebrow[lang]}
@@ -55,9 +56,9 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
             </p>
           </div>
 
-          <div className="lg:col-span-5 grid sm:grid-cols-3 lg:grid-cols-1 gap-3">
+          <div className="lg:col-span-5 flex lg:grid lg:grid-cols-1 gap-3 overflow-x-auto pb-1 lg:overflow-visible lg:pb-0">
             {proofSignals.map((signal) => (
-              <div key={signal} className={`rounded-2xl bg-white/[0.025] border border-white/10 px-4 py-3 glass ${isRtl ? "text-right" : "text-left"}`}>
+              <div key={signal} className={`min-w-[220px] lg:min-w-0 rounded-2xl bg-white/[0.025] border border-white/10 px-4 py-3 glass ${isRtl ? "text-right" : "text-left"}`}>
                 <div className="flex items-center gap-2 text-orange-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_18px_rgba(255,62,0,0.7)]" />
                   <span className={`text-[10px] ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`}>{signal}</span>
@@ -67,18 +68,18 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
           </div>
         </div>
 
-        <div className={`grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch ${isRtl ? "font-arabic" : ""}`}>
+        <div className={`grid lg:grid-cols-12 gap-6 lg:gap-8 items-start ${isRtl ? "font-arabic" : ""}`}>
           <div className="lg:col-span-8">
             <div className="rounded-[1.75rem] border border-orange-500/10 bg-zinc-950/70 shadow-2xl shadow-orange-500/5 overflow-hidden glass">
-              <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-white/10 bg-black/40">
+              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-white/10 bg-black/40">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.7)]" />
                   <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`}>{t.canvasStatus[lang]}</span>
                 </div>
-                <span className={`text-[10px] text-slate-600 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}>{t.canvasHint[lang]}</span>
+                <span className={`text-[10px] text-slate-600 max-w-[240px] ${isRtl ? "font-arabic text-right" : "font-mono uppercase tracking-[0.16em] text-right"}`}>{t.canvasHint[lang]}</span>
               </div>
 
-              <div className="w-full h-[360px] md:h-[500px] p-3">
+              <div className="w-full h-[390px] md:h-[430px] xl:h-[480px] p-3">
                 {isInViewport ? (
                   <div className="relative w-full h-full">
                     <Suspense
@@ -107,9 +108,13 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
                 )}
               </div>
             </div>
+
+            <div className={`mt-4 rounded-2xl bg-white/[0.018] border border-white/10 px-4 py-3 text-[11px] md:text-xs leading-relaxed text-slate-500 ${isRtl ? "text-right font-arabic" : "font-mono"}`}>
+              {t.proofLine[lang]}
+            </div>
           </div>
 
-          <div className="lg:col-span-4 flex flex-col gap-4">
+          <div className="lg:col-span-4 lg:sticky lg:top-24">
             <ThreeModelCustomizer
               lang={lang}
               color={color}
@@ -123,9 +128,6 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
               activePreset={activePreset}
               setActivePreset={setActivePreset}
             />
-            <div className={`rounded-2xl bg-white/[0.018] border border-white/10 p-4 text-xs leading-relaxed text-slate-500 ${isRtl ? "text-right font-arabic" : "font-mono"}`}>
-              {t.proofLine[lang]}
-            </div>
           </div>
         </div>
       </div>
