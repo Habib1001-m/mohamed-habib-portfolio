@@ -142,6 +142,17 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
             </p>
           </div>
 
+          {selectedProject.verificationNote && (
+            <div className="rounded-2xl border border-cyan-500/15 bg-cyan-500/[0.035] p-4 space-y-2">
+              <h4 className={`text-xs text-cyan-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
+                {lang === "ar" ? "مسار التحقق" : "Verification path"}
+              </h4>
+              <p className="text-sm text-cyan-100/75 leading-relaxed">
+                {selectedProject.verificationNote[lang]}
+              </p>
+            </div>
+          )}
+
           {selectedProject.gallery && selectedProject.gallery.length > 0 && (
             <div className="space-y-4">
               <h4 className={`text-xs text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic tracking-normal" : "font-mono"}`}>
