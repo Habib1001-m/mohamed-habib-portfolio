@@ -11,8 +11,15 @@ import ContactSection from "./components/sections/ContactSection";
 import Footer from "./components/layout/Footer";
 import ProjectModal from "./components/ProjectModal";
 
+const getInitialLanguage = (): "en" | "ar" => {
+  if (typeof window === "undefined") return "ar";
+
+  const savedLang = window.localStorage.getItem("portfolio-lang");
+  return savedLang === "en" || savedLang === "ar" ? savedLang : "ar";
+};
+
 export default function App() {
-  const [lang, setLang] = useState<"en" | "ar">("ar"); // Default to Arabic as requested
+  const [lang, setLang] = useState<"en" | "ar">(getInitialLanguage);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Sync layout direction with language state
@@ -21,6 +28,7 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dir = isRtl ? "rtl" : "ltr";
     document.documentElement.lang = lang;
+    window.localStorage.setItem("portfolio-lang", lang);
   }, [lang, isRtl]);
 
   return (
