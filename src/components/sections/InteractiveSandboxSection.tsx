@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
 import ThreeModelCustomizer from "../ThreeModelCustomizer";
+import ArchitecturePresetOverlay from "../ArchitecturePresetOverlay";
 
 const ThreeCanvas = lazy(() => import("../ThreeCanvas"));
 
@@ -79,23 +80,26 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
 
               <div className="w-full h-[360px] md:h-[500px] p-3">
                 {isInViewport ? (
-                  <Suspense
-                    fallback={
-                      <div className="w-full h-full bg-white/[0.015] border border-white/10 rounded-2xl flex flex-col items-center justify-center font-mono text-xs text-slate-500 gap-3">
-                        <span className="w-7 h-7 rounded-full border-2 border-orange-500/20 border-t-orange-500 animate-spin" />
-                        <span>{isRtl ? "جاري تجهيز طبقة WebGL..." : "Initializing WebGL architecture layer..."}</span>
-                      </div>
-                    }
-                  >
-                    <ThreeCanvas
-                      lang={lang}
-                      color={color}
-                      wireframe={wireframe}
-                      rotationSpeed={rotationSpeed}
-                      showParticles={showParticles}
-                      activePreset={activePreset}
-                    />
-                  </Suspense>
+                  <div className="relative w-full h-full">
+                    <Suspense
+                      fallback={
+                        <div className="w-full h-full bg-white/[0.015] border border-white/10 rounded-2xl flex flex-col items-center justify-center font-mono text-xs text-slate-500 gap-3">
+                          <span className="w-7 h-7 rounded-full border-2 border-orange-500/20 border-t-orange-500 animate-spin" />
+                          <span>{isRtl ? "جاري تجهيز طبقة WebGL..." : "Initializing WebGL architecture layer..."}</span>
+                        </div>
+                      }
+                    >
+                      <ThreeCanvas
+                        lang={lang}
+                        color={color}
+                        wireframe={wireframe}
+                        rotationSpeed={rotationSpeed}
+                        showParticles={showParticles}
+                        activePreset={activePreset}
+                      />
+                    </Suspense>
+                    <ArchitecturePresetOverlay lang={lang} activePreset={activePreset} />
+                  </div>
                 ) : (
                   <div className="w-full h-full bg-white/[0.01] border border-white/5 rounded-2xl flex items-center justify-center font-mono text-xs text-slate-600">
                     {isRtl ? "يتم تحميل المختبر عند الاقتراب" : "Approach the lab to load the proof layer"}
