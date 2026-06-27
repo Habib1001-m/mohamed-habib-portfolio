@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
 
 interface NavbarProps {
@@ -7,18 +7,73 @@ interface NavbarProps {
 }
 
 const NAV_ITEMS = [
-  { key: "about", href: "#about-section" },
-  { key: "projects", href: "#projects-section" },
-  { key: "experience", href: "#experience-section" },
-  { key: "stack", href: "#stack-section" },
+  { key: "about", href: "#about-section", sectionId: "about-section" },
+  { key: "projects", href: "#projects-section", sectionId: "projects-section" },
+  { key: "experience", href: "#experience-section", sectionId: "experience-section" },
+  { key: "stack", href: "#stack-section", sectionId: "stack-section" },
+  { key: "contact", href: "#contact-section", sectionId: "contact-section" },
 ] as const;
 
 export default function Navbar({ lang, setLang }: NavbarProps) {
   const nav = PORTFOLIO_DATA.navigation;
   const isRtl = lang === "ar";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("hero-section");
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    const sectionIds = ["hero-section", ...NAV_ITEMS.map((item) => item.sectionId)];
+    const visibleMap = new Map<string, number>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibleMap.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        const best = sectionIds.reduce(
+          (currentBest, sectionId) => {
+            const ratio = visibleMap.get(sectionId) ?? 0;
+            return ratio > currentBest.ratio ? { sectionId, ratio } : currentBest;
+          },
+          { sectionId: activeSection, ratio: 0 }
+        );
+
+        if (best.ratio > 0.1) {
+          setActiveSection(best.sectionId);
+        }
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0, 0.1, 0.25, 0.5, 0.75] }
+    );
+
+    sectionIds.forEach((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [activeSection]);
+
+  const desktopLinkClass = (sectionId: string) => {
+    const isActive = activeSection === sectionId;
+    return `px-4 py-2 text-xs rounded-lg transition-all ${
+      isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"
+    } ${
+      isActive
+        ? "text-orange-300 bg-orange-500/[0.08] border border-orange-500/20"
+        : "text-slate-400 hover:text-white hover:bg-white/5 border border-transparent"
+    }`;
+  };
+
+  const mobileLinkClass = (sectionId: string) => {
+    const isActive = activeSection === sectionId;
+    return `px-4 py-3 rounded-xl border text-sm transition-all ${
+      isActive
+        ? "border-orange-500/30 bg-orange-500/[0.07] text-orange-300"
+        : "border-white/5 bg-white/[0.015] text-slate-300 hover:text-white hover:border-orange-500/25 hover:bg-orange-500/[0.03]"
+    }`;
+  };
 
   return (
     <nav id="app-navbar" className="fixed top-0 left-0 right-0 z-40 bg-[#050505]/80 glass border-b border-white/10 transition-all duration-300">
@@ -34,16 +89,21 @@ export default function Navbar({ lang, setLang }: NavbarProps) {
 
         {/* Desktop nav list */}
         <div className="hidden md:flex items-center gap-1" role="navigation" aria-label={isRtl ? "التنقل الرئيسي" : "Primary navigation"}>
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.slice(0, 4).map((item) => (
             <a
               key={item.key}
               href={item.href}
-              className={`px-4 py-2 text-xs rounded-lg hover:bg-white/5 transition-all ${isRtl ? "font-arabic text-slate-400 hover:text-white" : "font-mono uppercase tracking-wider text-slate-400 hover:text-white"}`}
+              aria-current={activeSection === item.sectionId ? "page" : undefined}
+              className={desktopLinkClass(item.sectionId)}
             >
               {nav[item.key][lang]}
             </a>
           ))}
-          <a href="#contact-section" className={`ml-2 px-4 py-2 text-xs text-black font-black accent-gradient rounded-lg transition-all shadow-lg shadow-orange-500/10 hover:opacity-90 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>
+          <a
+            href="#contact-section"
+            aria-current={activeSection === "contact-section" ? "page" : undefined}
+            className={`ml-2 px-4 py-2 text-xs text-black font-black accent-gradient rounded-lg transition-all shadow-lg shadow-orange-500/10 hover:opacity-90 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}
+          >
             {nav.contact[lang]}
           </a>
         </div>
@@ -91,12 +151,13 @@ export default function Navbar({ lang, setLang }: NavbarProps) {
         className={`md:hidden border-t border-white/10 bg-[#050505]/95 transition-all duration-200 ${isMenuOpen ? "block" : "hidden"}`}
       >
         <div className={`max-w-7xl mx-auto px-6 py-4 grid gap-2 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.slice(0, 4).map((item) => (
             <a
               key={item.key}
               href={item.href}
               onClick={closeMenu}
-              className="px-4 py-3 rounded-xl border border-white/5 bg-white/[0.015] text-sm text-slate-300 hover:text-white hover:border-orange-500/25 hover:bg-orange-500/[0.03] transition-all"
+              aria-current={activeSection === item.sectionId ? "page" : undefined}
+              className={mobileLinkClass(item.sectionId)}
             >
               {nav[item.key][lang]}
             </a>
@@ -104,6 +165,7 @@ export default function Navbar({ lang, setLang }: NavbarProps) {
           <a
             href="#contact-section"
             onClick={closeMenu}
+            aria-current={activeSection === "contact-section" ? "page" : undefined}
             className="mt-1 px-4 py-3 rounded-xl accent-gradient text-black text-sm font-bold transition-all"
           >
             {nav.contact[lang]}
