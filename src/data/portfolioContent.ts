@@ -100,23 +100,38 @@ export const PORTFOLIO_DATA = {
     }
   },
   playground3D: {
-    title: { en: "Interactive systems visualizer", ar: "مخطط أنظمة تفاعلي" },
+    eyebrow: { en: "Systems architecture lab", ar: "مختبر معمارية الأنظمة" },
+    title: { en: "Live architecture proof console", ar: "لوحة إثبات معماري حي" },
     subtitle: {
-      en: "A small Three.js visual layer for exploring system presets. It is decorative, but built to stay lightweight and responsive.",
-      ar: "طبقة عرض تفاعلية صغيرة باستخدام Three.js لاستكشاف قوالب الأنظمة. هي عنصر بصري مساعد، لكنها مبنية لتبقى خفيفة وسريعة الاستجابة."
+      en: "An interactive console that shows how product flows, evidence gates, automation layers, and contact pipelines are structured before they become production features.",
+      ar: "لوحة تفاعلية توضّح كيف تُنظَّم تدفقات المنتج، بوابات الأدلة، طبقات الأتمتة، ومسارات التواصل قبل تحويلها إلى خصائص إنتاجية."
     },
-    controlWireframe: { en: "Wireframe mode", ar: "عرض الهيكل" },
-    controlColor: { en: "Core color", ar: "لون النواة" },
-    controlSpeed: { en: "Rotation speed", ar: "سرعة الدوران" },
-    controlParticle: { en: "Particle field", ar: "حقل الجسيمات" },
-    controlPreset: { en: "Architecture preset", ar: "قالب النظام" },
-    presetQuickShed: { en: "QuickShed — Utility tools", ar: "QuickShed — أدوات خدمية" },
-    presetSieve: { en: "SIEVE — Evaluation logic", ar: "SIEVE — منطق التقييم" },
-    presetAI: { en: "AI Systems — MCP & LLM workflows", ar: "أنظمة الذكاء الاصطناعي — MCP ومسارات LLM" },
-    presetData: { en: "Data Pipeline — Streams & queues", ar: "مسار بيانات — تدفقات وطوابير" },
+    proofLine: {
+      en: "The current visual layer is lightweight WebGL. The next pass will replace the cube with a true architecture graph: nodes, connections, data packets, and live system states.",
+      ar: "الطبقة الحالية WebGL خفيفة. التمريرة القادمة ستستبدل المكعب بمخطط معماري حقيقي: عقد، اتصالات، حزم بيانات، وحالات نظام مباشرة."
+    },
+    proofSignal1: { en: "Preset-driven scenarios", ar: "سيناريوهات حسب النظام" },
+    proofSignal2: { en: "Boundary-first thinking", ar: "تفكير يبدأ من الحدود" },
+    proofSignal3: { en: "Lightweight WebGL", ar: "WebGL خفيف" },
+    consoleTitle: { en: "Scenario console", ar: "لوحة السيناريو" },
+    consoleSubtitle: {
+      en: "Switch between real product architectures and inspect the operating signals behind each one.",
+      ar: "بدّل بين معماريات منتجات حقيقية وافحص مؤشرات التشغيل خلف كل سيناريو."
+    },
+    canvasStatus: { en: "Live WebGL architecture layer", ar: "طبقة معمارية WebGL مباشرة" },
+    canvasHint: { en: "Drag to inspect · preset-driven · lazy loaded", ar: "اسحب للفحص · سيناريوهات · تحميل كسول" },
+    controlWireframe: { en: "Boundary view", ar: "عرض الحدود" },
+    controlColor: { en: "Signal channel", ar: "قناة الإشارة" },
+    controlSpeed: { en: "Motion intensity", ar: "كثافة الحركة" },
+    controlParticle: { en: "Data flow", ar: "تدفق البيانات" },
+    controlPreset: { en: "System scenario", ar: "سيناريو النظام" },
+    presetQuickShed: { en: "QuickShed — Local-first tooling", ar: "QuickShed — أدوات محلية" },
+    presetSieve: { en: "SIEVE — Evidence gate", ar: "SIEVE — بوابة الأدلة" },
+    presetPortfolio: { en: "Portfolio — Lead flow", ar: "البورتفوليو — مسار التواصل" },
+    presetAI: { en: "AI Workflow — Tool layer", ar: "مسار AI — طبقة الأدوات" },
     interactiveTip: {
-      en: "Drag the scene to rotate it. Keep the interaction simple: the visual should support the content, not compete with it.",
-      ar: "اسحب المشهد لتدويره. الهدف أن يدعم العنصر البصري المحتوى، لا أن ينافسه."
+      en: "This is being repositioned as a proof console, not a decorative toy. The graph rebuild comes next.",
+      ar: "يتم إعادة تموضع هذا القسم كلوحة إثبات، لا كعنصر زخرفي. إعادة بناء المخطط تأتي بعد ذلك."
     }
   },
   contact: {
