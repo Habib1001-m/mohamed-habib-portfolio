@@ -12,11 +12,9 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerButtonIdRef = useRef<string | null>(null);
 
-  // Store the active element before the modal opens so we can restore focus
   useEffect(() => {
     if (selectedProject) {
       triggerButtonIdRef.current = `details-btn-${selectedProject.id}`;
-      // Prevent body scroll
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -31,7 +29,6 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
     };
   }, [selectedProject]);
 
-  // Focus trap, Escape key
   useEffect(() => {
     if (!selectedProject) return;
 
@@ -67,7 +64,6 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
       }
     };
 
-    // Initially focus on close button for immediate accessibility
     const timer = setTimeout(() => {
       const closeBtn = document.getElementById("close-specs-modal");
       if (closeBtn) closeBtn.focus();
@@ -102,76 +98,102 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
       <div
         ref={modalRef}
         id="specs-modal-body"
-        className="w-full max-w-2xl bg-[#050505] border border-white/15 rounded-2xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col glass"
+        className="w-full max-w-4xl bg-[#050505] border border-white/15 rounded-2xl overflow-hidden shadow-2xl relative max-h-[92vh] flex flex-col glass"
       >
-        {/* Header image in modal */}
-        <div className="relative h-48 sm:h-56 w-full bg-black">
+        <div className="relative h-56 sm:h-72 w-full bg-black">
           <img
             src={selectedProject.image}
             alt={selectedProject.title[lang]}
             referrerPolicy="no-referrer"
-            className="w-full h-full object-cover opacity-75"
+            className="w-full h-full object-cover opacity-90"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent"></div>
-          
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/15 to-transparent" />
+
           <button
             id="close-specs-modal"
             type="button"
             onClick={() => setSelectedProject(null)}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white hover:text-orange-400 flex items-center justify-center transition-colors border border-white/10 cursor-pointer"
-            aria-label="Close modal"
+            className={`absolute top-4 ${isRtl ? "left-4" : "right-4"} w-9 h-9 rounded-full bg-black/70 hover:bg-black text-white hover:text-orange-400 flex items-center justify-center transition-colors border border-white/10 cursor-pointer`}
+            aria-label={lang === "ar" ? "إغلاق" : "Close modal"}
           >
             ✕
           </button>
         </div>
 
-        {/* Modal Scroll Content */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
+        <div className={`p-6 sm:p-8 overflow-y-auto space-y-7 flex-1 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
           <div>
-            <span className="text-xs font-mono text-orange-400 uppercase tracking-widest bg-orange-500/10 border border-orange-500/20 px-2.5 py-1 rounded-md">
+            <span className={`text-xs text-orange-300 bg-orange-500/10 border border-orange-500/20 px-2.5 py-1 rounded-md ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
               {selectedProject.category[lang]}
             </span>
-            <h3 id="modal-title" className={`text-2xl font-black text-white mt-3.5 tracking-tight ${isRtl ? "font-arabic" : ""}`}>
+            <h3 id="modal-title" className={`text-2xl sm:text-3xl font-black text-white mt-3.5 tracking-tight ${isRtl ? "font-arabic" : ""}`}>
               {selectedProject.title[lang]}
             </h3>
-            <p className={`text-xs sm:text-sm font-mono text-slate-400 mt-1 leading-relaxed ${isRtl ? "font-arabic" : ""}`}>
+            <p className={`text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed ${isRtl ? "font-arabic" : "font-mono"}`}>
               {selectedProject.tagline[lang]}
             </p>
           </div>
 
-          {/* Detailed Long Description */}
           <div className="space-y-3">
-            <h4 className={`text-xs font-mono text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic" : ""}`}>
-              {lang === "ar" ? "تفاصيل الهندسة والعمل المنجز" : "Engineering Analysis & Execution"}
+            <h4 className={`text-xs text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic tracking-normal" : "font-mono"}`}>
+              {lang === "ar" ? "ما الذي يثبته هذا المشروع؟" : "What this project proves"}
             </h4>
-            <p className={`text-sm text-slate-300 leading-relaxed font-sans ${isRtl ? "font-arabic" : ""}`}>
+            <p className="text-sm text-slate-300 leading-relaxed">
               {selectedProject.longDescription[lang]}
             </p>
           </div>
 
-          {/* System Specs (Metadata Stats table) */}
+          {selectedProject.gallery && selectedProject.gallery.length > 0 && (
+            <div className="space-y-4">
+              <h4 className={`text-xs text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic tracking-normal" : "font-mono"}`}>
+                {lang === "ar" ? "لقطات من المنتج" : "Product screenshots"}
+              </h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                {selectedProject.gallery.map((shot) => (
+                  <figure key={shot.src} className="rounded-2xl overflow-hidden bg-zinc-950 border border-white/10">
+                    <img
+                      src={shot.src}
+                      alt={shot.label[lang]}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      className="w-full h-52 object-cover bg-black"
+                    />
+                    <figcaption className="p-4 space-y-1.5">
+                      <div className={`text-xs text-orange-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>
+                        {shot.label[lang]}
+                      </div>
+                      {shot.caption && (
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                          {shot.caption[lang]}
+                        </p>
+                      )}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
           {selectedProject.stats && selectedProject.stats.length > 0 && (
             <div className="space-y-3">
-              <h4 className={`text-xs font-mono text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic" : ""}`}>
+              <h4 className={`text-xs text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic tracking-normal" : "font-mono"}`}>
                 {proj.specsHeader[lang]}
               </h4>
               <div className="grid grid-cols-3 gap-3">
-                {selectedProject.stats.map((st, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 glass text-center font-mono">
-                    <div className="text-sm font-bold text-orange-400">{st.value}</div>
-                    <div className={`text-[9px] text-slate-500 uppercase tracking-wider mt-1 ${isRtl ? "font-arabic" : ""}`}>{st.label[lang]}</div>
+                {selectedProject.stats.map((st) => (
+                  <div key={`${st.label.en}-${st.value}`} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 glass text-center font-mono">
+                    <div className="text-sm font-bold text-orange-300">{st.value}</div>
+                    <div className={`text-[9px] text-slate-500 uppercase tracking-wider mt-1 ${isRtl ? "font-arabic tracking-normal" : ""}`}>{st.label[lang]}</div>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Tech Spec pills list */}
           <div className="space-y-3">
-            <h4 className={`text-xs font-mono text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic" : ""}`}>
-              {lang === "ar" ? "قائمة التقنيات والعتاد المدمج" : "Technology Stack Implemented"}
+            <h4 className={`text-xs text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2 ${isRtl ? "font-arabic tracking-normal" : "font-mono"}`}>
+              {lang === "ar" ? "التقنيات المستخدمة" : "Technology stack"}
             </h4>
-            <div className="flex flex-wrap gap-2">
+            <div className={`flex flex-wrap gap-2 ${isRtl ? "justify-end" : "justify-start"}`}>
               {selectedProject.tech.map((techName) => (
                 <span
                   key={techName}
@@ -184,13 +206,12 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
           </div>
         </div>
 
-        {/* Modal Bottom link actions */}
         <div className="p-4 sm:p-6 border-t border-white/10 bg-black/40 flex items-center justify-end gap-3.5">
           <button
             id="close-specs-modal-bottom"
             type="button"
             onClick={() => setSelectedProject(null)}
-            className={`px-4 py-2 text-xs font-mono text-slate-400 hover:text-white transition-colors cursor-pointer ${isRtl ? "font-arabic" : ""}`}
+            className={`px-4 py-2 text-xs text-slate-400 hover:text-white transition-colors cursor-pointer ${isRtl ? "font-arabic" : "font-mono"}`}
           >
             {proj.closeDetails[lang]}
           </button>
@@ -200,7 +221,7 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
               href={selectedProject.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-4 py-2 text-xs font-mono text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-white/10 rounded-lg transition-all ${isRtl ? "font-arabic" : ""}`}
+              className={`px-4 py-2 text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-white/10 rounded-lg transition-all ${isRtl ? "font-arabic" : "font-mono"}`}
             >
               {proj.viewSource[lang]}
             </a>
@@ -210,7 +231,7 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
               href={selectedProject.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-4 py-2.5 text-xs font-mono text-black font-black uppercase tracking-wider accent-gradient rounded-lg hover:opacity-90 transition-all shadow-lg shadow-orange-500/10 ${isRtl ? "font-arabic" : ""}`}
+              className={`px-4 py-2.5 text-xs text-black font-black accent-gradient rounded-lg hover:opacity-90 transition-all shadow-lg shadow-orange-500/10 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}
             >
               {proj.visitDemo[lang]}
             </a>
