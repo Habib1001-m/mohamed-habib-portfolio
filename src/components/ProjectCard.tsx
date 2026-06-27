@@ -60,6 +60,11 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
           <p className="text-sm text-slate-300 leading-relaxed pt-2">
             {project.description[lang]}
           </p>
+          {project.verificationNote && !project.links?.github && !project.links?.demo && (
+            <p className={`mt-3 rounded-xl border border-cyan-500/15 bg-cyan-500/[0.035] px-3 py-2 text-xs text-cyan-200/80 leading-relaxed ${isRtl ? "font-arabic" : "font-mono"}`}>
+              {project.verificationNote[lang]}
+            </p>
+          )}
         </div>
 
         <div className="space-y-4 pt-4 border-t border-white/10">
