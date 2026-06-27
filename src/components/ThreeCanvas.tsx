@@ -388,23 +388,22 @@ export default function ThreeCanvas({
       ref={containerRef}
       id="three-canvas-container"
       role="img"
-      aria-label={lang === "ar" ? "رسم بياني تفاعلي ثلاثي الأبعاد لنظام العقد" : "Interactive 3D node diagram visualizer"}
-      className="relative w-full h-full min-h-[300px] md:min-h-[420px] bg-slate-950/20 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/5 flex items-center justify-center shadow-inner"
+      aria-label={lang === "ar" ? "طبقة WebGL تفاعلية لمعاينة منطق معمارية الأنظمة" : "Interactive WebGL layer for previewing systems architecture logic"}
+      className="relative w-full h-full min-h-[360px] md:min-h-[480px] bg-slate-950/30 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/10 flex items-center justify-center shadow-inner"
     >
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full block" />
-      
-      {/* Decorative coordinate corners representing system logs */}
-      <div className="absolute top-3 left-3 font-mono text-[9px] text-blue-400/40 select-none pointer-events-none tracking-widest uppercase">
-        SYS_NODE_OK // POS_X: 0.00
+
+      <div className="absolute top-3 left-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
+        PROOF_LAYER // WEBGL_READY
       </div>
-      <div className="absolute top-3 right-3 font-mono text-[9px] text-blue-400/40 select-none pointer-events-none tracking-widest uppercase">
-        SYS_GRID // TYPE: {activePreset.toUpperCase()}
+      <div className="absolute top-3 right-3 font-mono text-[9px] text-orange-300/45 select-none pointer-events-none tracking-widest uppercase">
+        SCENARIO // {activePreset.toUpperCase()}
       </div>
-      <div className="absolute bottom-3 left-3 font-mono text-[9px] text-blue-400/40 select-none pointer-events-none tracking-widest uppercase">
-        AXIS_Y: COORD_LOCK
+      <div className="absolute bottom-3 left-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
+        ARCH_MODE: PRESET_DRIVEN
       </div>
-      <div className="absolute bottom-3 right-3 font-mono text-[9px] text-blue-400/40 select-none pointer-events-none tracking-widest uppercase">
-        3D_GL_RENDER_V2
+      <div className="absolute bottom-3 right-3 font-mono text-[9px] text-orange-300/40 select-none pointer-events-none tracking-widest uppercase">
+        GRAPH_REBUILD_READY
       </div>
     </div>
   );
