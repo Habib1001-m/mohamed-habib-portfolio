@@ -17,9 +17,9 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-black/10 md:bg-black/20" />
 
-      <div className="absolute inset-8 md:inset-12">
+      <div className="absolute inset-5 md:inset-12">
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           {architecture.links.map((link) => {
             const from = architecture.nodes.find((node) => node.id === link.from);
@@ -34,7 +34,7 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
                 x2={to.x}
                 y2={to.y}
                 stroke={architecture.accent}
-                strokeOpacity="0.32"
+                strokeOpacity="0.3"
                 strokeWidth="0.45"
                 strokeDasharray="2 1.6"
               />
@@ -45,19 +45,19 @@ export default function ArchitecturePresetOverlay({ lang, activePreset }: Archit
         {architecture.nodes.map((node) => (
           <div
             key={node.id}
-            className={`absolute -translate-x-1/2 -translate-y-1/2 min-w-[104px] rounded-xl border px-3 py-2 backdrop-blur-sm ${statusStyles[node.status]}`}
+            className={`absolute -translate-x-1/2 -translate-y-1/2 min-w-[72px] md:min-w-[104px] max-w-[118px] rounded-lg md:rounded-xl border px-2 py-1.5 md:px-3 md:py-2 backdrop-blur-sm ${statusStyles[node.status]}`}
             style={{ left: `${node.x}%`, top: `${node.y}%`, boxShadow: `0 0 24px ${architecture.accent}22` }}
           >
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: architecture.accent }} />
               <span className="font-mono text-[9px] uppercase tracking-widest opacity-70">{node.kind[lang]}</span>
             </div>
-            <div className="mt-1 text-[11px] font-semibold text-white leading-tight">{node.label[lang]}</div>
+            <div className="md:mt-1 text-[10px] md:text-[11px] font-semibold text-white leading-tight truncate md:whitespace-normal">{node.label[lang]}</div>
           </div>
         ))}
       </div>
 
-      <div className="absolute left-4 bottom-12 md:bottom-14 max-w-[260px] rounded-2xl border border-white/10 bg-black/55 backdrop-blur px-4 py-3">
+      <div className="hidden md:block absolute left-4 bottom-12 md:bottom-14 max-w-[260px] rounded-2xl border border-white/10 bg-black/55 backdrop-blur px-4 py-3">
         <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500 mb-2">Architecture signals</div>
         <div className="space-y-1.5">
           {architecture.signals.slice(0, 3).map((signal) => (
