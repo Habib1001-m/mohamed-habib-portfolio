@@ -30,8 +30,8 @@ export default function App() {
       <div className="absolute bottom-[20%] right-[-10%] w-[45%] h-[45%] rounded-full bg-amber-950/10 blur-[130px] pointer-events-none" />
       <div className="absolute top-[40%] left-[30%] w-[35%] h-[35%] rounded-full bg-red-950/5 blur-[100px] pointer-events-none" />
 
-      {/* Cyber grid decorative background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(239,68,68,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(239,68,68,0.012)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(239,68,68,0.009)_1px,transparent_1px),linear-gradient(90deg,rgba(239,68,68,0.009)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
 
       {/* Navigation Header */}
       <Navbar lang={lang} setLang={setLang} />
@@ -42,11 +42,11 @@ export default function App() {
       {/* About Section */}
       <AboutSection lang={lang} />
 
-      {/* Interactive 3D Node Sandbox Section */}
-      <InteractiveSandboxSection lang={lang} />
-
       {/* Projects Grid Section */}
       <ProjectsSection lang={lang} setSelectedProject={setSelectedProject} />
+
+      {/* Compact Systems Lab */}
+      <InteractiveSandboxSection lang={lang} />
 
       {/* Experience Section */}
       <ExperienceSection lang={lang} />
