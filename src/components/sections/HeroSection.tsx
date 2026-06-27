@@ -87,20 +87,11 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                 src="/images/mohamed-habib-hero.webp"
                 alt={isRtl ? "صورة شخصية حقيقية لمحمد حبيب" : "Real portrait of Mohamed Habib"}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center grayscale brightness-90 contrast-105 group-hover:grayscale-0 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-cover object-[44%_center] grayscale brightness-90 contrast-105 group-hover:grayscale-0 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700"
               />
             </div>
             <div className={`absolute top-1/2 ${isRtl ? "-left-6" : "-right-6"} -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
               <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusLocation[lang]}</span>
             </div>
-            <div className={`absolute bottom-2 ${isRtl ? "-right-4" : "-left-4"} flex items-center gap-2 px-3 py-1.5 bg-[#050505]/95 rounded-xl border border-white/10 shadow-xl z-20`}>
-              <span className="text-orange-400 text-xs">⚡</span>
-              <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>{h.statusExperience[lang]}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
+            <div className={`absolute bottom-2 ${isRtl ? "-right-4" : "-left-4
