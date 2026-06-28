@@ -76,29 +76,29 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
   const proofSignals = [t.proofSignal1[lang], t.proofSignal2[lang], t.proofSignal3[lang]];
 
   return (
-    <section id="interactive-sandbox" className="py-20 md:py-24 border-y border-white/5 bg-[#050505] relative overflow-hidden max-w-full">
+    <section id="interactive-sandbox" className="py-20 md:py-24 border-y border-white/5 bg-[var(--habib-bg)] relative overflow-hidden max-w-full">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,62,0,0.08),transparent_32%),radial-gradient(circle_at_20%_78%,rgba(59,130,246,0.06),transparent_34%)] pointer-events-none" />
 
-      <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 relative z-10 overflow-hidden">
+      <div className="ds-shell relative z-10 overflow-hidden">
         <div className={`grid lg:grid-cols-12 gap-7 lg:gap-10 items-end mb-8 min-w-0 ${isRtl ? "font-arabic" : ""}`}>
           <div className={`lg:col-span-7 min-w-0 ${isRtl ? "text-right" : "text-left"}`}>
-            <span className={`text-[10px] text-orange-400 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.24em]"}`}>
+            <span className="ds-kicker">
               {t.eyebrow[lang]}
             </span>
             <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-tight text-white leading-[1.05] max-w-2xl">
               {t.title[lang]}
             </h2>
-            <p className="mt-5 text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl">
+            <p className={`mt-5 text-sm md:text-base ds-muted-copy max-w-2xl ${isRtl ? "font-arabic" : ""}`}>
               {t.subtitle[lang]}
             </p>
           </div>
 
           <div className="lg:col-span-5 min-w-0 flex lg:grid lg:grid-cols-1 gap-3 overflow-x-auto pb-1 lg:overflow-visible lg:pb-0">
             {proofSignals.map((signal) => (
-              <div key={signal} className={`min-w-[210px] max-w-[78vw] lg:max-w-none lg:min-w-0 rounded-2xl bg-white/[0.025] border border-white/10 px-4 py-3 glass ${isRtl ? "text-right" : "text-left"}`}>
+              <div key={signal} className={`ds-card min-w-[210px] max-w-[78vw] lg:max-w-none lg:min-w-0 px-4 py-3 ${isRtl ? "text-right" : "text-left"}`}>
                 <div className="flex items-center gap-2 text-orange-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_18px_rgba(255,62,0,0.7)]" />
-                  <span className={`text-[10px] ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`}>{signal}</span>
+                  <span className="ds-label text-orange-300">{signal}</span>
                 </div>
               </div>
             ))}
@@ -107,11 +107,11 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
 
         <div className={`grid lg:grid-cols-12 gap-6 lg:gap-8 items-start min-w-0 ${isRtl ? "font-arabic" : ""}`}>
           <div className="lg:col-span-8 min-w-0 max-w-full">
-            <div className="rounded-[1.75rem] border border-orange-500/10 bg-zinc-950/70 shadow-2xl shadow-orange-500/5 overflow-hidden glass max-w-full">
-              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-white/10 bg-black/40">
+            <div className="ds-panel overflow-hidden max-w-full">
+              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-[var(--habib-border)] bg-black/32">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.7)]" />
-                  <span className={`text-[10px] text-slate-300 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`}>{t.canvasStatus[lang]}</span>
+                  <span className="ds-label text-slate-300">{t.canvasStatus[lang]}</span>
                 </div>
                 <span className={`hidden sm:block text-[10px] text-slate-600 max-w-[240px] ${isRtl ? "font-arabic text-right" : "font-mono uppercase tracking-[0.16em] text-right"}`}>{t.canvasHint[lang]}</span>
               </div>
@@ -128,7 +128,7 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
                   >
                     <Suspense
                       fallback={
-                        <div className="w-full h-full bg-white/[0.015] border border-white/10 rounded-2xl flex flex-col items-center justify-center font-mono text-xs text-slate-500 gap-3">
+                        <div className="w-full h-full ds-card flex flex-col items-center justify-center font-mono text-xs text-slate-500 gap-3">
                           <span className="w-7 h-7 rounded-full border-2 border-orange-500/20 border-t-orange-500 animate-spin" />
                           <span>{isRtl ? "جاري تجهيز طبقة WebGL..." : "Initializing WebGL architecture layer..."}</span>
                         </div>
@@ -148,7 +148,7 @@ export default function InteractiveSandboxSection({ lang }: InteractiveSandboxSe
                     <ArchitecturePresetOverlay lang={lang} activePreset={activePreset} offsetX={graphOffset.x} offsetY={graphOffset.y} />
                   </div>
                 ) : (
-                  <div className="w-full h-full bg-white/[0.01] border border-white/5 rounded-2xl flex items-center justify-center font-mono text-xs text-slate-600">
+                  <div className="w-full h-full ds-card flex items-center justify-center font-mono text-xs text-slate-600">
                     {isRtl ? "يتم تحميل المختبر عند الاقتراب" : "Approach the lab to load the proof layer"}
                   </div>
                 )}
