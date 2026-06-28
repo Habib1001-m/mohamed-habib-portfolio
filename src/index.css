@@ -143,6 +143,31 @@ body {
   letter-spacing: 0;
 }
 
+.ds-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ds-section-title {
+  color: var(--habib-text);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.9rem);
+  line-height: 1.16;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.ds-section-rule {
+  height: 1px;
+  flex: 1 1 auto;
+  background: linear-gradient(to right, rgba(255, 62, 0, 0.22), rgba(255, 255, 255, 0.055), transparent);
+}
+
+[dir="rtl"] .ds-section-rule {
+  background: linear-gradient(to left, rgba(255, 62, 0, 0.22), rgba(255, 255, 255, 0.055), transparent);
+}
+
 .ds-muted-copy {
   color: var(--habib-text-muted);
   line-height: 1.75;
@@ -246,4 +271,16 @@ body {
   font-size: 0.8125rem;
   line-height: 1.65;
   text-align: center;
+}
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--habib-border-soft);
+  background: rgba(255, 255, 255, 0.024);
+  border-radius: var(--habib-radius-sm);
+  padding: 0.35rem 0.55rem;
+  color: var(--habib-text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
 }
