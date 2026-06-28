@@ -55,19 +55,19 @@ export default function ContactSection({ lang }: ContactSectionProps) {
   const contactInfo = PORTFOLIO_DATA.contact;
 
   return (
-    <section id="contact-section" className="py-24 border-t border-white/5 relative bg-gradient-to-b from-transparent to-[#050505]">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="contact-section" className="py-24 border-t border-white/5 relative bg-gradient-to-b from-transparent to-[var(--habib-bg)]">
+      <div className="ds-shell">
         <div className="flex items-center gap-4 mb-4">
           <span className="font-mono text-orange-500 text-sm font-bold">{contactInfo.sectionNum}</span>
           <h2 className={`text-2xl sm:text-3xl font-black text-white tracking-tight ${isRtl ? "font-arabic" : "uppercase"}`}>{contactInfo.title[lang]}</h2>
           <div className="flex-1 h-px bg-gradient-to-r from-orange-500/20 to-transparent" />
         </div>
-        <p className={`text-slate-400 text-sm md:text-base mb-12 ${isRtl ? "font-arabic leading-8" : ""}`}>
+        <p className={`ds-muted-copy text-sm md:text-base mb-12 max-w-5xl ${isRtl ? "font-arabic leading-8 text-right" : ""}`}>
           {contactInfo.subtitle[lang]}
         </p>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 space-y-4">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="lg:col-span-5 space-y-3.5">
             {contactCards.map((card) => {
               const tone = toneClasses[card.tone];
               const value = typeof card.value === "string" ? card.value : card.value[lang];
@@ -77,28 +77,28 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                   href={card.href}
                   target={card.href.startsWith("http") ? "_blank" : undefined}
                   rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className={`flex items-center gap-4 p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass transition-all group ${tone.hover}`}
+                  className={`ds-card ds-card-hover flex items-center gap-4 p-4 transition-all group ${tone.hover} ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}
                 >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${tone.box}`}>
+                  <div className={`w-10 h-10 rounded-[var(--habib-radius-md)] flex items-center justify-center flex-shrink-0 transition-colors ${tone.box}`}>
                     <span className={`text-xs font-mono font-bold ${tone.text}`}>{card.icon}</span>
                   </div>
-                  <div>
-                    <p className={`text-[10px] text-slate-500 uppercase font-mono tracking-wider ${isRtl ? "font-arabic tracking-normal" : ""}`}>{card.label[lang]}</p>
-                    <p className={`text-sm font-mono text-white transition-colors ${tone.text}`}>{value}</p>
+                  <div className="min-w-0">
+                    <p className="ds-label">{card.label[lang]}</p>
+                    <p className={`text-sm text-white transition-colors truncate ${isRtl ? "font-arabic" : "font-mono"} ${tone.text}`}>{value}</p>
                   </div>
                 </a>
               );
             })}
 
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-zinc-900/60 border border-white/10 glass shadow-xl">
-              <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+            <div className={`ds-card flex items-center gap-4 p-4 shadow-xl ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}>
+              <div className="w-10 h-10 rounded-[var(--habib-radius-md)] bg-orange-500/10 flex items-center justify-center flex-shrink-0">
                 <span className="text-orange-400 text-sm">◎</span>
               </div>
-              <div>
-                <p className={`text-[10px] text-slate-500 uppercase font-mono tracking-wider ${isRtl ? "font-arabic tracking-normal" : ""}`}>
+              <div className="min-w-0">
+                <p className="ds-label">
                   {contactInfo.locationLabel[lang]}
                 </p>
-                <p className={`text-sm font-mono text-white ${isRtl ? "font-arabic" : ""}`}>
+                <p className={`text-sm text-white ${isRtl ? "font-arabic" : "font-mono"}`}>
                   {contactInfo.locationValue[lang]}
                 </p>
               </div>
