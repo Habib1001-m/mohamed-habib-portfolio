@@ -68,35 +68,34 @@ export default function ThreeModelCustomizer({
     setShowParticles(preset.particles);
   };
 
-  const labelClass = `text-[10px] text-slate-500 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.18em]"}`;
-  const presetButtonClass = `w-full px-3 py-2.5 text-[11px] rounded-xl border transition-all ${isRtl ? "text-right font-arabic" : "text-left font-mono"}`;
+  const presetButtonClass = `w-full ds-action justify-start px-3 py-2.5 text-[11px] ${isRtl ? "text-right font-arabic justify-end" : "text-left font-mono"}`;
   const proofTitle = isRtl ? "لماذا هذا مهم؟" : "Why this matters";
   const proofNote = isRtl
     ? "هذا القسم يوضح طريقة تفكيري قبل التنفيذ: حدود النظام، تدفق البيانات، مسارات المستخدم، ونقاط الإثبات التي تجعل المنتج قابلًا للتشغيل لا مجرد واجهة جميلة."
     : "This section demonstrates how I think before implementation: system boundaries, data flow, user paths, and proof points that make a product operational, not just visually polished.";
 
   return (
-    <div id="three-customizer" className={`w-full max-w-full overflow-hidden flex flex-col gap-4 p-4 md:p-5 rounded-[1.5rem] bg-zinc-950/80 border border-white/10 shadow-2xl glass ${isRtl ? "font-arabic" : ""}`}>
+    <div id="three-customizer" className={`ds-panel w-full max-w-full overflow-hidden flex flex-col gap-4 p-4 md:p-5 ${isRtl ? "font-arabic" : ""}`}>
       <div className="min-w-0">
         <h3 className="text-white font-bold text-base mb-1 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_16px_rgba(255,62,0,0.75)]" />
           {t.consoleTitle[lang]}
         </h3>
-        <p className="text-xs text-slate-500 leading-relaxed break-words">
+        <p className="text-xs ds-muted-copy break-words">
           {t.consoleSubtitle[lang]}
         </p>
       </div>
 
-      <div className="rounded-2xl bg-black/40 border border-white/10 p-4 space-y-3 min-w-0">
+      <div className="ds-card p-4 space-y-3 min-w-0">
         <div className="flex items-center justify-between gap-3">
-          <span className={labelClass}>{isRtl ? "حالة النظام" : "System state"}</span>
-          <span className={`px-2 py-1 rounded-md border text-[10px] ${toneClass[activeMeta.tone]} ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>
+          <span className="ds-label">{isRtl ? "حالة النظام" : "System state"}</span>
+          <span className={`px-2 py-1 rounded-[var(--habib-radius-sm)] border text-[10px] ${toneClass[activeMeta.tone]} ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>
             {activeMeta.shortLabel[lang]}
           </span>
         </div>
         <div className="min-w-0">
           <p className="text-sm text-white font-semibold leading-relaxed break-words">{activeMeta.mode[lang]}</p>
-          <p className="text-[11px] text-slate-400 leading-relaxed mt-1 break-words">{activeMeta.signal[lang]}</p>
+          <p className="text-[11px] ds-muted-copy mt-1 break-words">{activeMeta.signal[lang]}</p>
         </div>
         <div className="flex items-center gap-2 text-[11px] text-emerald-300">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -105,18 +104,18 @@ export default function ThreeModelCustomizer({
       </div>
 
       <div className="grid grid-cols-2 gap-3 min-w-0">
-        <div className="rounded-xl bg-white/[0.015] border border-white/5 p-3 min-w-0">
-          <span className={labelClass}>{isRtl ? "العقد" : "Nodes"}</span>
+        <div className="ds-metric min-w-0">
+          <span className="ds-label">{isRtl ? "العقد" : "Nodes"}</span>
           <p className="mt-1 text-lg font-black text-white font-mono">{activeMeta.nodes.length}</p>
         </div>
-        <div className="rounded-xl bg-white/[0.015] border border-white/5 p-3 min-w-0">
-          <span className={labelClass}>{isRtl ? "المسارات" : "Links"}</span>
+        <div className="ds-metric min-w-0">
+          <span className="ds-label">{isRtl ? "المسارات" : "Links"}</span>
           <p className="mt-1 text-lg font-black text-white font-mono">{activeMeta.links.length}</p>
         </div>
       </div>
 
       <div className="flex flex-col gap-2 min-w-0">
-        <label className={labelClass}>{t.controlPreset[lang]}</label>
+        <label className="ds-label">{t.controlPreset[lang]}</label>
         <div className="grid grid-cols-1 gap-2 min-w-0">
           {presets.map((preset) => (
             <button
@@ -124,7 +123,7 @@ export default function ThreeModelCustomizer({
               id={`preset-${preset.id}`}
               type="button"
               onClick={() => handlePresetChange(preset.id)}
-              className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5 hover:border-white/10"}`}
+              className={`${presetButtonClass} ${activePreset === preset.id ? activeButtonClass[preset.tone] : ""}`}
             >
               <span className="block truncate">{preset.label[lang]}</span>
               <span className="block mt-1 text-[10px] opacity-70 truncate">{preset.state[lang]}</span>
@@ -133,8 +132,8 @@ export default function ThreeModelCustomizer({
         </div>
       </div>
 
-      <div className="rounded-2xl bg-black/30 border border-white/5 p-3 space-y-2 min-w-0">
-        <span className={labelClass}>{isRtl ? "مؤشرات معمارية" : "Architecture signals"}</span>
+      <div className="ds-card p-3 space-y-2 min-w-0">
+        <span className="ds-label">{isRtl ? "مؤشرات معمارية" : "Architecture signals"}</span>
         <div className="grid sm:grid-cols-3 lg:grid-cols-1 gap-1.5">
           {activeMeta.signals.slice(0, 3).map((signal) => (
             <div key={signal.en} className="flex items-start gap-2 text-[11px] text-slate-400 leading-relaxed min-w-0">
@@ -148,7 +147,7 @@ export default function ThreeModelCustomizer({
       <button
         type="button"
         onClick={() => setShowAdvanced((value) => !value)}
-        className={`flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.015] px-3 py-2 text-[11px] text-slate-400 hover:text-white hover:border-orange-500/30 transition-colors ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}
+        className={`ds-action w-full justify-between text-[11px] ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}
         aria-expanded={showAdvanced}
       >
         <span>{isRtl ? "إعدادات متقدمة" : "Advanced controls"}</span>
@@ -156,9 +155,9 @@ export default function ThreeModelCustomizer({
       </button>
 
       {showAdvanced && (
-        <div className="space-y-4 rounded-2xl border border-white/5 bg-black/25 p-3 min-w-0 overflow-hidden">
+        <div className="space-y-4 ds-card p-3 min-w-0 overflow-hidden">
           <div className="flex flex-col gap-2.5 min-w-0">
-            <label id="color-picker-label" className={labelClass}>{t.controlColor[lang]}</label>
+            <label id="color-picker-label" className="ds-label">{t.controlColor[lang]}</label>
             <div className="flex flex-wrap gap-2" role="group" aria-labelledby="color-picker-label">
               {COLORS.map((c) => (
                 <button
@@ -185,34 +184,26 @@ export default function ThreeModelCustomizer({
 
           <div className="grid grid-cols-2 gap-3 min-w-0">
             <div className="flex flex-col gap-2 min-w-0">
-              <label htmlFor="toggle-wireframe" className={labelClass}>{t.controlWireframe[lang]}</label>
+              <label htmlFor="toggle-wireframe" className="ds-label">{t.controlWireframe[lang]}</label>
               <button
                 id="toggle-wireframe"
                 type="button"
                 aria-pressed={wireframe}
                 onClick={() => setWireframe(!wireframe)}
-                className={`px-3 py-2 text-[11px] rounded-lg border transition-all ${isRtl ? "font-arabic" : "font-mono"} ${
-                  wireframe
-                    ? "bg-orange-500/10 border-orange-500/40 text-orange-300 font-semibold"
-                    : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"
-                }`}
+                className={`ds-action w-full text-[11px] ${isRtl ? "font-arabic" : "font-mono"} ${wireframe ? "ds-action-accent font-semibold" : ""}`}
               >
                 {wireframe ? (isRtl ? "نشط" : "On") : (isRtl ? "مغلق" : "Off")}
               </button>
             </div>
 
             <div className="flex flex-col gap-2 min-w-0">
-              <label htmlFor="toggle-particles" className={labelClass}>{t.controlParticle[lang]}</label>
+              <label htmlFor="toggle-particles" className="ds-label">{t.controlParticle[lang]}</label>
               <button
                 id="toggle-particles"
                 type="button"
                 aria-pressed={showParticles}
                 onClick={() => setShowParticles(!showParticles)}
-                className={`px-3 py-2 text-[11px] rounded-lg border transition-all ${isRtl ? "font-arabic" : "font-mono"} ${
-                  showParticles
-                    ? "bg-orange-500/10 border-orange-500/40 text-orange-300 font-semibold"
-                    : "bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/5"
-                }`}
+                className={`ds-action w-full text-[11px] ${isRtl ? "font-arabic" : "font-mono"} ${showParticles ? "ds-action-accent font-semibold" : ""}`}
               >
                 {showParticles ? (isRtl ? "نشط" : "On") : (isRtl ? "مغلق" : "Off")}
               </button>
@@ -221,7 +212,7 @@ export default function ThreeModelCustomizer({
 
           <div className="flex flex-col gap-2 min-w-0">
             <div className="flex items-center justify-between">
-              <label htmlFor="speed-range-slider" className={labelClass}>{t.controlSpeed[lang]}</label>
+              <label htmlFor="speed-range-slider" className="ds-label">{t.controlSpeed[lang]}</label>
               <span className="text-[11px] font-mono text-orange-400">{rotationSpeed.toFixed(1)}x</span>
             </div>
             <input
@@ -239,14 +230,14 @@ export default function ThreeModelCustomizer({
         </div>
       )}
 
-      <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl min-w-0">
+      <div className="ds-card p-3 min-w-0">
         <div className="flex items-start gap-2.5">
           <span className="text-orange-400 text-xs mt-0.5 select-none">•</span>
           <div>
-            <p className={`text-[10px] text-orange-300 mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]"}`}>
+            <p className="ds-kicker mb-1">
               {proofTitle}
             </p>
-            <p className="text-[11px] text-slate-500 leading-relaxed break-words">
+            <p className="text-[11px] ds-muted-copy break-words">
               {proofNote}
             </p>
           </div>
