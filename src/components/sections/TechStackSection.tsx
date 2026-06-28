@@ -30,10 +30,13 @@ function GlobeIcon() {
   );
 }
 
+const DEFAULT_TECH_CATEGORY = TECH_STACK[0]?.id ?? "frontend";
+
 export default function TechStackSection({ lang }: TechStackSectionProps) {
   const skl = PORTFOLIO_DATA.skills;
   const isRtl = lang === "ar";
-  const [activeTechCategory, setActiveTechCategory] = useState("languages");
+  const [activeTechCategory, setActiveTechCategory] = useState(DEFAULT_TECH_CATEGORY);
+  const activeCategory = TECH_STACK.find((c) => c.id === activeTechCategory) ?? TECH_STACK[0];
 
   return (
     <section id="stack-section" className="py-24 border-t border-white/5 relative">
@@ -52,7 +55,7 @@ export default function TechStackSection({ lang }: TechStackSectionProps) {
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           <div role="tablist" aria-label={lang === "ar" ? "الفئات التقنية" : "Technical Categories"} className="lg:col-span-4 flex flex-col gap-2">
             {TECH_STACK.map((cat) => {
-              const isActive = activeTechCategory === cat.id;
+              const isActive = activeCategory?.id === cat.id;
               return (
                 <button
                   key={cat.id}
@@ -67,12 +70,12 @@ export default function TechStackSection({ lang }: TechStackSectionProps) {
                   } ${isRtl ? "text-right flex-row-reverse font-arabic" : "text-left font-mono uppercase tracking-wider"}`}
                 >
                   <span>{cat.title[lang]}</span>
-                  {cat.id === "languages" && <CodeIcon />}
-                  {cat.id === "frameworks" && <GlobeIcon />}
+                  {cat.id === "frontend" && <CodeIcon />}
+                  {cat.id === "backend-data" && <GlobeIcon />}
                   {cat.id === "infrastructure" && <ServerIcon />}
-                  {cat.id === "ai-ml" && <span className="text-orange-400 font-mono text-xs font-bold">[AI]</span>}
-                  {cat.id === "practices" && <span className="text-amber-500 font-mono text-xs font-bold">[ARCH]</span>}
-                  {cat.id === "marketing-support" && <span className="text-yellow-500 font-mono text-xs font-bold">[SYS]</span>}
+                  {cat.id === "automation-ai" && <span className="text-orange-400 font-mono text-xs font-bold">[AI]</span>}
+                  {cat.id === "systems-practices" && <span className="text-amber-500 font-mono text-xs font-bold">[ARCH]</span>}
+                  {cat.id === "product-ops" && <span className="text-yellow-500 font-mono text-xs font-bold">[SYS]</span>}
                 </button>
               );
             })}
@@ -81,11 +84,11 @@ export default function TechStackSection({ lang }: TechStackSectionProps) {
           <div
             id="tech-items-panel"
             role="tabpanel"
-            aria-labelledby={`tech-cat-${activeTechCategory}`}
+            aria-labelledby={`tech-cat-${activeCategory?.id ?? DEFAULT_TECH_CATEGORY}`}
             className="lg:col-span-8 ds-panel p-6 sm:p-8 min-h-[280px] flex flex-col justify-center"
           >
             <div className="grid sm:grid-cols-2 gap-4">
-              {TECH_STACK.find((c) => c.id === activeTechCategory)?.items.map((item, idx) => (
+              {activeCategory?.items.map((item, idx) => (
                 <div
                   key={idx}
                   id={`tech-item-${idx}`}
