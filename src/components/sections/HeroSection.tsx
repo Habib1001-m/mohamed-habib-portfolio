@@ -21,6 +21,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
     : "-translate-x-[7%] scale-[1.15] grayscale brightness-90";
 
   const actionTextClass = isRtl ? "font-arabic" : "font-mono uppercase tracking-[0.16em]";
+  const pillarCardClass = `ds-card ds-card-hover min-h-[86px] p-4 ${isRtl ? "text-right font-arabic" : "text-left"}`;
 
   return (
     <header id="hero-section" className="min-h-screen relative flex items-center pt-24 pb-16">
@@ -53,7 +54,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             {h.subtitle[lang]}
           </p>
 
-          <div className={`flex flex-wrap items-center gap-4 justify-center ${isRtl ? "lg:justify-end" : "lg:justify-start"} mb-12`}>
+          <div className={`flex flex-wrap items-center gap-4 justify-center ${isRtl ? "lg:justify-end" : "lg:justify-start"} mb-10`}>
             <a
               href="#projects-section"
               className={`ds-action ds-action-primary px-6 ${actionTextClass}`}
@@ -77,18 +78,20 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl border-t border-white/10 pt-8 mx-auto lg:mx-0">
-            <div className={`ds-card p-4 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
-              <div className={`text-orange-300 text-xs mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle1[lang]}</div>
-              <div className={`text-[11px] text-slate-500 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc1[lang]}</div>
-            </div>
-            <div className={`ds-card p-4 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
-              <div className={`text-yellow-400 text-xs mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle2[lang]}</div>
-              <div className={`text-[11px] text-slate-500 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc2[lang]}</div>
-            </div>
-            <div className={`ds-card p-4 ${isRtl ? "text-right font-arabic" : "text-left"}`}>
-              <div className={`text-amber-400 text-xs mb-1 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle3[lang]}</div>
-              <div className={`text-[11px] text-slate-500 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc3[lang]}</div>
+          <div className={`w-full max-w-2xl mx-auto lg:mx-0 rounded-[var(--habib-radius-xl)] border border-white/10 bg-black/25 p-2.5 shadow-xl shadow-black/10 ${isRtl ? "font-arabic" : ""}`}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className={pillarCardClass}>
+                <div className={`text-orange-300 text-xs mb-1.5 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle1[lang]}</div>
+                <div className={`text-[11px] text-slate-400 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc1[lang]}</div>
+              </div>
+              <div className={pillarCardClass}>
+                <div className={`text-yellow-400 text-xs mb-1.5 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle2[lang]}</div>
+                <div className={`text-[11px] text-slate-400 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc2[lang]}</div>
+              </div>
+              <div className={pillarCardClass}>
+                <div className={`text-amber-400 text-xs mb-1.5 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}>{h.pillarTitle3[lang]}</div>
+                <div className={`text-[11px] text-slate-400 leading-snug ${isRtl ? "font-arabic" : ""}`}>{h.pillarDesc3[lang]}</div>
+              </div>
             </div>
           </div>
         </div>
