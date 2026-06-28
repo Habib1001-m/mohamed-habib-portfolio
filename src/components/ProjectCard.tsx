@@ -14,7 +14,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
   return (
     <div
       id={`project-card-${project.id}`}
-      className="project-card flex flex-col h-full rounded-2xl bg-zinc-950/70 border border-white/10 glass overflow-hidden transition-all duration-300 shadow-xl hover:border-orange-500/25"
+      className="project-card ds-card ds-card-hover flex flex-col h-full overflow-hidden shadow-xl"
     >
       <button
         type="button"
@@ -29,18 +29,18 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
           className="project-img w-full h-full object-cover opacity-90 group-hover:scale-[1.03] transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#050505] to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--habib-bg)] to-transparent" />
 
         <div className={`absolute top-4 ${isRtl ? "left-4" : "right-4"} flex flex-wrap gap-1.5 justify-end`}>
-          <span className={`px-2.5 py-1 rounded-md text-[10px] bg-orange-500/10 text-orange-300 border border-orange-500/20 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
+          <span className={`px-2.5 py-1 rounded-[var(--habib-radius-sm)] text-[10px] bg-orange-500/10 text-orange-300 border border-orange-500/20 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
             {project.category[lang]}
           </span>
-          <span className={`px-2.5 py-1 rounded-md text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
+          <span className={`px-2.5 py-1 rounded-[var(--habib-radius-sm)] text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 ${isRtl ? "font-arabic" : "font-mono uppercase tracking-widest"}`}>
             {project.status[lang]}
           </span>
         </div>
 
-        <div className={`absolute bottom-4 ${isRtl ? "right-4" : "left-4"} flex items-center gap-2 px-2.5 py-1 bg-black/85 nav-blur rounded-md border border-white/10`}>
+        <div className={`absolute bottom-4 ${isRtl ? "right-4" : "left-4"} flex items-center gap-2 px-2.5 py-1 bg-black/85 nav-blur rounded-[var(--habib-radius-sm)] border border-white/10`}>
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-60" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500" />
@@ -57,11 +57,11 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
           <p className={`text-xs text-orange-300 leading-relaxed ${isRtl ? "font-arabic" : "font-mono tracking-wide"}`}>
             {project.tagline[lang]}
           </p>
-          <p className="text-sm text-slate-300 leading-relaxed pt-2">
+          <p className="text-sm ds-muted-copy pt-2">
             {project.description[lang]}
           </p>
           {project.verificationNote && !project.links?.github && !project.links?.demo && (
-            <p className={`mt-3 rounded-xl border border-cyan-500/15 bg-cyan-500/[0.035] px-3 py-2 text-xs text-cyan-200/80 leading-relaxed ${isRtl ? "font-arabic" : "font-mono"}`}>
+            <p className={`mt-3 rounded-[var(--habib-radius-md)] border border-cyan-500/15 bg-cyan-500/[0.035] px-3 py-2 text-xs text-cyan-200/80 leading-relaxed ${isRtl ? "font-arabic" : "font-mono"}`}>
               {project.verificationNote[lang]}
             </p>
           )}
@@ -72,13 +72,13 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
             {project.tech.slice(0, 5).map((techName) => (
               <span
                 key={techName}
-                className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.03] border border-white/5 text-slate-300"
+                className="px-2 py-0.5 rounded-[var(--habib-radius-sm)] text-[10px] font-mono bg-white/[0.03] border border-white/5 text-slate-300"
               >
                 {techName}
               </span>
             ))}
             {project.tech.length > 5 && (
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.05] text-slate-400">
+              <span className="px-2 py-0.5 rounded-[var(--habib-radius-sm)] text-[10px] font-mono bg-white/[0.05] text-slate-400">
                 +{project.tech.length - 5}
               </span>
             )}
@@ -100,7 +100,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
                   href={project.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-[var(--habib-radius-sm)] bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
                   title={t.viewSource[lang]}
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -113,7 +113,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
                   href={project.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-[var(--habib-radius-sm)] bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
                   title={t.visitDemo[lang]}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
