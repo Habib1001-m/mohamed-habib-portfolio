@@ -7,6 +7,7 @@ interface ContactFormProps {
 
 export default function ContactForm({ lang }: ContactFormProps) {
   const t = PORTFOLIO_DATA.contact;
+  const isRtl = lang === "ar";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -15,6 +16,8 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
   const [isSending, setIsSending] = useState(false);
   const [success, setSuccess] = useState<boolean | null>(null);
+
+  const labelClass = `ds-label ${isRtl ? "font-arabic" : ""}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +68,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
     <form
       id="portfolio-contact-form"
       onSubmit={handleSubmit}
-      className="p-6 sm:p-8 rounded-2xl bg-zinc-900/60 border border-white/10 shadow-2xl glass space-y-5 flex flex-col justify-between"
+      className={`ds-panel p-6 sm:p-8 space-y-5 flex flex-col justify-between ${isRtl ? "font-arabic text-right" : ""}`}
     >
       <div className="hidden" aria-hidden="true">
         <label htmlFor="input-company">Company</label>
@@ -81,7 +84,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
       <div className="grid sm:grid-cols-2 gap-5">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="input-name" className="text-xs font-mono text-slate-500 uppercase tracking-wider">
+          <label htmlFor="input-name" className={labelClass}>
             {t.formName[lang]}
           </label>
           <input
@@ -91,12 +94,12 @@ export default function ContactForm({ lang }: ContactFormProps) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={t.formNamePlaceholder[lang]}
-            className="w-full px-4 py-3 rounded-xl bg-white/[0.02] border border-white/5 focus:border-orange-500/50 focus:bg-orange-500/[0.01] text-white placeholder-slate-600 focus:outline-none transition-all text-sm"
+            className="ds-field"
           />
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="input-email" className="text-xs font-mono text-slate-500 uppercase tracking-wider">
+          <label htmlFor="input-email" className={labelClass}>
             {t.formEmail[lang]}
           </label>
           <input
@@ -106,13 +109,13 @@ export default function ContactForm({ lang }: ContactFormProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.formEmailPlaceholder[lang]}
-            className="w-full px-4 py-3 rounded-xl bg-white/[0.02] border border-white/5 focus:border-orange-500/50 focus:bg-orange-500/[0.01] text-white placeholder-slate-600 focus:outline-none transition-all text-sm"
+            className="ds-field"
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="input-subject" className="text-xs font-mono text-slate-500 uppercase tracking-wider">
+        <label htmlFor="input-subject" className={labelClass}>
           {t.formSubject[lang]}
         </label>
         <input
@@ -121,12 +124,12 @@ export default function ContactForm({ lang }: ContactFormProps) {
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder={t.formSubjectPlaceholder[lang]}
-          className="w-full px-4 py-3 rounded-xl bg-white/[0.02] border border-white/5 focus:border-orange-500/50 focus:bg-orange-500/[0.01] text-white placeholder-slate-600 focus:outline-none transition-all text-sm"
+          className="ds-field"
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="input-message" className="text-xs font-mono text-slate-500 uppercase tracking-wider">
+        <label htmlFor="input-message" className={labelClass}>
           {t.formMessage[lang]}
         </label>
         <textarea
@@ -136,7 +139,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={t.formMessagePlaceholder[lang]}
-          className="w-full px-4 py-3 rounded-xl bg-white/[0.02] border border-white/5 focus:border-orange-500/50 focus:bg-orange-500/[0.01] text-white placeholder-slate-600 focus:outline-none transition-all text-sm resize-none"
+          className="ds-field resize-none"
         ></textarea>
       </div>
 
@@ -144,7 +147,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
         id="submit-contact-btn"
         type="submit"
         disabled={isSending}
-        className="w-full py-3.5 accent-gradient hover:opacity-90 active:scale-[0.98] disabled:opacity-50 text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+        className={`ds-action ds-action-primary w-full disabled:opacity-50 active:scale-[0.98] cursor-pointer ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}
       >
         <span>{isSending ? t.formSending[lang] : t.formSubmit[lang]}</span>
         {!isSending && (
@@ -155,12 +158,12 @@ export default function ContactForm({ lang }: ContactFormProps) {
       </button>
 
       {success === true && (
-        <div id="contact-success-msg" aria-live="polite" className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs sm:text-sm text-center animate-fade-in font-mono">
+        <div id="contact-success-msg" aria-live="polite" className={`ds-status-note bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 animate-fade-in ${isRtl ? "font-arabic" : "font-mono"}`}>
           {t.formSuccess[lang]}
         </div>
       )}
       {success === false && (
-        <div id="contact-error-msg" aria-live="polite" className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-xs sm:text-sm text-center animate-fade-in font-mono">
+        <div id="contact-error-msg" aria-live="polite" className={`ds-status-note bg-rose-500/10 border border-rose-500/30 text-rose-300 animate-fade-in ${isRtl ? "font-arabic" : "font-mono"}`}>
           {t.formError[lang]}
         </div>
       )}
