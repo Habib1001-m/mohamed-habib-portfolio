@@ -161,7 +161,7 @@ body {
   padding: 0.68rem 0.85rem;
   color: var(--habib-text-muted);
   font-size: 0.75rem;
-  transition: color var(--habib-transition), border-color var(--habib-transition), background var(--habib-transition), transform var(--habib-transition);
+  transition: color var(--habib-transition), border-color var(--habib-transition), background var(--habib-transition), transform var(--habib-transition), opacity var(--habib-transition);
 }
 
 .ds-action:hover {
@@ -171,10 +171,31 @@ body {
   transform: translateY(-1px);
 }
 
+.ds-action-primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--habib-orange) 0%, var(--habib-gold) 100%);
+  color: #050505;
+  font-weight: 800;
+  box-shadow: 0 12px 36px rgba(255, 62, 0, 0.12);
+}
+
+.ds-action-primary:hover {
+  color: #050505;
+  border-color: transparent;
+  background: linear-gradient(135deg, #ff4f12 0%, #ffc72a 100%);
+  box-shadow: 0 14px 42px rgba(255, 126, 0, 0.16);
+}
+
 .ds-action-accent {
   border-color: rgba(255, 62, 0, 0.26);
   background: rgba(255, 62, 0, 0.07);
   color: #fdba74;
+}
+
+.ds-action-success {
+  border-color: rgba(16, 242, 154, 0.2);
+  background: rgba(16, 242, 154, 0.04);
+  color: #86efac;
 }
 
 .ds-metric {
@@ -195,4 +216,34 @@ body {
 [dir="rtl"] .ds-label {
   font-family: var(--font-arabic);
   letter-spacing: 0;
+}
+
+.ds-field {
+  width: 100%;
+  border: 1px solid var(--habib-border-soft);
+  background: rgba(255, 255, 255, 0.024);
+  border-radius: var(--habib-radius-md);
+  padding: 0.8rem 1rem;
+  color: var(--habib-text);
+  font-size: 0.875rem;
+  transition: border-color var(--habib-transition), background var(--habib-transition), box-shadow var(--habib-transition);
+}
+
+.ds-field::placeholder {
+  color: rgba(100, 116, 139, 0.95);
+}
+
+.ds-field:focus {
+  outline: none;
+  border-color: rgba(255, 62, 0, 0.5);
+  background: rgba(255, 62, 0, 0.012);
+  box-shadow: 0 0 0 3px rgba(255, 62, 0, 0.065);
+}
+
+.ds-status-note {
+  border-radius: var(--habib-radius-md);
+  padding: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  text-align: center;
 }
