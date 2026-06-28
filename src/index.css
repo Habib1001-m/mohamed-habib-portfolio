@@ -7,16 +7,55 @@
   --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Cairo", "Tajawal", sans-serif;
 }
 
+:root {
+  color-scheme: dark;
+
+  --habib-bg: #050505;
+  --habib-bg-soft: #070707;
+  --habib-surface: rgba(255, 255, 255, 0.024);
+  --habib-surface-strong: rgba(255, 255, 255, 0.04);
+  --habib-surface-muted: rgba(0, 0, 0, 0.34);
+  --habib-border: rgba(255, 255, 255, 0.1);
+  --habib-border-soft: rgba(255, 255, 255, 0.065);
+  --habib-border-accent: rgba(255, 62, 0, 0.28);
+
+  --habib-orange: #ff3e00;
+  --habib-gold: #ffbe00;
+  --habib-green: #10f29a;
+  --habib-blue: #7aa2ff;
+
+  --habib-text: #f8fafc;
+  --habib-text-soft: #cbd5e1;
+  --habib-text-muted: #94a3b8;
+  --habib-text-dim: #64748b;
+
+  --habib-radius-sm: 0.65rem;
+  --habib-radius-md: 0.9rem;
+  --habib-radius-lg: 1.15rem;
+  --habib-radius-xl: 1.55rem;
+  --habib-radius-2xl: 1.85rem;
+
+  --habib-shadow-soft: 0 18px 70px rgba(0, 0, 0, 0.32);
+  --habib-shadow-accent: 0 0 34px rgba(255, 62, 0, 0.1);
+  --habib-transition: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 html {
   scroll-behavior: smooth;
   text-rendering: geometricPrecision;
+  background: var(--habib-bg);
 }
 
 body {
-  background-color: #050505;
-  color: #ffffff;
+  background-color: var(--habib-bg);
+  color: var(--habib-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(255, 126, 0, 0.3);
+  color: var(--habib-text);
 }
 
 .display-text {
@@ -40,17 +79,120 @@ body {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--habib-surface);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--habib-border);
 }
 
 .accent-gradient {
-  background: linear-gradient(135deg, #FF3E00 0%, #FFBE00 100%);
+  background: linear-gradient(135deg, var(--habib-orange) 0%, var(--habib-gold) 100%);
 }
 
 .vertical-line {
   width: 1px;
   height: 100%;
   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.ds-shell {
+  width: min(100%, 72rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .ds-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+.ds-panel {
+  border: 1px solid var(--habib-border);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 62, 0, 0.045), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.014));
+  border-radius: var(--habib-radius-2xl);
+  box-shadow: var(--habib-shadow-soft);
+}
+
+.ds-card {
+  border: 1px solid var(--habib-border-soft);
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: var(--habib-radius-lg);
+  transition: border-color var(--habib-transition), background var(--habib-transition), transform var(--habib-transition), box-shadow var(--habib-transition);
+}
+
+.ds-card-hover:hover {
+  border-color: var(--habib-border-accent);
+  background: rgba(255, 62, 0, 0.035);
+  transform: translateY(-1px);
+  box-shadow: var(--habib-shadow-accent);
+}
+
+.ds-kicker {
+  color: #fdba74;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+[dir="rtl"] .ds-kicker {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
+}
+
+.ds-muted-copy {
+  color: var(--habib-text-muted);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.ds-action {
+  min-height: 2.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid var(--habib-border);
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: var(--habib-radius-md);
+  padding: 0.68rem 0.85rem;
+  color: var(--habib-text-muted);
+  font-size: 0.75rem;
+  transition: color var(--habib-transition), border-color var(--habib-transition), background var(--habib-transition), transform var(--habib-transition);
+}
+
+.ds-action:hover {
+  color: var(--habib-text);
+  border-color: var(--habib-border-accent);
+  background: rgba(255, 62, 0, 0.045);
+  transform: translateY(-1px);
+}
+
+.ds-action-accent {
+  border-color: rgba(255, 62, 0, 0.26);
+  background: rgba(255, 62, 0, 0.07);
+  color: #fdba74;
+}
+
+.ds-metric {
+  border: 1px solid var(--habib-border-soft);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--habib-radius-lg);
+  padding: 0.85rem 1rem;
+}
+
+.ds-label {
+  color: var(--habib-text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+[dir="rtl"] .ds-label {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
 }
