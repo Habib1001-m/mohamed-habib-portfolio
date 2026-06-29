@@ -2,8 +2,8 @@ export const FEATURES = {
   testimonials: false,
   booking: false,
   caseStudies: false,
-  motionPrototype: false,
-  scrollProgress: false,
+  motionPrototype: true,
+  scrollProgress: true,
   customCursor: false,
 } as const;
 
