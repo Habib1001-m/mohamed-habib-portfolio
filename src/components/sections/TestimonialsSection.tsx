@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FEATURES, TRUST_CONFIG } from "../../config/features";
 import { TESTIMONIALS } from "../../data/testimonials";
 import { trackEvent } from "../../lib/analytics";
@@ -9,15 +10,19 @@ interface TestimonialsSectionProps {
 export default function TestimonialsSection({ lang }: TestimonialsSectionProps) {
   const approvedTestimonials = TESTIMONIALS.filter((testimonial) => testimonial.approvedForPublicUse);
   const isRtl = lang === "ar";
+  const shouldShow = FEATURES.testimonials && approvedTestimonials.length >= TRUST_CONFIG.testimonialsMinimumCount;
 
-  if (!FEATURES.testimonials || approvedTestimonials.length < TRUST_CONFIG.testimonialsMinimumCount) {
+  useEffect(() => {
+    if (!shouldShow) return;
+    trackEvent("testimonials_viewed", {
+      count: approvedTestimonials.length,
+      lang,
+    });
+  }, [approvedTestimonials.length, lang, shouldShow]);
+
+  if (!shouldShow) {
     return null;
   }
-
-  trackEvent("testimonials_viewed", {
-    count: approvedTestimonials.length,
-    lang,
-  });
 
   return (
     <section id="testimonials-section" className="py-24 border-t border-white/5 relative">
