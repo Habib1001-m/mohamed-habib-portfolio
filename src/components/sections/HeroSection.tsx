@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
+import { trackEvent } from "../../lib/analytics";
 
 interface HeroSectionProps {
   lang: "en" | "ar";
@@ -57,6 +58,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
           <div className={`flex flex-wrap items-center gap-4 justify-center ${isRtl ? "lg:justify-end" : "lg:justify-start"} mb-10`}>
             <a
               href="#projects-section"
+              onClick={() => trackEvent("hero_projects_clicked", { lang })}
               className={`ds-action ds-action-primary px-6 ${actionTextClass}`}
             >
               <span>{h.ctaPrimary[lang]}</span>
@@ -66,12 +68,14 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             </a>
             <a
               href="#contact-section"
+              onClick={() => trackEvent("hero_contact_clicked", { lang })}
               className={`ds-action px-6 ${actionTextClass}`}
             >
               {h.ctaSecondary[lang]}
             </a>
             <a
               href="/cv/Mohamed_Habib_One_Page_CV.pdf"
+              onClick={() => trackEvent("cv_one_page_clicked", { source: "hero", lang })}
               className={`ds-action ds-action-success px-6 ${actionTextClass}`}
             >
               {h.ctaCv[lang]}
