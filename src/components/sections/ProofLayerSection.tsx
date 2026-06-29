@@ -1,6 +1,7 @@
 import { FEATURES } from "../../config/features";
 import { selectedPublicProofAssets } from "../../data/proofAssetReviewSelection";
 import { APPROVED_CURRENT_PROOF_COPY } from "../../data/proofLayerCopyMap";
+import { trackEvent } from "../../lib/analytics";
 
 type Lang = "en" | "ar";
 
@@ -62,6 +63,15 @@ export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
           const isExternal = Boolean(href?.startsWith("http"));
           const ctaText = copy.ctaLabel?.[lang];
 
+          const recordProofAssetClick = () => {
+            trackEvent("proof_asset_clicked", {
+              proof_id: asset.id,
+              proof_area: asset.area,
+              destination: isExternal ? "external" : "local",
+              language: lang,
+            });
+          };
+
           return (
             <article
               key={asset.id}
@@ -89,6 +99,7 @@ export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noreferrer" : undefined}
                     aria-label={`${ctaText}: ${copy.title[lang]}`}
+                    onClick={recordProofAssetClick}
                   >
                     {ctaText}
                   </a>
