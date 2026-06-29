@@ -1,5 +1,6 @@
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
 import { trackEvent } from "../../lib/analytics";
+import BookingCTA from "../BookingCTA";
 import ContactForm from "../ContactForm";
 
 interface ContactSectionProps {
@@ -99,6 +100,8 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                 </a>
               );
             })}
+
+            <BookingCTA lang={lang} />
 
             <div className={`ds-card flex items-center gap-4 p-4 shadow-xl ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}>
               <div className="w-10 h-10 rounded-[var(--habib-radius-md)] bg-orange-500/10 flex items-center justify-center flex-shrink-0">
