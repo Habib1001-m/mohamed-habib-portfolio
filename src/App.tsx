@@ -14,6 +14,7 @@ import ProjectModal from "./components/ProjectModal";
 import ScrollProgressIndicator from "./components/ScrollProgressIndicator";
 import SectionHeadingRevealController from "./components/SectionHeadingRevealController";
 import ProjectCardStaggerController from "./components/ProjectCardStaggerController";
+import RevealShell from "./components/RevealShell";
 
 const getInitialLanguage = (): "en" | "ar" => {
   if (typeof window === "undefined") return "ar";
@@ -53,13 +54,17 @@ export default function App() {
       <Navbar lang={lang} setLang={setLang} />
 
       {/* Hero Section */}
-      <HeroSection lang={lang} />
+      <RevealShell id="hero">
+        <HeroSection lang={lang} />
+      </RevealShell>
 
       {/* About Section */}
       <AboutSection lang={lang} />
 
       {/* Projects Grid Section */}
-      <ProjectsSection lang={lang} setSelectedProject={setSelectedProject} />
+      <RevealShell id="projects">
+        <ProjectsSection lang={lang} setSelectedProject={setSelectedProject} />
+      </RevealShell>
 
       {/* Gated Proof Layer — hidden while FEATURES.proofLayer is false */}
       <ProofLayerSection lang={lang} />
