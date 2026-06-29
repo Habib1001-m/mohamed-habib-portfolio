@@ -25,6 +25,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
   return (
     <div
       id={`project-card-${project.id}`}
+      data-motion-reveal="project-card"
       className="project-card ds-card ds-card-hover flex flex-col h-full overflow-hidden shadow-xl"
     >
       <button
