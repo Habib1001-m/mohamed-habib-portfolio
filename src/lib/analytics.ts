@@ -1,10 +1,10 @@
 import {
   ANALYTICS_CONFIG,
   ANALYTICS_EVENTS,
-  AnalyticsEventName,
   SENSITIVE_ANALYTICS_PARAM_KEYS,
   isAnalyticsEventName,
 } from "../config/analytics";
+import type { AnalyticsEventName } from "../config/analytics";
 
 export type { AnalyticsEventName } from "../config/analytics";
 
