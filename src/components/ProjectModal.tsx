@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Project } from "../types/portfolio";
 import { PORTFOLIO_DATA } from "../data/portfolioContent";
 import { trackEvent } from "../lib/analytics";
+import ProjectCaseStudyPanel from "./ProjectCaseStudyPanel";
 
 interface ProjectModalProps {
   lang: "en" | "ar";
@@ -141,6 +142,8 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
               {selectedProject.longDescription[lang]}
             </p>
           </div>
+
+          <ProjectCaseStudyPanel projectId={selectedProject.id} lang={lang} />
 
           {selectedProject.verificationNote && (
             <div className="ds-card p-4 space-y-2 border-cyan-500/15 bg-cyan-500/[0.035]">
