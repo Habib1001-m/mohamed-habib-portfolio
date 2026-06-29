@@ -5,6 +5,7 @@ export const FEATURES = {
   motionPrototype: true,
   scrollProgress: true,
   sectionHeadingReveal: true,
+  projectCardStagger: true,
   customCursor: false,
 } as const;
 
