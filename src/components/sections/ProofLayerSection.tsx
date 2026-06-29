@@ -8,6 +8,20 @@ interface ProofLayerSectionProps {
   lang: Lang;
 }
 
+const getAssetTypeLabel = (area: (typeof selectedPublicProofAssets)[number]["area"], lang: Lang) => {
+  const labels: Record<typeof area, { en: string; ar: string }> = {
+    identity: { en: "Identity", ar: "هوية" },
+    cv: { en: "CV", ar: "سيرة" },
+    deployment: { en: "Deployment", ar: "نشر" },
+    repository: { en: "Repository", ar: "مستودع" },
+    project: { en: "Project", ar: "مشروع" },
+    screenshot: { en: "Screenshot", ar: "لقطة" },
+    "trust-content": { en: "Trust", ar: "ثقة" },
+  };
+
+  return labels[area][lang];
+};
+
 export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
   if (!FEATURES.proofLayer) {
     return null;
@@ -28,11 +42,11 @@ export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
   }
 
   return (
-    <section id="proof" className="ds-shell py-24">
-      <div className="ds-section-heading mb-10">
+    <section id="proof" className="ds-shell py-24 md:py-28" aria-labelledby="proof-heading">
+      <div className="ds-section-heading mb-12 max-w-4xl">
         <p className="ds-kicker">{lang === "ar" ? "إثباتات عامة" : "Public proof"}</p>
         <div className="ds-section-rule" />
-        <h2 className="ds-section-title">
+        <h2 id="proof-heading" className="ds-section-title">
           {lang === "ar" ? "إثباتات جاهزة بدون مبالغة" : "Proof assets without overclaiming"}
         </h2>
         <p className="ds-muted-copy max-w-3xl">
@@ -45,23 +59,45 @@ export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {proofCards.map(({ asset, copy }) => {
           const href = asset.href ?? asset.localPath;
+          const isExternal = Boolean(href?.startsWith("http"));
+          const ctaText = copy.ctaLabel?.[lang];
 
           return (
-            <article key={asset.id} className="ds-card ds-card-hover p-5">
-              <p className="ds-kicker mb-3">{copy.eyebrow[lang]}</p>
-              <h3 className="text-xl font-semibold text-white">{copy.title[lang]}</h3>
-              <p className="ds-muted-copy mt-3 text-sm leading-7">{copy.description[lang]}</p>
+            <article
+              key={asset.id}
+              className="ds-card ds-card-hover group relative flex min-h-[260px] flex-col overflow-hidden p-5 md:p-6"
+            >
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent opacity-70" />
 
-              {href && copy.ctaLabel ? (
-                <a
-                  className="ds-action ds-action-accent mt-5 inline-flex"
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noreferrer" : undefined}
-                >
-                  {copy.ctaLabel[lang]}
-                </a>
-              ) : null}
+              <div className="mb-5 flex items-start justify-between gap-4">
+                <p className="ds-kicker mb-0">{copy.eyebrow[lang]}</p>
+                <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-orange-100/80">
+                  {getAssetTypeLabel(asset.area, lang)}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-semibold leading-snug text-white md:text-2xl">
+                {copy.title[lang]}
+              </h3>
+              <p className="ds-muted-copy mt-4 text-sm leading-7">{copy.description[lang]}</p>
+
+              <div className="mt-auto pt-6">
+                {href && ctaText ? (
+                  <a
+                    className="ds-action ds-action-accent inline-flex w-full justify-center md:w-auto"
+                    href={href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
+                    aria-label={`${ctaText}: ${copy.title[lang]}`}
+                  >
+                    {ctaText}
+                  </a>
+                ) : (
+                  <p className="text-xs uppercase tracking-[0.22em] text-slate-500">
+                    {lang === "ar" ? "إثبات بصري" : "Visual proof"}
+                  </p>
+                )}
+              </div>
             </article>
           );
         })}
