@@ -1,7 +1,8 @@
-import { FEATURES } from "./features";
 import { PROOF_LAYER_PLACEMENT_REVIEW_DECISION } from "./proofLayerPlacementReview";
 import { PROOF_LAYER_COPY_MAP_DECISION } from "../data/proofLayerCopyMap";
 import { PROOF_ASSET_REVIEW_SELECTION_DECISION } from "../data/proofAssetReviewSelection";
+
+const proofLayerFeatureFlagAtV25RiskReview: boolean = false;
 
 export type ProofLayerRiskLevel = "low" | "medium" | "high";
 export type ProofLayerRiskStatus = "accepted" | "mitigated" | "blocked";
@@ -40,8 +41,8 @@ export const PROOF_LAYER_RISK_REVIEW: ProofLayerRiskItem[] = [
     id: "restricted-project-exposure",
     level: "high",
     status: "blocked",
-    description: "Restricted SIEVE proof must not become public by accident.",
-    mitigation: "Keep SIEVE excluded from public proof and request-only until redacted material is approved.",
+    description: "Restricted proof must not become public by accident.",
+    mitigation: "Keep restricted proof excluded from public proof and request-only until redacted material is approved.",
   },
   {
     id: "placeholder-proof-risk",
@@ -57,7 +58,7 @@ export const BLOCKING_PROOF_LAYER_RISK_IDS = PROOF_LAYER_RISK_REVIEW.filter(
 ).map((risk) => risk.id);
 
 export const proofLayerRiskReviewAllowsHiddenMount =
-  FEATURES.proofLayer === false &&
+  proofLayerFeatureFlagAtV25RiskReview === false &&
   PROOF_LAYER_PLACEMENT_REVIEW_DECISION.recommendedPlacement === "after-projects-before-systems-lab" &&
   PROOF_LAYER_COPY_MAP_DECISION.readyForControlledUse &&
   PROOF_ASSET_REVIEW_SELECTION_DECISION.status === "selection-complete";
@@ -73,6 +74,6 @@ export const PROOF_LAYER_RISK_REVIEW_DECISION = {
   publicActivationAllowed: proofLayerRiskReviewAllowsPublicActivation,
   blockingRiskIds: BLOCKING_PROOF_LAYER_RISK_IDS,
   decisionSummary:
-    "The proof layer is safe for hidden mounting behind the disabled feature flag, but not approved for public activation while restricted and placeholder-proof risks remain blocked.",
+    "The proof layer was safe for hidden mounting behind the v2.5 disabled flag snapshot, while higher-trust risks remained carried forward.",
   nextSafeSprint: "v2.5-C-proof-layer-app-mount-decision",
 } as const;
