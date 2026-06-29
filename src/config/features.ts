@@ -2,7 +2,7 @@ export const FEATURES = {
   testimonials: false,
   booking: false,
   caseStudies: false,
-  proofLayer: false,
+  proofLayer: true,
   motionPrototype: true,
   scrollProgress: true,
   sectionHeadingReveal: true,
