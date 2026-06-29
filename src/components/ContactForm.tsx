@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { PORTFOLIO_DATA } from "../data/portfolioContent";
+import { trackEvent } from "../lib/analytics";
 
 interface ContactFormProps {
   lang: "en" | "ar";
@@ -8,6 +9,7 @@ interface ContactFormProps {
 export default function ContactForm({ lang }: ContactFormProps) {
   const t = PORTFOLIO_DATA.contact;
   const isRtl = lang === "ar";
+  const hasTrackedStart = useRef(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -19,11 +21,18 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
   const labelClass = `ds-label ${isRtl ? "font-arabic" : ""}`;
 
+  const handleFormStart = () => {
+    if (hasTrackedStart.current) return;
+    hasTrackedStart.current = true;
+    trackEvent("contact_form_started", { lang });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim() || !email.trim() || !message.trim()) {
       setSuccess(false);
+      trackEvent("contact_form_failed", { reason: "missing_required_fields", lang });
       return;
     }
 
@@ -48,6 +57,10 @@ export default function ContactForm({ lang }: ContactFormProps) {
       }
 
       setSuccess(true);
+      trackEvent("contact_form_submitted", {
+        has_subject: Boolean(subject.trim()),
+        lang,
+      });
       setName("");
       setEmail("");
       setSubject("");
@@ -59,6 +72,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
       }, 10000);
     } catch (err) {
       setSuccess(false);
+      trackEvent("contact_form_failed", { reason: "request_failed", lang });
     } finally {
       setIsSending(false);
     }
@@ -68,6 +82,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
     <form
       id="portfolio-contact-form"
       onSubmit={handleSubmit}
+      onFocus={handleFormStart}
       className={`ds-panel p-6 sm:p-8 space-y-5 flex flex-col justify-between ${isRtl ? "font-arabic text-right" : ""}`}
     >
       <div className="hidden" aria-hidden="true">
