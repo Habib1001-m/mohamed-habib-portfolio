@@ -1,5 +1,6 @@
 import { Project } from "../types/portfolio";
 import { PORTFOLIO_DATA } from "../data/portfolioContent";
+import { trackEvent } from "../lib/analytics";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,6 +12,16 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
   const t = PORTFOLIO_DATA.projects;
   const isRtl = lang === "ar";
 
+  const handleOpenProject = (source: "image" | "details") => {
+    trackEvent("project_opened", {
+      project_id: project.id,
+      project_title: project.title.en,
+      source,
+      lang,
+    });
+    onSelect(project);
+  };
+
   return (
     <div
       id={`project-card-${project.id}`}
@@ -18,7 +29,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
     >
       <button
         type="button"
-        onClick={() => onSelect(project)}
+        onClick={() => handleOpenProject("image")}
         className="relative overflow-hidden h-56 sm:h-60 bg-black text-left group cursor-pointer"
         aria-label={lang === "ar" ? `فتح تفاصيل ${project.title[lang]}` : `Open ${project.title[lang]} details`}
       >
@@ -88,7 +99,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
             <button
               id={`details-btn-${project.id}`}
               type="button"
-              onClick={() => onSelect(project)}
+              onClick={() => handleOpenProject("details")}
               className={`text-xs font-medium text-orange-300 hover:text-orange-200 transition-colors flex items-center gap-1.5 group ${isRtl ? "font-arabic" : "font-mono"}`}
             >
               {lang === "ar" ? "← دراسة المشروع" : "Project case study →"}
@@ -100,6 +111,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
                   href={project.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("project_github_clicked", { project_id: project.id, project_title: project.title.en, source: "card", lang })}
                   className="w-8 h-8 rounded-[var(--habib-radius-sm)] bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
                   title={t.viewSource[lang]}
                 >
@@ -113,6 +125,7 @@ export default function ProjectCard({ project, lang, onSelect }: ProjectCardProp
                   href={project.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("project_demo_clicked", { project_id: project.id, project_title: project.title.en, source: "card", lang })}
                   className="w-8 h-8 rounded-[var(--habib-radius-sm)] bg-white/[0.03] border border-white/10 hover:border-orange-500/30 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
                   title={t.visitDemo[lang]}
                 >
