@@ -29,6 +29,12 @@ function isSensitiveParamKey(key: string) {
   return SENSITIVE_ANALYTICS_PARAM_KEYS.some((sensitiveKey) => normalizedKey.includes(sensitiveKey));
 }
 
+function analyticsDebugEnabled() {
+  if (!ANALYTICS_CONFIG.debugInDevelopment || typeof window === "undefined") return false;
+
+  return ["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname);
+}
+
 function cleanParams(params: AnalyticsParams = {}) {
   return Object.fromEntries(
     Object.entries(params).filter(([key, value]) => {
@@ -53,15 +59,16 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
   if (!ANALYTICS_CONFIG.enabled || typeof window === "undefined") return;
 
   const validation = validateAnalyticsEvent(eventName, params);
+  const shouldDebug = analyticsDebugEnabled();
 
   if (validation.unknownEvent) {
-    if (import.meta.env.DEV) {
+    if (shouldDebug) {
       console.warn("[habib:analytics] Unknown event blocked", eventName);
     }
     return;
   }
 
-  if (validation.blockedKeys.length > 0 && import.meta.env.DEV) {
+  if (validation.blockedKeys.length > 0 && shouldDebug) {
     console.warn("[habib:analytics] Sensitive analytics params removed", {
       eventName,
       blockedKeys: validation.blockedKeys,
@@ -95,7 +102,7 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
     window.plausible(eventName, { props: { category: eventDefinition.category, ...props } });
   }
 
-  if (ANALYTICS_CONFIG.debugInDevelopment && import.meta.env.DEV) {
+  if (shouldDebug) {
     console.debug("[habib:analytics]", payload);
   }
 }
