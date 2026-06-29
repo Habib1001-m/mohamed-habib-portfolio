@@ -4,6 +4,7 @@ export const FEATURES = {
   caseStudies: false,
   motionPrototype: true,
   scrollProgress: true,
+  sectionHeadingReveal: true,
   customCursor: false,
 } as const;
 
