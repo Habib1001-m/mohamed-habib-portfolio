@@ -1,6 +1,7 @@
 export const FEATURES = {
   testimonials: false,
   booking: false,
+  caseStudies: false,
   motionPrototype: false,
   scrollProgress: false,
   customCursor: false,
