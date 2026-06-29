@@ -20,7 +20,8 @@ export const MOTION_CONFIG = {
   desktopOnly: false,
   respectReducedMotion: true,
   provider: "native-scroll",
-  activePrototype: "scroll-progress",
+  activePrototype: "section-heading-reveal",
+  activePrototypes: ["scroll-progress", "section-heading-reveal"],
   prototypeTargets: ["section-heading-reveal", "project-card-stagger", "scroll-progress"],
   disabledTargets: ["preloader", "custom-cursor", "page-transitions"],
 } as const;
