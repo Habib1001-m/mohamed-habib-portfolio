@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { FEATURES } from "../config/features";
 import { MOTION_CONFIG } from "../config/motion";
 import { trackEvent } from "../lib/analytics";
@@ -19,8 +19,8 @@ function motionTargetIsActive() {
 
 function prepareElement(element: HTMLElement) {
   element.style.opacity = "0";
-  element.style.transform = "translate3d(0, 18px, 0)";
-  element.style.transition = "opacity 520ms ease, transform 640ms cubic-bezier(0.22, 1, 0.36, 1)";
+  element.style.transform = "translate3d(0, 16px, 0)";
+  element.style.transition = "opacity 420ms ease, transform 560ms cubic-bezier(0.22, 1, 0.36, 1)";
   element.style.willChange = "opacity, transform";
 }
 
@@ -31,13 +31,18 @@ function revealElement(element: HTMLElement) {
 }
 
 export default function SectionHeadingRevealController({ lang }: SectionHeadingRevealControllerProps) {
-  useEffect(() => {
-    if (!FEATURES.motionPrototype || !MOTION_CONFIG.enabled || !motionTargetIsActive()) return;
+  useLayoutEffect(() => {
+    if (!FEATURES.motionPrototype || !FEATURES.sectionHeadingReveal || !MOTION_CONFIG.enabled || !motionTargetIsActive()) return;
     if (MOTION_CONFIG.respectReducedMotion && prefersReducedMotion()) return;
 
     const elements = Array.from(document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR));
 
     if (elements.length === 0) return;
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach(revealElement);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -52,8 +57,8 @@ export default function SectionHeadingRevealController({ lang }: SectionHeadingR
         });
       },
       {
-        threshold: 0.18,
-        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.16,
+        rootMargin: "0px 0px -10% 0px",
       }
     );
 
