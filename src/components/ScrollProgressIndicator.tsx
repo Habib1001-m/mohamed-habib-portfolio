@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FEATURES } from "../config/features";
 import { MOTION_CONFIG } from "../config/motion";
 import { trackEvent } from "../lib/analytics";
@@ -21,7 +21,7 @@ function prefersReducedMotion() {
 }
 
 export default function ScrollProgressIndicator({ lang }: ScrollProgressIndicatorProps) {
-  const [progress, setProgress] = useState(0);
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
   const [shouldRender, setShouldRender] = useState(false);
   const isRtl = lang === "ar";
 
@@ -33,7 +33,11 @@ export default function ScrollProgressIndicator({ lang }: ScrollProgressIndicato
 
     const updateProgress = () => {
       animationFrame = 0;
-      setProgress(getScrollProgress());
+      const progress = getScrollProgress();
+
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
+      }
     };
 
     const requestUpdate = () => {
@@ -42,7 +46,7 @@ export default function ScrollProgressIndicator({ lang }: ScrollProgressIndicato
     };
 
     setShouldRender(true);
-    updateProgress();
+    requestUpdate();
     trackEvent("motion_layer_loaded", { target: "scroll_progress", lang });
 
     window.addEventListener("scroll", requestUpdate, { passive: true });
@@ -67,9 +71,10 @@ export default function ScrollProgressIndicator({ lang }: ScrollProgressIndicato
       aria-hidden="true"
     >
       <div
-        className="h-full w-full origin-left transform-gpu bg-gradient-to-r from-orange-600 via-amber-400 to-orange-300 shadow-[0_0_16px_rgba(249,115,22,0.32)]"
+        ref={progressBarRef}
+        className="h-full w-full transform-gpu bg-gradient-to-r from-orange-600 via-amber-400 to-orange-300 shadow-[0_0_16px_rgba(249,115,22,0.32)] will-change-transform"
         style={{
-          transform: `scaleX(${progress})`,
+          transform: "scaleX(0)",
           transformOrigin: isRtl ? "right center" : "left center",
         }}
       />
