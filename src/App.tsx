@@ -10,6 +10,7 @@ import TechStackSection from "./components/sections/TechStackSection";
 import ContactSection from "./components/sections/ContactSection";
 import Footer from "./components/layout/Footer";
 import ProjectModal from "./components/ProjectModal";
+import ScrollProgressIndicator from "./components/ScrollProgressIndicator";
 
 const getInitialLanguage = (): "en" | "ar" => {
   if (typeof window === "undefined") return "ar";
@@ -33,6 +34,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-slate-200 selection:bg-orange-500/20 selection:text-white relative overflow-hidden font-sans">
+      <ScrollProgressIndicator lang={lang} />
+
       {/* Background radial glowing ambient light pools */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-orange-950/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[45%] h-[45%] rounded-full bg-amber-950/10 blur-[130px] pointer-events-none" />
