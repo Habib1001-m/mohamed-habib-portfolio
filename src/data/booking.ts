@@ -1,4 +1,5 @@
 import { FEATURES, TRUST_CONFIG } from "../config/features";
+import { bookingWorkflowIsReady } from "../config/bookingWorkflow";
 
 export const BOOKING_COPY = {
   label: {
@@ -15,4 +16,6 @@ export const BOOKING_COPY = {
   },
 } as const;
 
-export const bookingIsReady = Boolean(FEATURES.booking && TRUST_CONFIG.bookingUrl);
+export const bookingIsReady = Boolean(
+  FEATURES.booking && TRUST_CONFIG.bookingUrl && bookingWorkflowIsReady
+);
