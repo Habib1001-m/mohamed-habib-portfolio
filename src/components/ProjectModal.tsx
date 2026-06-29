@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Project } from "../types/portfolio";
 import { PORTFOLIO_DATA } from "../data/portfolioContent";
+import { trackEvent } from "../lib/analytics";
 
 interface ProjectModalProps {
   lang: "en" | "ar";
@@ -231,6 +232,7 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
               href={selectedProject.links.github}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("project_github_clicked", { project_id: selectedProject.id, project_title: selectedProject.title.en, source: "modal", lang })}
               className={`ds-action ${isRtl ? "font-arabic" : "font-mono"}`}
             >
               {proj.viewSource[lang]}
@@ -241,6 +243,7 @@ export default function ProjectModal({ lang, selectedProject, setSelectedProject
               href={selectedProject.links.demo}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("project_demo_clicked", { project_id: selectedProject.id, project_title: selectedProject.title.en, source: "modal", lang })}
               className={`ds-action ds-action-primary ${isRtl ? "font-arabic" : "font-mono uppercase tracking-wider"}`}
             >
               {proj.visitDemo[lang]}
