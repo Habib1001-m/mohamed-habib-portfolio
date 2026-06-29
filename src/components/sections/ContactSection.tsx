@@ -1,4 +1,5 @@
 import { PORTFOLIO_DATA } from "../../data/portfolioContent";
+import { trackEvent } from "../../lib/analytics";
 import ContactForm from "../ContactForm";
 
 interface ContactSectionProps {
@@ -8,10 +9,11 @@ interface ContactSectionProps {
 const contactCards = [
   {
     label: { en: "Email", ar: "البريد الإلكتروني" },
-    value: "mohamedhabib49.MH@gmail.com",
-    href: "mailto:mohamedhabib49.MH@gmail.com",
+    value: "mohamedhabib49.mh@gmail.com",
+    href: "mailto:mohamedhabib49.mh@gmail.com",
     tone: "orange",
     icon: "@",
+    eventName: "email_clicked" as const,
   },
   {
     label: { en: "LinkedIn", ar: "LinkedIn" },
@@ -19,6 +21,7 @@ const contactCards = [
     href: "https://www.linkedin.com/in/mohamed-habib49/",
     tone: "sky",
     icon: "in",
+    eventName: "linkedin_clicked" as const,
   },
   {
     label: { en: "CV", ar: "السيرة الذاتية" },
@@ -26,6 +29,7 @@ const contactCards = [
     href: "/cv/Mohamed_Habib_One_Page_CV.pdf",
     tone: "emerald",
     icon: "CV",
+    eventName: "cv_one_page_clicked" as const,
   },
   {
     label: { en: "CV", ar: "السيرة الذاتية" },
@@ -33,6 +37,7 @@ const contactCards = [
     href: "/cv/Mohamed_Habib_Detailed_CV.pdf",
     tone: "emerald",
     icon: "PDF",
+    eventName: "cv_detailed_clicked" as const,
   },
   {
     label: { en: "GitHub", ar: "GitHub" },
@@ -40,6 +45,7 @@ const contactCards = [
     href: "https://github.com/Habib1001-m",
     tone: "red",
     icon: "GH",
+    eventName: "github_clicked" as const,
   },
 ];
 
@@ -77,6 +83,10 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                   href={card.href}
                   target={card.href.startsWith("http") ? "_blank" : undefined}
                   rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  onClick={() => {
+                    trackEvent("contact_card_clicked", { label: card.label.en, href_type: card.href.startsWith("http") ? "external" : "internal", lang });
+                    trackEvent(card.eventName, { source: "contact_section", lang });
+                  }}
                   className={`ds-card ds-card-hover flex items-center gap-4 p-4 transition-all group ${tone.hover} ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}
                 >
                   <div className={`w-10 h-10 rounded-[var(--habib-radius-md)] flex items-center justify-center flex-shrink-0 transition-colors ${tone.box}`}>
