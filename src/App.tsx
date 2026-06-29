@@ -5,6 +5,7 @@ import HeroSection from "./components/sections/HeroSection";
 import AboutSection from "./components/sections/AboutSection";
 import InteractiveSandboxSection from "./components/sections/InteractiveSandboxSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
+import ProofLayerSection from "./components/sections/ProofLayerSection";
 import ExperienceSection from "./components/sections/ExperienceSection";
 import TechStackSection from "./components/sections/TechStackSection";
 import ContactSection from "./components/sections/ContactSection";
@@ -59,6 +60,9 @@ export default function App() {
 
       {/* Projects Grid Section */}
       <ProjectsSection lang={lang} setSelectedProject={setSelectedProject} />
+
+      {/* Gated Proof Layer — hidden while FEATURES.proofLayer is false */}
+      <ProofLayerSection lang={lang} />
 
       {/* Compact Systems Lab */}
       <InteractiveSandboxSection lang={lang} />
