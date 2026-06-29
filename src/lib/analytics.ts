@@ -1,24 +1,20 @@
-export type AnalyticsEventName =
-  | "hero_projects_clicked"
-  | "hero_contact_clicked"
-  | "cv_one_page_clicked"
-  | "cv_detailed_clicked"
-  | "project_opened"
-  | "project_demo_clicked"
-  | "project_github_clicked"
-  | "contact_card_clicked"
-  | "contact_form_started"
-  | "contact_form_submitted"
-  | "contact_form_failed"
-  | "github_clicked"
-  | "linkedin_clicked"
-  | "email_clicked"
-  | "booking_clicked"
-  | "testimonials_viewed"
-  | "case_study_viewed"
-  | "motion_layer_loaded";
+import {
+  ANALYTICS_CONFIG,
+  ANALYTICS_EVENTS,
+  AnalyticsEventName,
+  SENSITIVE_ANALYTICS_PARAM_KEYS,
+  isAnalyticsEventName,
+} from "../config/analytics";
+
+export type { AnalyticsEventName } from "../config/analytics";
 
 type AnalyticsParams = Record<string, string | number | boolean | null | undefined>;
+
+interface AnalyticsValidationResult {
+  valid: boolean;
+  blockedKeys: string[];
+  unknownEvent: boolean;
+}
 
 declare global {
   interface Window {
@@ -28,33 +24,79 @@ declare global {
   }
 }
 
+function isSensitiveParamKey(key: string) {
+  const normalizedKey = key.toLowerCase();
+  return SENSITIVE_ANALYTICS_PARAM_KEYS.some((sensitiveKey) => normalizedKey.includes(sensitiveKey));
+}
+
 function cleanParams(params: AnalyticsParams = {}) {
   return Object.fromEntries(
-    Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== "")
+    Object.entries(params).filter(([key, value]) => {
+      if (value === undefined || value === null || value === "") return false;
+      if (isSensitiveParamKey(key)) return false;
+      return true;
+    })
   ) as Record<string, string | number | boolean>;
 }
 
+export function validateAnalyticsEvent(eventName: string, params: AnalyticsParams = {}): AnalyticsValidationResult {
+  const blockedKeys = Object.keys(params).filter(isSensitiveParamKey);
+
+  return {
+    valid: isAnalyticsEventName(eventName) && blockedKeys.length === 0,
+    blockedKeys,
+    unknownEvent: !isAnalyticsEventName(eventName),
+  };
+}
+
 export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParams = {}) {
-  if (typeof window === "undefined") return;
+  if (!ANALYTICS_CONFIG.enabled || typeof window === "undefined") return;
+
+  const validation = validateAnalyticsEvent(eventName, params);
+
+  if (validation.unknownEvent) {
+    if (import.meta.env.DEV) {
+      console.warn("[habib:analytics] Unknown event blocked", eventName);
+    }
+    return;
+  }
+
+  if (validation.blockedKeys.length > 0 && import.meta.env.DEV) {
+    console.warn("[habib:analytics] Sensitive analytics params removed", {
+      eventName,
+      blockedKeys: validation.blockedKeys,
+    });
+  }
 
   const props = cleanParams(params);
+  const eventDefinition = ANALYTICS_EVENTS[eventName];
+  const payload = {
+    eventName,
+    category: eventDefinition.category,
+    props,
+  };
 
-  window.dispatchEvent(
-    new CustomEvent("habib:analytics", {
-      detail: { eventName, props },
-    })
-  );
-
-  if (typeof window.gtag === "function") {
-    window.gtag("event", eventName, props);
+  if (ANALYTICS_CONFIG.dispatchBrowserEvent) {
+    window.dispatchEvent(
+      new CustomEvent(ANALYTICS_CONFIG.browserEventName, {
+        detail: payload,
+      })
+    );
   }
 
-  if (typeof window.plausible === "function") {
-    window.plausible(eventName, { props });
+  if (ANALYTICS_CONFIG.allowGtagForwarding && typeof window.gtag === "function") {
+    window.gtag("event", eventName, {
+      event_category: eventDefinition.category,
+      ...props,
+    });
   }
 
-  if (import.meta.env.DEV) {
-    console.debug("[habib:analytics]", eventName, props);
+  if (ANALYTICS_CONFIG.allowPlausibleForwarding && typeof window.plausible === "function") {
+    window.plausible(eventName, { props: { category: eventDefinition.category, ...props } });
+  }
+
+  if (ANALYTICS_CONFIG.debugInDevelopment && import.meta.env.DEV) {
+    console.debug("[habib:analytics]", payload);
   }
 }
 
