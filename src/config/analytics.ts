@@ -45,6 +45,10 @@ export const ANALYTICS_EVENTS = {
     category: "project_validation",
     description: "Project source link clicked.",
   },
+  proof_asset_clicked: {
+    category: "proof_validation",
+    description: "A public proof layer asset CTA was clicked.",
+  },
   contact_card_clicked: {
     category: "conversion",
     description: "A contact card was clicked.",
