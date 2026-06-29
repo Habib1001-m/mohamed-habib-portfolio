@@ -16,10 +16,11 @@ export const MOTION_READINESS_DECISION = {
 } as const;
 
 export const MOTION_CONFIG = {
-  enabled: false,
-  desktopOnly: true,
+  enabled: true,
+  desktopOnly: false,
   respectReducedMotion: true,
-  provider: "none",
+  provider: "native-scroll",
+  activePrototype: "scroll-progress",
   prototypeTargets: ["section-heading-reveal", "project-card-stagger", "scroll-progress"],
   disabledTargets: ["preloader", "custom-cursor", "page-transitions"],
 } as const;
