@@ -7,9 +7,9 @@ interface ProjectCardStaggerControllerProps {
   lang: "en" | "ar";
 }
 
-const CARD_SELECTOR = ".project-card, [data-motion-reveal='project-card']";
-const STAGGER_MS = 80;
-const MAX_STAGGER_MS = 240;
+const CARD_SELECTOR = "[data-motion-reveal='project-card']";
+const STAGGER_MS = 70;
+const MAX_STAGGER_MS = 210;
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -23,8 +23,8 @@ function prepareElement(element: HTMLElement, index: number) {
   const delay = Math.min(index * STAGGER_MS, MAX_STAGGER_MS);
 
   element.style.opacity = "0";
-  element.style.transform = "translate3d(0, 20px, 0)";
-  element.style.transition = `opacity 460ms ease ${delay}ms, transform 620ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`;
+  element.style.transform = "translate3d(0, 16px, 0)";
+  element.style.transition = `opacity 420ms ease ${delay}ms, transform 560ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`;
   element.style.willChange = "opacity, transform";
 }
 
