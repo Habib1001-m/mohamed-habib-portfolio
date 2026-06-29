@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FEATURES } from "../config/features";
 import { getCaseStudyByProjectId } from "../data/caseStudies";
 import { trackEvent } from "../lib/analytics";
@@ -10,16 +11,19 @@ interface ProjectCaseStudyPanelProps {
 export default function ProjectCaseStudyPanel({ projectId, lang }: ProjectCaseStudyPanelProps) {
   const caseStudy = getCaseStudyByProjectId(projectId);
   const isRtl = lang === "ar";
+  const shouldShow = FEATURES.caseStudies && caseStudy?.status === "ready";
 
-  if (!FEATURES.caseStudies || !caseStudy || caseStudy.status !== "ready") {
+  useEffect(() => {
+    if (!shouldShow || !caseStudy) return;
+    trackEvent("case_study_viewed", { project_id: projectId, slug: caseStudy.slug, lang });
+  }, [caseStudy, lang, projectId, shouldShow]);
+
+  if (!shouldShow || !caseStudy) {
     return null;
   }
 
   return (
-    <section
-      className={`space-y-6 ${isRtl ? "font-arabic text-right" : "text-left"}`}
-      onMouseEnter={() => trackEvent("case_study_viewed", { project_id: projectId, slug: caseStudy.slug, lang })}
-    >
+    <section className={`space-y-6 ${isRtl ? "font-arabic text-right" : "text-left"}`}>
       <div className="space-y-2">
         <h4 className="ds-label border-b border-white/5 pb-2">
           {lang === "ar" ? "دراسة الحالة" : "Case study"}
