@@ -1,17 +1,7 @@
 import { TRUST_CONFIG } from "../config/features";
+import { PublicTestimonial } from "../types/testimonial";
 
-export interface Testimonial {
-  id: string;
-  quote: {
-    en: string;
-    ar: string;
-  };
-  author: string;
-  role?: string;
-  relation: "mentor" | "collaborator" | "client" | "manager" | "peer";
-  approvedForPublicUse: boolean;
-  source?: "linkedin" | "email" | "direct" | "documented";
-}
+export type Testimonial = PublicTestimonial;
 
 export const TESTIMONIALS: Testimonial[] = [];
 
