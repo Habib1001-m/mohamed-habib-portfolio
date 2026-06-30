@@ -32,7 +32,7 @@ export const PUBLIC_PROOF_ASSETS: PublicProofAsset[] = [
     label: "Portfolio live deployment",
     status: "public-ready",
     publicUseAllowed: true,
-    href: "https://habib.systems",
+    href: "https://mohamed-habib-portfolio-opal.vercel.app",
     projectId: "portfolio",
     notes: "Public deployment is available as proof of the portfolio system.",
   },

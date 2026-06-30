@@ -169,7 +169,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         label: { en: "Live site", ar: "الموقع الحي" },
         description: { en: "Current deployed portfolio.", ar: "نسخة البورتفوليو المنشورة حاليًا." },
-        href: "https://habib.systems"
+        href: "https://mohamed-habib-portfolio-opal.vercel.app"
       },
       {
         label: { en: "Source", ar: "الكود" },

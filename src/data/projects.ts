@@ -136,7 +136,10 @@ export const PROJECTS_LIST: Project[] = [
       { label: { en: "Locales", ar: "اللغات" }, value: "EN/AR" },
       { label: { en: "3D Lab", ar: "المختبر" }, value: "Three.js" }
     ],
-    links: { github: "https://github.com/Habib1001-m/mohamed-habib-portfolio", demo: "https://habib.systems" }
+    links: {
+      github: "https://github.com/Habib1001-m/mohamed-habib-portfolio",
+      demo: "https://mohamed-habib-portfolio-opal.vercel.app",
+    }
   }
 ];
 

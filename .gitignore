@@ -1,5 +1,5 @@
-# Dependencies
-node_modules/
+# Dependencies and package-manager state
+/node_modules/
 .pnp
 .pnp.*
 .yarn/*
@@ -8,51 +8,82 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
-# Next.js build output
-.next/
-out/
-build/
+# Next.js and generic build output
+/.next/
+/out/
+/build/
+/dist/
 
-# TypeScript / build caches
+# TypeScript, framework, and tool caches
 *.tsbuildinfo
-next-env.d.ts
+/next-env.d.ts
+/.turbo/
+/.cache/
+.eslintcache
 
-# Test / coverage output
-coverage/
-playwright-report/
-test-results/
+# Tests, coverage, and generated QA output
+/coverage/
+/playwright-report/
+/test-results/
+/blob-report/
+/screenshots/
+/qa-artifacts/
 
-# Environment and secrets
+# Environment files, credentials, and certificates
 .env
 .env.*
 !.env.example
 *.pem
 
-# Logs
+# Logs and diagnostics
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Local editor / OS files
+# Editors, operating systems, and downloaded-file metadata
 .DS_Store
-.vscode/
-.idea/
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+*:Zone.Identifier
+/.vscode/
+/.idea/
 
 # Deployment metadata
-.vercel/
+/.vercel/
 
-# Internal run logs and scratch documents — never publish
-worklog.md
-worklog_*.md
-*_worklog.md
-local-*
-AGENT*.md
-PRODUCT.local.md
-DESIGN.local.md
+# Internal documentation and agent context — never publish
+/docs/
+/.agents/
+/.codex/
+/.claude/
+/.cursor/
+/worklog.md
+/worklog_*.md
+/*_worklog.md
+/AGENT*.md
+/PRODUCT.md
+/DESIGN.md
+/PRODUCT.local.md
+/DESIGN.local.md
 
-# Temporary QA captures and local artifacts
-screenshots/
-qa-artifacts/
-tmp/
+# Scratch files, temporary exports, and patch leftovers
+/.scratch/
+/scratch/
+/tmp/
+/temp/
+/artifacts/
+/reports/
+*.tmp
+*.bak
+*.orig
+*.rej
+/*.diff
+/*.patch
+
+# Explicitly excluded foreign or placeholder public assets
+/public/logo.svg
