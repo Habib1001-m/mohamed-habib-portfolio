@@ -1,117 +1,119 @@
-import { FEATURES } from "../../config/features";
-import { selectedPublicProofAssets } from "../../data/proofAssetReviewSelection";
-import { APPROVED_CURRENT_PROOF_COPY } from "../../data/proofLayerCopyMap";
-import { trackEvent } from "../../lib/analytics";
+"use client";
 
-type Lang = "en" | "ar";
+import { ShieldCheck, ExternalLink, FileText, Github, Globe, Image as ImageIcon, User, ArrowRight } from "lucide-react";
+import { selectedPublicProofAssets } from "@/data/proofAssetReviewSelection";
+import { APPROVED_CURRENT_PROOF_COPY } from "@/data/proofLayerCopyMap";
+import { FEATURES } from "@/config/features";
+import { t, type Locale, type Bilingual } from "@/lib/i18n";
+import { SectionHeading } from "@/components/layout/SectionHeading";
+import { track } from "@/lib/analytics";
 
-interface ProofLayerSectionProps {
-  lang: Lang;
-}
-
-const getAssetTypeLabel = (area: (typeof selectedPublicProofAssets)[number]["area"], lang: Lang) => {
-  const labels: Record<typeof area, { en: string; ar: string }> = {
-    identity: { en: "Identity", ar: "هوية" },
-    cv: { en: "CV", ar: "سيرة" },
-    deployment: { en: "Deployment", ar: "نشر" },
-    repository: { en: "Repository", ar: "مستودع" },
-    project: { en: "Project", ar: "مشروع" },
-    screenshot: { en: "Screenshot", ar: "لقطة" },
-    "trust-content": { en: "Trust", ar: "ثقة" },
-  };
-
-  return labels[area][lang];
+const AREA_ICON: Record<string, React.ElementType> = {
+  identity: User,
+  cv: FileText,
+  deployment: Globe,
+  repository: Github,
+  project: ShieldCheck,
+  screenshot: ImageIcon,
+  "trust-content": ShieldCheck,
 };
 
-export default function ProofLayerSection({ lang }: ProofLayerSectionProps) {
-  if (!FEATURES.proofLayer) {
-    return null;
-  }
+const AREA_LABEL: Record<string, Bilingual> = {
+  identity: { en: "Identity", ar: "الهوية" },
+  cv: { en: "CV", ar: "السيرة" },
+  deployment: { en: "Deployment", ar: "نشر" },
+  repository: { en: "Repository", ar: "المستودع" },
+  project: { en: "Project", ar: "مشروع" },
+  screenshot: { en: "Screenshot", ar: "لقطة" },
+  "trust-content": { en: "Trust", ar: "ثقة" },
+};
+
+export function ProofLayerSection({ locale }: { locale: Locale }) {
+  if (!FEATURES.proofLayer) return null;
 
   const proofCards = selectedPublicProofAssets
     .map((asset) => {
-      const copy = APPROVED_CURRENT_PROOF_COPY.find((item) => item.assetId === asset.id);
+      const copy = APPROVED_CURRENT_PROOF_COPY.find((c) => c.assetId === asset.id);
       return copy ? { asset, copy } : null;
     })
-    .filter(Boolean) as Array<{
-    asset: (typeof selectedPublicProofAssets)[number];
-    copy: (typeof APPROVED_CURRENT_PROOF_COPY)[number];
-  }>;
+    .filter((c): c is NonNullable<typeof c> => c !== null);
 
-  if (proofCards.length === 0) {
-    return null;
-  }
+  if (proofCards.length === 0) return null;
 
   return (
-    <section id="proof" className="ds-shell py-24 md:py-28" aria-labelledby="proof-heading">
-      <div className="ds-section-heading mb-12 max-w-4xl">
-        <p className="ds-kicker">{lang === "ar" ? "إثباتات عامة" : "Public proof"}</p>
-        <div className="ds-section-rule" />
-        <h2 id="proof-heading" className="ds-section-title">
-          {lang === "ar" ? "إثباتات جاهزة بدون مبالغة" : "Proof assets without overclaiming"}
-        </h2>
-        <p className="ds-muted-copy max-w-3xl">
-          {lang === "ar"
-            ? "هذه الطبقة تعرض فقط الأصول المعتمدة حاليًا للاستخدام العام. التوصيات، الحجز، ودراسات الحالة الكاملة تظل مخفية حتى اكتمال الأدلة."
-            : "This layer only shows assets that are already approved for public use. Testimonials, booking, and full case studies stay hidden until evidence is complete."}
-        </p>
-      </div>
+    <section id="proof" className="ds-section">
+      <div className="ds-shell">
+        <SectionHeading
+          num="03."
+          title={t(
+            { en: "Proof, without exaggeration.", ar: "إثباتات جاهزة بدون مبالغة." },
+            locale,
+          )}
+          subtitle={t(
+            {
+              en: "Verifiable evidence — live deployments, public repositories, and ready CVs. No fabricated metrics.",
+              ar: "أدلة قابلة للتحقق — نشر مباشر، مستودعات عامة، وسير جاهزة. بلا أرقام ملفّقة.",
+            },
+            locale,
+          )}
+        />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {proofCards.map(({ asset, copy }) => {
-          const href = asset.href ?? asset.localPath;
-          const isExternal = Boolean(href?.startsWith("http"));
-          const ctaText = copy.ctaLabel?.[lang];
-
-          const recordProofAssetClick = () => {
-            trackEvent("proof_asset_clicked", {
-              proof_id: asset.id,
-              proof_area: asset.area,
-              destination: isExternal ? "external" : "local",
-              language: lang,
-            });
-          };
-
-          return (
-            <article
-              key={asset.id}
-              className="ds-card ds-card-hover group relative flex min-h-[260px] flex-col overflow-hidden p-5 md:p-6"
-            >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent opacity-70" />
-
-              <div className="mb-5 flex items-start justify-between gap-4">
-                <p className="ds-kicker mb-0">{copy.eyebrow[lang]}</p>
-                <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-orange-100/80">
-                  {getAssetTypeLabel(asset.area, lang)}
-                </span>
-              </div>
-
-              <h3 className="text-xl font-semibold leading-snug text-white md:text-2xl">
-                {copy.title[lang]}
-              </h3>
-              <p className="ds-muted-copy mt-4 text-sm leading-7">{copy.description[lang]}</p>
-
-              <div className="mt-auto pt-6">
-                {href && ctaText ? (
-                  <a
-                    className="ds-action ds-action-accent inline-flex w-full justify-center md:w-auto"
-                    href={href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noreferrer" : undefined}
-                    aria-label={`${ctaText}: ${copy.title[lang]}`}
-                    onClick={recordProofAssetClick}
-                  >
-                    {ctaText}
-                  </a>
-                ) : (
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-500">
-                    {lang === "ar" ? "إثبات بصري" : "Visual proof"}
-                  </p>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {proofCards.map(({ asset, copy }) => {
+            const Icon = AREA_ICON[asset.area] ?? ShieldCheck;
+            const href = asset.href || asset.localPath;
+            const areaLabel = AREA_LABEL[asset.area] ?? { en: asset.area, ar: asset.area };
+            return (
+              <a
+                key={asset.id}
+                href={href}
+                data-reveal
+                data-reveal-group="proof-cards"
+                target={href?.startsWith("http") ? "_blank" : undefined}
+                rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="ds-card ds-card-hover group block p-5"
+                onClick={() =>
+                  track({
+                    eventName: "proof_asset_clicked",
+                    category: "proof",
+                    props: {
+                      proof_id: asset.id,
+                      proof_area: asset.area,
+                      destination: href,
+                      language: locale,
+                    },
+                  })
+                }
+              >
+                <div className="flex items-center justify-between">
+                  <span className="ds-chip !text-[var(--accent-soft)] !border-hairline-accent">
+                    <Icon className="h-3 w-3" />
+                    {t(areaLabel, locale)}
+                  </span>
+                  <ExternalLink className="h-3.5 w-3.5 text-ink-faint transition-colors group-hover:text-accent" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-ink">
+                  {t(copy.title, locale)}
+                </h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                  {t(copy.description, locale)}
+                </p>
+                {copy.ctaLabel && (
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5">
+                    {t(copy.ctaLabel, locale)}
+                    <ArrowRight className="h-3 w-3 rtl:rotate-180" />
+                  </span>
                 )}
-              </div>
-            </article>
-          );
-        })}
+
+                {/* Top accent line on hover */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              </a>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

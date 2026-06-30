@@ -1,107 +1,119 @@
+"use client";
+
 import { useState } from "react";
-import { PORTFOLIO_DATA } from "../../data/portfolioContent";
-import { TECH_STACK } from "../../data/techStack";
+import { Code, Server, Globe, Cpu, Layers, Settings } from "lucide-react";
+import { TECH_STACK } from "@/data/techStack";
+import { PORTFOLIO_DATA } from "@/data/portfolioContent";
+import { t, type Locale } from "@/lib/i18n";
+import { SectionHeading } from "@/components/layout/SectionHeading";
+import { Marquee } from "@/components/motion/Marquee";
 
-interface TechStackSectionProps {
-  lang: "en" | "ar";
-}
+const CATEGORY_ICON: Record<string, React.ElementType> = {
+  frontend: Code,
+  "backend-data": Server,
+  "automation-ai": Cpu,
+  infrastructure: Globe,
+  "systems-practices": Layers,
+  "product-ops": Settings,
+};
 
-function CodeIcon() {
-  return (
-    <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-    </svg>
-  );
-}
+export function TechStackSection({ locale }: { locale: Locale }) {
+  const s = PORTFOLIO_DATA.skills;
+  const [active, setActive] = useState(TECH_STACK[0].id);
 
-function ServerIcon() {
-  return (
-    <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
-    </svg>
-  );
-}
-
-function GlobeIcon() {
-  return (
-    <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-    </svg>
-  );
-}
-
-const DEFAULT_TECH_CATEGORY = TECH_STACK[0]?.id ?? "frontend";
-
-export default function TechStackSection({ lang }: TechStackSectionProps) {
-  const skl = PORTFOLIO_DATA.skills;
-  const isRtl = lang === "ar";
-  const [activeTechCategory, setActiveTechCategory] = useState(DEFAULT_TECH_CATEGORY);
-  const activeCategory = TECH_STACK.find((c) => c.id === activeTechCategory) ?? TECH_STACK[0];
+  const activeCategory = TECH_STACK.find((c) => c.id === active) ?? TECH_STACK[0];
 
   return (
-    <section id="stack-section" className="py-24 border-t border-white/5 relative">
+    <section id="stack" className="ds-section">
       <div className="ds-shell">
-        <div className={isRtl ? "font-arabic text-right" : ""}>
-          <div className="ds-section-heading mb-4">
-            <span className="ds-kicker text-orange-500">{skl.sectionNum}</span>
-            <h2 className={`ds-section-title ${isRtl ? "font-arabic" : "uppercase"}`}>{skl.title[lang]}</h2>
-            <div className="ds-section-rule" />
+        <SectionHeading
+          num={s.sectionNum}
+          title={t(s.title, locale)}
+          subtitle={t(s.subtitle, locale)}
+        />
+
+        {/* Currently exploring banner */}
+        <div className="mt-10 flex flex-wrap items-center gap-3 rounded-[var(--r-lg)] border border-hairline-accent bg-[rgba(255,138,31,0.04)] p-4" data-reveal>
+          <span className="inline-flex items-center gap-2 font-mono text-xs text-[var(--accent-soft)]">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-pulse-soft rounded-full bg-[var(--accent)]" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+            </span>
+            {t({ en: "Currently exploring", ar: "أستكشف حاليًا" }, locale)}
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {["MCP Protocol", "Ollama", "AI Workflows", "Next.js 16"].map((tech) => (
+              <span key={tech} className="ds-chip !border-hairline-accent !text-[var(--accent-soft)]">
+                {tech}
+              </span>
+            ))}
           </div>
-          <p className={`ds-muted-copy text-sm md:text-base mb-12 max-w-5xl ${isRtl ? "font-arabic" : ""}`}>
-            {skl.subtitle[lang]}
-          </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          <div role="tablist" aria-label={lang === "ar" ? "الفئات التقنية" : "Technical Categories"} className="lg:col-span-4 flex flex-col gap-2">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[280px_1fr]">
+          <div
+            role="tablist"
+            aria-label={t({ en: "Technology categories", ar: "تصنيفات التقنيات" }, locale)}
+            className="flex flex-row flex-wrap gap-2 lg:flex-col"
+          >
             {TECH_STACK.map((cat) => {
-              const isActive = activeCategory?.id === cat.id;
+              const Icon = CATEGORY_ICON[cat.id] ?? Code;
+              const isActive = active === cat.id;
               return (
                 <button
                   key={cat.id}
-                  id={`tech-cat-${cat.id}`}
                   role="tab"
                   aria-selected={isActive}
-                  aria-controls="tech-items-panel"
-                  type="button"
-                  onClick={() => setActiveTechCategory(cat.id)}
-                  className={`ds-action w-full justify-between px-5 py-4 text-xs sm:text-sm cursor-pointer ${
-                    isActive ? "ds-action-accent font-bold shadow-lg shadow-orange-500/5" : ""
-                  } ${isRtl ? "text-right flex-row-reverse font-arabic" : "text-left font-mono uppercase tracking-wider"}`}
+                  aria-controls={`tabpanel-${cat.id}`}
+                  onClick={() => setActive(cat.id)}
+                  className={`flex items-center gap-2.5 rounded-[var(--r-md)] border px-4 py-3 text-sm transition-all ${
+                    isActive
+                      ? "border-hairline-accent bg-[rgba(255,138,31,0.05)] text-ink"
+                      : "border-hairline text-ink-muted hover:text-ink hover:border-hairline"
+                  }`}
                 >
-                  <span>{cat.title[lang]}</span>
-                  {cat.id === "frontend" && <CodeIcon />}
-                  {cat.id === "backend-data" && <GlobeIcon />}
-                  {cat.id === "infrastructure" && <ServerIcon />}
-                  {cat.id === "automation-ai" && <span className="text-orange-400 font-mono text-xs font-bold">[AI]</span>}
-                  {cat.id === "systems-practices" && <span className="text-amber-500 font-mono text-xs font-bold">[ARCH]</span>}
-                  {cat.id === "product-ops" && <span className="text-yellow-500 font-mono text-xs font-bold">[SYS]</span>}
+                  <Icon className={`h-4 w-4 ${isActive ? "text-accent" : ""}`} />
+                  <span className="font-medium">{t(cat.title, locale)}</span>
                 </button>
               );
             })}
           </div>
 
           <div
-            id="tech-items-panel"
             role="tabpanel"
-            aria-labelledby={`tech-cat-${activeCategory?.id ?? DEFAULT_TECH_CATEGORY}`}
-            className="lg:col-span-8 ds-panel p-6 sm:p-8 min-h-[280px] flex flex-col justify-center"
+            id={`tabpanel-${activeCategory.id}`}
+            aria-labelledby={activeCategory.id}
+            className="ds-card p-6"
           >
-            <div className="grid sm:grid-cols-2 gap-4">
-              {activeCategory?.items.map((item, idx) => (
-                <div
-                  key={idx}
-                  id={`tech-item-${idx}`}
-                  className={`ds-card ds-card-hover flex items-center gap-3 p-3.5 group ${isRtl ? "flex-row-reverse text-right" : ""}`}
-                >
-                  <div className="w-2.5 h-2.5 rounded-full bg-orange-500/30 group-hover:bg-orange-400 transition-colors" />
-                  <span className="text-sm font-mono text-slate-300 group-hover:text-white transition-colors">
-                    {item}
-                  </span>
-                </div>
+            <div className="flex items-center gap-3">
+              {(() => {
+                const Icon = CATEGORY_ICON[activeCategory.id] ?? Code;
+                return <Icon className="h-5 w-5 text-accent" />;
+              })()}
+              <h3 className="text-[length:var(--fs-h3)] font-semibold text-ink">
+                {t(activeCategory.title, locale)}
+              </h3>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {activeCategory.items.map((item) => (
+                <span key={item} className="ds-chip">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Marquee ticker of all technologies */}
+        <div className="mt-8" data-reveal>
+          <div className="ds-label mb-3">
+            {t({ en: "Full stack at a glance", ar: "كل التقنيات بنظرة" }, locale)}
+          </div>
+          <Marquee
+            items={TECH_STACK.flatMap((c) => c.items)}
+            speed={32}
+            className="rounded-[var(--r-lg)] border border-hairline bg-white/[0.015] py-4"
+          />
         </div>
       </div>
     </section>

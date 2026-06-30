@@ -1,68 +1,68 @@
-import { PORTFOLIO_DATA } from "../../data/portfolioContent";
+import { PORTFOLIO_DATA } from "@/data/portfolioContent";
+import { t, type Locale } from "@/lib/i18n";
+import { SectionHeading } from "@/components/layout/SectionHeading";
+import { AnimatedCounter } from "@/components/motion/AnimatedCounter";
 
-interface AboutSectionProps {
-  lang: "en" | "ar";
-}
+export function AboutSection({ locale }: { locale: Locale }) {
+  const a = PORTFOLIO_DATA.about;
 
-export default function AboutSection({ lang }: AboutSectionProps) {
-  const ab = PORTFOLIO_DATA.about;
-  const isRtl = lang === "ar";
-
+  const renderMetricValue = (value: string) => {
+    const num = parseInt(value, 10);
+    if (!Number.isNaN(num) && String(num) === value.trim()) {
+      return <AnimatedCounter value={num} />;
+    }
+    return <>{value}</>;
+  };
   return (
-    <section id="about-section" className="py-24 border-t border-white/5 relative bg-gradient-to-b from-transparent to-slate-950/20">
+    <section id="about" className="ds-section">
       <div className="ds-shell">
-        <div className={`ds-section-heading mb-12 ${isRtl ? "font-arabic text-right" : ""}`}>
-          <span className="ds-kicker text-orange-500">{ab.sectionNum}</span>
-          <h2 className={`ds-section-title ${isRtl ? "font-arabic" : "uppercase"}`}>{ab.title[lang]}</h2>
-          <div className="ds-section-rule" />
-        </div>
+        <SectionHeading
+          num={a.sectionNum}
+          title={t(a.title, locale)}
+        />
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 space-y-6">
-            <p className={`text-slate-300 text-base md:text-lg leading-relaxed ${isRtl ? "font-arabic text-right" : ""}`}>
-              {ab.paragraph1[lang]}
+        <div className="mt-10 grid gap-12 lg:grid-cols-[1.3fr_1fr]">
+          <div className="max-w-2xl space-y-5">
+            <p className="text-[length:var(--fs-body)] leading-relaxed text-ink-soft">
+              {t(a.paragraph1, locale)}
             </p>
-            <p className={`ds-muted-copy text-sm md:text-base ${isRtl ? "font-arabic text-right" : ""}`}>
-              {ab.paragraph2[lang]}
+            <p className="text-[length:var(--fs-body)] leading-relaxed text-ink-soft">
+              {t(a.paragraph2, locale)}
             </p>
-            <p className={`ds-muted-copy text-sm md:text-base ${isRtl ? "font-arabic text-right" : ""}`}>
-              {ab.paragraph3[lang]}
+            <p className="text-[length:var(--fs-body)] leading-relaxed text-ink-muted">
+              {t(a.paragraph3, locale)}
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
-              {ab.outcomeMetrics.map((metric) => (
-                <div key={metric.label.en} className={`ds-metric ${isRtl ? "text-right" : "text-left"}`}>
-                  <div className="text-xl font-black bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent font-mono mb-1">
-                    {metric.value}
-                  </div>
-                  <div className="ds-label text-slate-300 mb-1">
-                    {metric.label[lang]}
-                  </div>
-                  <div className={`text-[11px] ds-muted-copy leading-snug ${isRtl ? "font-arabic" : ""}`}>
-                    {metric.note[lang]}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
-          <div className="lg:col-span-5 ds-panel p-6">
-            <h3 className={`text-white font-bold text-base mb-4 flex items-center gap-2 ${isRtl ? "font-arabic justify-end" : ""}`}>
-              <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-              {ab.drivesTitle[lang]}
+          <div className="ds-panel p-6" data-reveal>
+            <h3 className="text-[length:var(--fs-h3)] font-semibold text-ink">
+              {t(a.drivesTitle, locale)}
             </h3>
-
-            <ul className="space-y-4 text-xs md:text-sm text-slate-400">
-              {[ab.driveItem1, ab.driveItem2, ab.driveItem3, ab.driveItem4].map((item) => (
-                <li key={item.en} className={`flex items-start gap-3 ${isRtl ? "font-arabic flex-row-reverse text-right" : ""}`}>
-                  <span className="text-orange-500 font-bold select-none mt-0.5">{isRtl ? "◂" : "▹"}</span>
-                  <span className="leading-relaxed">{item[lang]}</span>
-                </li>
-              ))}
+            <ul className="mt-4 space-y-3">
+              {[a.driveItem1, a.driveItem2, a.driveItem3, a.driveItem4].map(
+                (item, i) => (
+                  <li key={i} className="flex gap-3 text-sm leading-relaxed text-ink-muted">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
+                    <span>{t(item, locale)}</span>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
+        </div>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+          {a.outcomeMetrics.map((m, i) => (
+            <div key={i} className="ds-metric group/metric transition-colors hover:border-hairline-accent">
+              <div className="text-2xl font-bold text-ink transition-colors group-hover/metric:text-accent">
+                {renderMetricValue(m.value)}
+              </div>
+              <div className="mt-1 text-sm font-medium text-ink-soft">
+                {t(m.label, locale)}
+              </div>
+              <div className="mt-1 text-xs text-ink-faint">{t(m.note, locale)}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

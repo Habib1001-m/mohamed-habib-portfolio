@@ -1,126 +1,93 @@
-import { PORTFOLIO_DATA } from "../../data/portfolioContent";
-import { trackEvent } from "../../lib/analytics";
-import BookingCTA from "../BookingCTA";
-import ContactForm from "../ContactForm";
+"use client";
 
-interface ContactSectionProps {
-  lang: "en" | "ar";
-}
+import { Mail, Linkedin, Github, FileText } from "lucide-react";
+import { PORTFOLIO_DATA } from "@/data/portfolioContent";
+import { CONTACT_LINKS } from "@/data/contact";
+import { t, type Locale } from "@/lib/i18n";
+import { SectionHeading } from "@/components/layout/SectionHeading";
+import { ContactForm } from "@/components/sections/ContactForm";
+import { track } from "@/lib/analytics";
 
-const contactCards = [
-  {
-    label: { en: "Email", ar: "البريد الإلكتروني" },
-    value: "mohamedhabib49.mh@gmail.com",
-    href: "mailto:mohamedhabib49.mh@gmail.com",
-    tone: "orange",
-    icon: "@",
-    eventName: "email_clicked" as const,
-  },
-  {
-    label: { en: "LinkedIn", ar: "LinkedIn" },
-    value: "linkedin.com/in/mohamed-habib49",
-    href: "https://www.linkedin.com/in/mohamed-habib49/",
-    tone: "sky",
-    icon: "in",
-    eventName: "linkedin_clicked" as const,
-  },
-  {
-    label: { en: "CV", ar: "السيرة الذاتية" },
-    value: { en: "Download one-page CV", ar: "تحميل السيرة المختصرة" },
-    href: "/cv/Mohamed_Habib_One_Page_CV.pdf",
-    tone: "emerald",
-    icon: "CV",
-    eventName: "cv_one_page_clicked" as const,
-  },
-  {
-    label: { en: "CV", ar: "السيرة الذاتية" },
-    value: { en: "Download detailed CV", ar: "تحميل السيرة التفصيلية" },
-    href: "/cv/Mohamed_Habib_Detailed_CV.pdf",
-    tone: "emerald",
-    icon: "PDF",
-    eventName: "cv_detailed_clicked" as const,
-  },
-  {
-    label: { en: "GitHub", ar: "GitHub" },
-    value: "github.com/Habib1001-m",
-    href: "https://github.com/Habib1001-m",
-    tone: "red",
-    icon: "GH",
-    eventName: "github_clicked" as const,
-  },
-];
-
-const toneClasses: Record<string, { box: string; text: string; hover: string }> = {
-  orange: { box: "bg-orange-500/10 group-hover:bg-orange-500/20", text: "text-orange-400 group-hover:text-orange-300", hover: "hover:border-orange-500/30" },
-  sky: { box: "bg-sky-500/10 group-hover:bg-sky-500/20", text: "text-sky-400 group-hover:text-sky-300", hover: "hover:border-sky-500/30" },
-  emerald: { box: "bg-emerald-500/10 group-hover:bg-emerald-500/20", text: "text-emerald-400 group-hover:text-emerald-300", hover: "hover:border-emerald-500/30" },
-  red: { box: "bg-red-500/10 group-hover:bg-red-500/20", text: "text-red-400 group-hover:text-red-300", hover: "hover:border-red-500/30" },
+const LINK_ICON: Record<string, React.ElementType> = {
+  email: Mail,
+  linkedin: Linkedin,
+  github: Github,
+  cvOnePage: FileText,
+  cvDetailed: FileText,
 };
 
-export default function ContactSection({ lang }: ContactSectionProps) {
-  const isRtl = lang === "ar";
-  const contactInfo = PORTFOLIO_DATA.contact;
+function displayValue(link: { type: string; href: string }): string {
+  if (link.type === "email") return link.href.replace(/^mailto:/, "");
+  if (link.type === "cvOnePage") return "one-page PDF";
+  if (link.type === "cvDetailed") return "detailed PDF";
+  return link.href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+}
+
+export function ContactSection({ locale }: { locale: Locale }) {
+  const c = PORTFOLIO_DATA.contact;
 
   return (
-    <section id="contact-section" className="py-24 border-t border-white/5 relative bg-gradient-to-b from-transparent to-[var(--habib-bg)]">
+    <section id="contact" className="ds-section">
       <div className="ds-shell">
-        <div className="flex items-center gap-4 mb-4">
-          <span className="font-mono text-orange-500 text-sm font-bold">{contactInfo.sectionNum}</span>
-          <h2 className={`text-2xl sm:text-3xl font-black text-white tracking-tight ${isRtl ? "font-arabic" : "uppercase"}`}>{contactInfo.title[lang]}</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-orange-500/20 to-transparent" />
-        </div>
-        <p className={`ds-muted-copy text-sm md:text-base mb-12 max-w-5xl ${isRtl ? "font-arabic leading-8 text-right" : ""}`}>
-          {contactInfo.subtitle[lang]}
-        </p>
+        <SectionHeading
+          num={c.sectionNum}
+          title={t(c.title, locale)}
+          subtitle={t(c.subtitle, locale)}
+        />
 
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-5 space-y-3.5">
-            {contactCards.map((card) => {
-              const tone = toneClasses[card.tone];
-              const value = typeof card.value === "string" ? card.value : card.value[lang];
-              return (
-                <a
-                  key={`${card.label.en}-${value}`}
-                  href={card.href}
-                  target={card.href.startsWith("http") ? "_blank" : undefined}
-                  rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  onClick={() => {
-                    trackEvent("contact_card_clicked", { label: card.label.en, href_type: card.href.startsWith("http") ? "external" : "internal", lang });
-                    trackEvent(card.eventName, { source: "contact_section", lang });
-                  }}
-                  className={`ds-card ds-card-hover flex items-center gap-4 p-4 transition-all group ${tone.hover} ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}
-                >
-                  <div className={`w-10 h-10 rounded-[var(--habib-radius-md)] flex items-center justify-center flex-shrink-0 transition-colors ${tone.box}`}>
-                    <span className={`text-xs font-mono font-bold ${tone.text}`}>{card.icon}</span>
-                  </div>
-                  <div className="min-w-0">
-                    <p className="ds-label">{card.label[lang]}</p>
-                    <p className={`text-sm text-white transition-colors truncate ${isRtl ? "font-arabic" : "font-mono"} ${tone.text}`}>{value}</p>
-                  </div>
-                </a>
-              );
-            })}
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+          <div>
+            {/* Contact links — compact grid */}
+            <div className="grid gap-2 sm:grid-cols-2">
+              {CONTACT_LINKS.map((link) => {
+                const Icon = LINK_ICON[link.type] ?? Mail;
+                return (
+                  <a
+                    key={link.id}
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="ds-card ds-card-hover group flex items-center gap-3 p-3"
+                    onClick={() =>
+                      track({
+                        eventName: "contact_card_clicked",
+                        category: "contact",
+                        props: { card: link.id },
+                      })
+                    }
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[var(--r-md)] border border-hairline bg-white/[0.02]">
+                      <Icon className="h-4 w-4 text-accent" />
+                    </span>
+                    <div className="min-w-0">
+                      <div className="text-xs font-medium text-ink-soft">{t(link.label, locale)}</div>
+                      <div className="mt-0.5 truncate text-[0.7rem] text-ink-faint">
+                        {displayValue(link)}
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
 
-            <BookingCTA lang={lang} />
-
-            <div className={`ds-card flex items-center gap-4 p-4 shadow-xl ${isRtl ? "flex-row-reverse text-right" : "text-left"}`}>
-              <div className="w-10 h-10 rounded-[var(--habib-radius-md)] bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-                <span className="text-orange-400 text-sm">◎</span>
-              </div>
-              <div className="min-w-0">
-                <p className="ds-label">
-                  {contactInfo.locationLabel[lang]}
-                </p>
-                <p className={`text-sm text-white ${isRtl ? "font-arabic" : "font-mono"}`}>
-                  {contactInfo.locationValue[lang]}
-                </p>
+            {/* Availability note */}
+            <div className="mt-4 flex items-center gap-3 rounded-[var(--r-lg)] border border-hairline bg-white/[0.015] p-4">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-pulse-soft rounded-full bg-[var(--green)]" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--green)]" />
+              </span>
+              <div>
+                <div className="text-sm font-medium text-ink">
+                  {t({ en: "Available for selected collaborations", ar: "متاح لتعاونات مختارة" }, locale)}
+                </div>
+                <div className="mt-0.5 text-xs text-ink-faint">
+                  {t({ en: "Based in Cairo · Reply within 1 business day", ar: "من القاهرة · الرد خلال يوم عمل" }, locale)}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-7">
-            <ContactForm lang={lang} />
-          </div>
+          <ContactForm locale={locale} />
         </div>
       </div>
     </section>

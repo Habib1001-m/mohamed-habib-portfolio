@@ -1,0 +1,626 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Exclude markdown/docs from Tailwind content scanning (prevents class-name false positives) */
+@source not "**/*.md";
+@source not "./docs/**";
+@source not "./worklog*.md";
+
+/* =========================================================================
+   v3.1 Cinematic Design System — Mohamed Habib Portfolio
+   Always dark. Brand-kit-reconciled tokens (see docs/BRAND_KIT_RECONCILIATION.md).
+   ========================================================================= */
+
+@theme {
+  /* Map shadcn tokens to the cinematic palette so UI components render dark */
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-card: var(--bg-elevated);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--bg-elevated);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--accent);
+  --color-primary-foreground: #0a0b0e;
+  --color-secondary: var(--surface-strong);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--surface-strong);
+  --color-muted-foreground: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: #0a0b0e;
+  --color-destructive: #ef4444;
+  --color-border: var(--hairline);
+  --color-input: var(--hairline);
+  --color-ring: var(--accent);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-geist-sans), sans-serif;
+  --font-arabic: var(--font-ibm-plex-arabic), "Noto Sans Arabic", sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Offline-safe font variables. External Google font fetching is intentionally avoided. */
+  --font-geist-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-geist-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  --font-ibm-plex-arabic: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+
+  /* Brand-kit-reconciled palette */
+  --bg: #0a0b0e;
+  --bg-soft: #0e1014;
+  --bg-elevated: #11161c;
+  --surface: rgba(255, 255, 255, 0.024);
+  --surface-strong: rgba(255, 255, 255, 0.05);
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-soft: rgba(255, 255, 255, 0.05);
+  --hairline-accent: rgba(249, 115, 22, 0.34);
+
+  --accent: #f97316;
+  --accent-soft: #fb923c;
+  --accent-glow: rgba(249, 115, 22, 0.11);
+  --gold: #ffc857;
+  --green: #10f29a;
+
+  --ink: #f5f6f7;
+  --ink-soft: #d4d4d8;
+  --ink-muted: #a1a1aa;
+  --ink-faint: #52525b;
+
+  /* Radii — editorial (sharper) */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-2xl: 26px;
+
+  --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.5);
+  --shadow-accent: 0 0 40px var(--accent-glow);
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 220ms var(--ease-editorial);
+
+  /* Fluid type scale (locked) */
+  --fs-display: clamp(2.75rem, 1.5rem + 6.5vw, 6rem);
+  --fs-h1: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  --fs-h2: clamp(1.7rem, 1.18rem + 1.9vw, 2.85rem);
+  --fs-h3: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.8125rem;
+  --fs-mono: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--hairline);
+  }
+
+  html {
+    background: var(--bg);
+    text-rendering: geometricPrecision;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Smooth scroll only for users who don't prefer reduced motion (v3.0-E compliance) */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  [dir="rtl"] body {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4 {
+    font-family: var(--font-arabic);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  ::selection {
+    background: rgba(255, 138, 31, 0.28);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 5px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 138, 31, 0.3);
+  }
+}
+
+/* =========================================================================
+   Design-system component classes (ds-*)
+   ========================================================================= */
+
+.ds-shell {
+  width: min(100%, 72rem);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .ds-shell { padding-inline: 2rem; }
+}
+@media (min-width: 1280px) {
+  .ds-shell { padding-inline: 2.5rem; }
+}
+
+.ds-section {
+  padding-block: clamp(3.6rem, 2.4rem + 4vw, 6.25rem);
+  scroll-margin-top: 5.25rem;
+}
+@media (min-width: 1024px) {
+  .ds-section { scroll-margin-top: 6rem; }
+}
+
+.ds-panel {
+  border: 1px solid var(--hairline);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 138, 31, 0.04), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.008));
+  border-radius: var(--r-2xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.ds-card {
+  position: relative;
+  border: 1px solid var(--hairline-soft);
+  background: rgba(255, 255, 255, 0.018);
+  border-radius: var(--r-lg);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.ds-card-hover:hover {
+  border-color: var(--hairline-accent);
+  background: rgba(255, 138, 31, 0.03);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-accent);
+}
+
+.ds-kicker {
+  color: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+}
+[dir="rtl"] .ds-kicker {
+  font-family: var(--font-arabic);
+  letter-spacing: 0.06em;
+}
+
+.ds-section-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.ds-section-title {
+  color: var(--ink);
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  font-weight: 720;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+  text-shadow: 0 0 22px rgba(249, 115, 22, 0.06);
+}
+
+.ds-rule {
+  height: 1px;
+  flex: 1 1 auto;
+  background: linear-gradient(to right, rgba(255, 138, 31, 0.3), rgba(255, 255, 255, 0.06), transparent);
+}
+[dir="rtl"] .ds-rule {
+  background: linear-gradient(to left, rgba(255, 138, 31, 0.3), rgba(255, 255, 255, 0.06), transparent);
+}
+
+.ds-muted {
+  color: var(--ink-muted);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.ds-label {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+[dir="rtl"] .ds-label {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
+}
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border-radius: var(--r-sm);
+  padding: 0.3rem 0.6rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+}
+
+.ds-action {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 0.7rem 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--transition), border-color var(--transition), background var(--transition), transform var(--transition);
+  cursor: pointer;
+}
+.ds-action:hover {
+  color: var(--ink);
+  border-color: var(--hairline-accent);
+  background: rgba(255, 138, 31, 0.05);
+  transform: translateY(-1px);
+}
+
+.ds-action-primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: #0a0b0e;
+  font-weight: 700;
+  box-shadow: 0 12px 40px rgba(255, 138, 31, 0.18);
+}
+.ds-action-primary:hover {
+  background: var(--accent-soft);
+  color: #0a0b0e;
+  border-color: transparent;
+  box-shadow: 0 16px 48px rgba(255, 138, 31, 0.26);
+}
+
+.ds-action-ghost {
+  border-color: var(--hairline);
+  background: transparent;
+  color: var(--ink-muted);
+}
+
+.ds-field {
+  width: 100%;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 1.4rem 1rem 0.6rem;
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+.ds-field::placeholder { color: transparent; }
+.ds-field:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 138, 31, 0.02);
+  box-shadow: 0 0 0 3px rgba(255, 138, 31, 0.1);
+}
+
+/* Floating-label field wrapper */
+.ds-field-wrap {
+  position: relative;
+}
+.ds-field-wrap label {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9375rem;
+  color: var(--ink-faint);
+  pointer-events: none;
+  transition: top var(--transition), font-size var(--transition), color var(--transition);
+  font-family: var(--font-sans);
+}
+.ds-field-wrap textarea ~ label {
+  top: 1rem;
+  transform: none;
+}
+.ds-field-wrap .ds-field:focus ~ label,
+.ds-field-wrap .ds-field:not(:placeholder-shown) ~ label {
+  top: 0.45rem;
+  font-size: 0.6875rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ds-metric {
+  border: 1px solid var(--hairline-soft);
+  background: rgba(255, 255, 255, 0.015);
+  border-radius: var(--r-lg);
+  padding: 1rem 1.1rem;
+}
+
+.glass {
+  background: rgba(10, 11, 14, 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--hairline);
+}
+
+.accent-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+}
+
+.text-accent { color: var(--accent); }
+.text-gold { color: var(--gold); }
+.text-ink-muted { color: var(--ink-muted); }
+.text-ink-faint { color: var(--ink-faint); }
+.bg-bg { background: var(--bg); }
+.bg-elevated { background: var(--bg-elevated); }
+.border-hairline { border-color: var(--hairline); }
+
+.display-text {
+  font-family: var(--font-display);
+  font-weight: 650;
+  line-height: 0.98;
+  letter-spacing: -0.058em;
+  text-wrap: balance;
+}
+[dir="rtl"] .display-text {
+  font-family: var(--font-arabic);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+
+/* =========================================================================
+   Keyframes — reduced-motion-safe (Phase B will gate usage via useReducedMotion)
+   Fixes the dangling animate-fade-in / nav-blur debt from the Vite baseline.
+   ========================================================================= */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 240ms var(--ease-editorial) both;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-rise-in {
+  animation: rise-in 560ms var(--ease-editorial) both;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+@keyframes success-pop {
+  0% { opacity: 0; transform: scale(0.92) translateY(8px); }
+  60% { opacity: 1; transform: scale(1.02) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-success-pop {
+  animation: success-pop 480ms var(--ease-editorial) both;
+}
+
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+.check-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: check-draw 420ms 180ms var(--ease-editorial) forwards;
+}
+
+@keyframes confetti-burst {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--cx), var(--cy)) scale(0.3); }
+}
+.confetti-piece {
+  animation: confetti-burst 700ms var(--ease-editorial) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-rise-in,
+  .animate-pulse-soft,
+  .animate-success-pop,
+  .check-draw,
+  .confetti-piece,
+  .hero-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* =========================================================================
+   Hero entrance — staggered, cinematic (v3.1-C polish)
+   ========================================================================= */
+
+@keyframes hero-enter-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-enter-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-enter {
+  opacity: 0;
+  animation: hero-enter-up 800ms var(--ease-editorial) both;
+}
+.hero-enter-fade {
+  opacity: 0;
+  animation: hero-enter-fade 700ms var(--ease-editorial) both;
+}
+
+/* Utility delays */
+.delay-1 { animation-delay: 80ms; }
+.delay-2 { animation-delay: 200ms; }
+.delay-3 { animation-delay: 360ms; }
+.delay-4 { animation-delay: 520ms; }
+.delay-5 { animation-delay: 680ms; }
+.delay-6 { animation-delay: 840ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .delay-1, .delay-2, .delay-3, .delay-4, .delay-5, .delay-6 {
+    animation-delay: 0ms !important;
+  }
+}
+
+/* Reveal-on-scroll initial state (Phase B Reveal component toggles .is-visible) */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  filter: blur(4px);
+  transition: opacity 700ms var(--ease-editorial), transform 700ms var(--ease-editorial), filter 700ms var(--ease-editorial);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* Cinematic section transitions — subtle scale + fade on section boundaries */
+.ds-section {
+  position: relative;
+}
+.ds-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 800ms var(--ease-editorial);
+  background: radial-gradient(ellipse at 50% 0%, var(--accent-glow), transparent 50%);
+}
+.ds-section.is-active::before {
+  opacity: 1;
+}
+
+/* Cinematic parallax for hero ambient layers */
+@keyframes drift-slow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(2%, -1%, 0); }
+}
+@keyframes drift-reverse {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-1.5%, 1.5%, 0); }
+}
+.drift-slow {
+  animation: drift-slow 18s ease-in-out infinite;
+}
+.drift-reverse {
+  animation: drift-reverse 14s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .drift-slow, .drift-reverse {
+    animation: none !important;
+  }
+}
+
+/* Film grain overlay (Phase I — defined now, mounted later) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Scroll progress bar (Phase B) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 2px;
+  z-index: 90;
+  background: linear-gradient(to right, var(--accent), var(--gold));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 80ms linear;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+[dir="rtl"] .scroll-progress {
+  transform-origin: right center;
+}

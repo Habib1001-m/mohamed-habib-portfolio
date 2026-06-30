@@ -1,12 +1,14 @@
-export const ANALYTICS_PROVIDER_DECISION = {
-  phase: "2H-C",
-  provider: "browser-events",
-  externalProvider: "none",
-  rationale:
-    "Use first-party browser events for v2.1 so the portfolio becomes measurable without adding third-party scripts before the domain, consent, and reporting workflow are approved.",
-  nextProviderCandidates: ["plausible", "ga4"],
-} as const;
-
+/**
+ * Runtime analytics configuration for the v3.1 Next.js port.
+ *
+ * Ported from the frozen Vite baseline (`repo_clone/src/config/analytics.ts`),
+ * keeping ANALYTICS_CONFIG, ANALYTICS_EVENTS, SENSITIVE_ANALYTICS_PARAM_KEYS,
+ * and the type helpers verbatim. Adds the new v3.1 lead-funnel events.
+ *
+ * The ANALYTICS_PROVIDER_DECISION history object is a decision-record artifact
+ * (documentation-as-code) and remains in the frozen Vite baseline — it is
+ * intentionally NOT ported here.
+ */
 export const ANALYTICS_CONFIG = {
   enabled: true,
   debugInDevelopment: true,
@@ -92,6 +94,31 @@ export const ANALYTICS_EVENTS = {
   motion_layer_loaded: {
     category: "future_motion",
     description: "Future motion layer loaded. Gated until motion prototype is enabled.",
+  },
+  // ─── v3.1 lead-funnel events ────────────────────────────────────────────
+  lead_cv_downloaded: {
+    category: "lead_funnel",
+    description: "Either CV (one-page or detailed) was downloaded — a top-of-funnel lead signal.",
+  },
+  lead_case_study_opened: {
+    category: "lead_funnel",
+    description: "A case-study affordance was opened by a recruiter/visitor evaluating depth.",
+  },
+  lead_contact_started: {
+    category: "lead_funnel",
+    description: "User began the contact form interaction (first input focus).",
+  },
+  lead_contact_submitted: {
+    category: "lead_funnel",
+    description: "Contact form was submitted successfully — primary lead conversion event.",
+  },
+  lead_booking_intent: {
+    category: "lead_funnel",
+    description: "User expressed booking intent (gated — fires once booking surface activates).",
+  },
+  project_preview_hovered: {
+    category: "lead_funnel",
+    description: "A project preview card was hovered, indicating consideration interest.",
   },
 } as const;
 

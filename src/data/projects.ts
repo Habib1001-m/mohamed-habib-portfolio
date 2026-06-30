@@ -104,39 +104,39 @@ export const PROJECTS_LIST: Project[] = [
     id: "portfolio",
     title: { en: "Mohamed Habib Portfolio", ar: "بورتفوليو محمد حبيب" },
     tagline: {
-      en: "A bilingual personal brand system with real contact delivery, CV access, and project proof.",
-      ar: "نظام علامة شخصية ثنائي اللغة مع إرسال حقيقي للتواصل، روابط للسيرة، وإثباتات للمشاريع."
+      en: "A cinematic, bilingual portfolio rebuilt as a Next.js 16 production system with SSR, SSG case-study routes, and a live 3D systems lab.",
+      ar: "بورتفوليو سينمائي ثنائي اللغة، أُعيد بناؤه كنظام إنتاجي على Next.js 16 مع SSR ومسارات دراسات حالة ولوحة أنظمة ثلاثية الأبعاد حيّة."
     },
     description: {
-      en: "A systems-focused portfolio built as a production SPA: bilingual content, responsive navigation, real project visuals, Resend contact delivery, CV downloads, and Vercel deployment.",
-      ar: "بورتفوليو يركز على الأنظمة ومبني كتطبيق SPA جاهز للنشر: محتوى عربي/إنجليزي، تنقل متجاوب، صور مشاريع حقيقية، إرسال تواصل عبر Resend، تحميل CV، ونشر عبر Vercel."
+      en: "A dark-cinematic personal brand system built with Next.js 16 App Router: bilingual /en+/ar routing, scroll-driven motion, a Three.js architecture lab, Resend contact delivery, CV downloads, command palette, and SEO with structured data.",
+      ar: "نظام علامة شخصية بأسلوب سينمائي داكن، مبني على Next.js 16 App Router: توجيه ثنائي اللغة ‎/en+/ar‎، حركة مدفوعة بالتمرير، مختبر معمارية ثلاثي الأبعاد بـ Three.js، إرسال تواصل عبر Resend، تحميل السيرة، لوحة أوامر، وتحسين محركات البحث مع بيانات منظمة."
     },
     longDescription: {
-      en: "This portfolio is treated as a product rather than a static page. It went through audit-driven sprints covering positioning, typography, mobile navigation, language persistence, contact delivery, CV endpoints, LinkedIn integration, and project visual proof. The goal is to make the site credible as a working system, not only a visual landing page.",
-      ar: "تم التعامل مع هذا البورتفوليو كمنتج، لا كصفحة ثابتة. مرّ بمراحل تحسين مبنية على مراجعات: التموضع، الخطوط، التنقل على الموبايل، حفظ اللغة، إرسال رسائل التواصل، نقاط تحميل السيرة، ربط LinkedIn، وإثباتات بصرية للمشاريع. الهدف أن يبدو الموقع كنظام عامل وموثوق، لا مجرد صفحة شكلية."
+      en: "Treated as a product, not a static page. The v3.1 rebuild migrates from a Vite SPA to Next.js 16 with file-based routing, SSR/SSG, and a metadata API for lead-generation SEO. The design system is brand-kit-reconciled: warm amber accent on carbon black, fluid editorial typography, scroll-driven section reveals, and a reduced-motion-safe motion shell. A Three.js systems lab visualizes real product architectures interactively. Every trust surface (testimonials, booking, case studies) is gated behind evidence approval — no fabricated social proof.",
+      ar: "يُعامل هذا الموقع كمنتج لا كصفحة ثابتة. إعادة البناء v3.1 تنقله من تطبيق Vite SPA إلى Next.js 16 مع توجيه قائم على الملفات، وSSR/SSG، وواجهة Metadata لتحسين البحث وتوليد العملاء. نظام التصميم متوافق مع دليل العلامة: لون أمبر دافئ على خلفية كربونية سوداء، تايبوغرافي تحريري مرن، ظهور الأقسام مدفوعًا بالتمرير، ونظام حركة آمن للحركة المخفّضة. مختبر أنظمة Three.js يعرض معماريات منتجات حقيقية بشكل تفاعلي. كل سطح ثقة (توصيات، حجز، دراسات حالة) محمي خلف موافقة الأدلة — لا أدلة اجتماعية ملفّقة."
     },
     category: { en: "Personal brand", ar: "علامة شخصية" },
     status: { en: "Live", ar: "متاح" },
-    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Three.js", "Vercel"],
+    tech: ["Next.js 16", "TypeScript", "React 19", "Tailwind CSS 4", "Three.js", "Resend", "Vercel"],
     image: "/images/projects/portfolio-cover.webp",
     gallery: [
       {
         src: "/images/projects/portfolio-contact.webp",
-        label: { en: "Conversion layer", ar: "طبقة التحويل" },
-        caption: { en: "Contact cards, LinkedIn, CV downloads, and Resend-backed form delivery.", ar: "كروت التواصل، LinkedIn، تحميل السيرة، ونموذج إرسال مدعوم بـ Resend." }
+        label: { en: "Contact + lead flow", ar: "التواصل وتوليد العملاء" },
+        caption: { en: "Floating-label form with Resend delivery, char counter, animated success, and compact contact grid.", ar: "نموذج بتنسيق Floating-label مع إرسال عبر Resend، عدّاد أحرف، رسالة نجاح متحركة، وشبكة تواصل مدمجة." }
       },
       {
         src: "/images/projects/portfolio-mobile-nav.webp",
-        label: { en: "Mobile navigation", ar: "تنقل الموبايل" },
-        caption: { en: "Hamburger navigation and mobile-first access to the core sections.", ar: "قائمة موبايل واضحة للوصول إلى الأقسام الأساسية." }
+        label: { en: "Bilingual + responsive", ar: "ثنائي اللغة ومتجاوب" },
+        caption: { en: "Bilingual /en+/ar routing with no-flash locale script, RTL-aware layouts, and mobile-first navigation.", ar: "توجيه ثنائي اللغة ‎/en+/ar‎ بدون وميض، تخطيطات تدعم RTL، وتنقل يبدأ من الموبايل." }
       }
     ],
     stats: [
-      { label: { en: "Identity", ar: "الهوية" }, value: "Real" },
-      { label: { en: "Contact flow", ar: "التواصل" }, value: "Resend" },
-      { label: { en: "CV access", ar: "السيرة" }, value: "PDF" }
+      { label: { en: "Framework", ar: "الإطار" }, value: "Next.js 16" },
+      { label: { en: "Locales", ar: "اللغات" }, value: "EN/AR" },
+      { label: { en: "3D Lab", ar: "المختبر" }, value: "Three.js" }
     ],
-    links: { github: "https://github.com/Habib1001-m/mohamed-habib-portfolio", demo: "https://mohamed-habib-portfolio-opal.vercel.app" }
+    links: { github: "https://github.com/Habib1001-m/mohamed-habib-portfolio", demo: "https://habib.systems" }
   }
 ];
 

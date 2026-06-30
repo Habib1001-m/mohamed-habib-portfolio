@@ -8,6 +8,8 @@ export interface FeatureFlags {
   sectionHeadingReveal: boolean;
   projectCardStagger: boolean;
   customCursor: boolean;
+  /** v3.1 flag — framer-motion runtime is intentionally disabled until the motion shell in v3.1-B is validated. */
+  framerMotion: boolean;
 }
 
 export const FEATURES: FeatureFlags = {
@@ -20,6 +22,7 @@ export const FEATURES: FeatureFlags = {
   sectionHeadingReveal: true,
   projectCardStagger: true,
   customCursor: false,
+  framerMotion: false,
 };
 
 export const TRUST_CONFIG = {

@@ -1,110 +1,72 @@
-import {
-  ANALYTICS_CONFIG,
-  ANALYTICS_EVENTS,
-  SENSITIVE_ANALYTICS_PARAM_KEYS,
-  isAnalyticsEventName,
-} from "../config/analytics";
-import type { AnalyticsEventName } from "../config/analytics";
+import { ANALYTICS_CONFIG, SENSITIVE_ANALYTICS_PARAM_KEYS } from "@/config/analytics";
 
-export type { AnalyticsEventName } from "../config/analytics";
+export type AnalyticsCategory =
+  | "engagement"
+  | "navigation"
+  | "proof"
+  | "project"
+  | "contact"
+  | "lead"
+  | "future_motion"
+  | "system";
 
-type AnalyticsParams = Record<string, string | number | boolean | null | undefined>;
-
-interface AnalyticsValidationResult {
-  valid: boolean;
-  blockedKeys: string[];
-  unknownEvent: boolean;
+export interface AnalyticsEvent {
+  eventName: string;
+  category: AnalyticsCategory;
+  props?: Record<string, unknown>;
 }
 
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-    plausible?: (eventName: string, options?: { props?: Record<string, string | number | boolean> }) => void;
-    dataLayer?: unknown[];
+function isProd(): boolean {
+  return process.env.NODE_ENV === "production";
+}
+
+function sanitizeProps(
+  props?: Record<string, unknown>,
+): Record<string, unknown> {
+  if (!props) return {};
+  const clean: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(props)) {
+    if ((SENSITIVE_ANALYTICS_PARAM_KEYS as readonly string[]).includes(key)) continue;
+    clean[key] = value;
   }
+  return clean;
 }
 
-function isSensitiveParamKey(key: string) {
-  const normalizedKey = key.toLowerCase();
-  return SENSITIVE_ANALYTICS_PARAM_KEYS.some((sensitiveKey) => normalizedKey.includes(sensitiveKey));
-}
+/**
+ * First-party analytics dispatcher. Client-side only.
+ * Dispatches a custom browser event `habib:analytics` (listenable via
+ * `window.addEventListener("habib:analytics", ...)`). No third-party
+ * forwarding unless explicitly enabled in config.
+ */
+export function track(event: AnalyticsEvent): void {
+  if (!ANALYTICS_CONFIG.enabled) return;
+  if (typeof window === "undefined") return;
 
-function analyticsDebugEnabled() {
-  if (!ANALYTICS_CONFIG.debugInDevelopment || typeof window === "undefined") return false;
+  const safeProps = sanitizeProps(event.props);
 
-  return ["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname);
-}
-
-function cleanParams(params: AnalyticsParams = {}) {
-  return Object.fromEntries(
-    Object.entries(params).filter(([key, value]) => {
-      if (value === undefined || value === null || value === "") return false;
-      if (isSensitiveParamKey(key)) return false;
-      return true;
-    })
-  ) as Record<string, string | number | boolean>;
-}
-
-export function validateAnalyticsEvent(eventName: string, params: AnalyticsParams = {}): AnalyticsValidationResult {
-  const blockedKeys = Object.keys(params).filter(isSensitiveParamKey);
-
-  return {
-    valid: isAnalyticsEventName(eventName) && blockedKeys.length === 0,
-    blockedKeys,
-    unknownEvent: !isAnalyticsEventName(eventName),
-  };
-}
-
-export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParams = {}) {
-  if (!ANALYTICS_CONFIG.enabled || typeof window === "undefined") return;
-
-  const validation = validateAnalyticsEvent(eventName, params);
-  const shouldDebug = analyticsDebugEnabled();
-
-  if (validation.unknownEvent) {
-    if (shouldDebug) {
-      console.warn("[habib:analytics] Unknown event blocked", eventName);
-    }
-    return;
-  }
-
-  if (validation.blockedKeys.length > 0 && shouldDebug) {
-    console.warn("[habib:analytics] Sensitive analytics params removed", {
-      eventName,
-      blockedKeys: validation.blockedKeys,
+  if (ANALYTICS_CONFIG.debugInDevelopment && !isProd()) {
+     
+    console.debug(`[habib:analytics]`, {
+      eventName: event.eventName,
+      category: event.category,
+      props: safeProps,
     });
   }
-
-  const props = cleanParams(params);
-  const eventDefinition = ANALYTICS_EVENTS[eventName];
-  const payload = {
-    eventName,
-    category: eventDefinition.category,
-    props,
-  };
 
   if (ANALYTICS_CONFIG.dispatchBrowserEvent) {
-    window.dispatchEvent(
-      new CustomEvent(ANALYTICS_CONFIG.browserEventName, {
-        detail: payload,
-      })
-    );
-  }
-
-  if (ANALYTICS_CONFIG.allowGtagForwarding && typeof window.gtag === "function") {
-    window.gtag("event", eventName, {
-      event_category: eventDefinition.category,
-      ...props,
-    });
-  }
-
-  if (ANALYTICS_CONFIG.allowPlausibleForwarding && typeof window.plausible === "function") {
-    window.plausible(eventName, { props: { category: eventDefinition.category, ...props } });
-  }
-
-  if (shouldDebug) {
-    console.debug("[habib:analytics]", payload);
+    try {
+      window.dispatchEvent(
+        new CustomEvent(ANALYTICS_CONFIG.browserEventName, {
+          detail: {
+            eventName: event.eventName,
+            category: event.category,
+            props: safeProps,
+            timestamp: Date.now(),
+          },
+        }),
+      );
+    } catch {
+      // CustomEvent may be unavailable in rare environments — fail silently.
+    }
   }
 }
-
-export {};
