@@ -142,5 +142,3 @@ export const PROJECTS_LIST: Project[] = [
     }
   }
 ];
-
-export default PROJECTS_LIST;

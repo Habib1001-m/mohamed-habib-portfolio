@@ -1,4 +1,4 @@
-export type Lang = "en" | "ar";
+type Lang = "en" | "ar";
 
 export type ArchitecturePresetId = "portfolio" | "quickshed" | "sieve" | "ai-agent" | "custom";
 
@@ -18,14 +18,14 @@ export interface ArchitectureNode {
   status: NodeStatus;
 }
 
-export interface ArchitectureLink {
+interface ArchitectureLink {
   from: string;
   to: string;
   label: Localized;
   type: LinkType;
 }
 
-export interface ArchitectureMetric {
+interface ArchitectureMetric {
   label: Localized;
   value: string;
   trend: "up" | "down" | "stable";

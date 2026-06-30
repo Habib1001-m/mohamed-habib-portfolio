@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import "../globals.css";
-import { Toaster } from "@/components/ui/toaster";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/config/site";
 import { DEFAULT_LOCALE, LOCALES, dir, isLocale, type Locale } from "@/lib/i18n";
 
@@ -152,7 +151,6 @@ export default async function LocaleLayout({
           Skip to content
         </a>
         {children}
-        <Toaster />
       </body>
     </html>
   );

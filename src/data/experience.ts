@@ -72,4 +72,3 @@ export const EXPERIENCE_LIST: ExperienceItem[] = [
     ]
   }
 ];
-export default EXPERIENCE_LIST;

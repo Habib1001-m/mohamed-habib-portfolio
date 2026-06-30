@@ -1,5 +1,3 @@
-import type { Bilingual } from "@/lib/i18n";
-
 /**
  * Estimate reading time from a bilingual content object.
  * Uses the English text by default (falls back to Arabic).
@@ -22,5 +20,3 @@ export function readingTimeLabel(minutes: number, locale: "en" | "ar"): string {
   }
   return `${minutes} ${minutes === 1 ? "min" : "min"} read`;
 }
-
-export type { Bilingual };

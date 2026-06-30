@@ -3,11 +3,6 @@ export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "en";
 
-export const LOCALE_LABELS: Record<Locale, { en: string; ar: string }> = {
-  en: { en: "English", ar: "الإنجليزية" },
-  ar: { en: "Arabic", ar: "العربية" },
-};
-
 export function isLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value);
 }

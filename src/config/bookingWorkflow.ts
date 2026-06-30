@@ -1,15 +1,3 @@
-/**
- * Runtime booking-workflow configuration for the v3.1 Next.js port.
- *
- * Ported from the frozen Vite baseline (`repo_clone/src/config/bookingWorkflow.ts`),
- * keeping BOOKING_WORKFLOW_REQUIREMENTS and bookingWorkflowIsReady behavior
- * verbatim. The boolean readiness flags (all `false`) are preserved as a
- * runtime status object.
- *
- * The BOOKING_WORKFLOW_DECISION history object is a decision-record artifact
- * (documentation-as-code) and remains in the frozen Vite baseline — only its
- * boolean gate flags are preserved here, as BOOKING_WORKFLOW_STATUS.
- */
 export type BookingWorkflowStatus = "no-go" | "ready-for-review" | "ready";
 
 export const BOOKING_WORKFLOW_STATUS = {

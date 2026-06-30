@@ -32,4 +32,3 @@ export const TECH_STACK: TechCategory[] = [
     items: ["User workflows", "Landing pages", "SEO basics", "Analytics thinking", "Technical support", "Network diagnostics"]
   }
 ];
-export default TECH_STACK;

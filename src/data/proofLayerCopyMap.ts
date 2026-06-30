@@ -1,17 +1,11 @@
-import {
-  DEFERRED_PROOF_ASSET_IDS,
-  EXCLUDED_PROOF_ASSET_IDS,
-  SELECTED_PUBLIC_PROOF_ASSET_IDS,
-} from "./proofAssetReviewSelection";
-
-export interface LocalizedProofCopy {
+interface LocalizedProofCopy {
   en: string;
   ar: string;
 }
 
-export type ProofLayerCopyStatus = "approved-current" | "draft-deferred" | "blocked";
+type ProofLayerCopyStatus = "approved-current" | "draft-deferred" | "blocked";
 
-export interface ProofLayerCopyItem {
+interface ProofLayerCopyItem {
   assetId: string;
   copyStatus: ProofLayerCopyStatus;
   publicSurfaceAllowed: boolean;
@@ -21,7 +15,7 @@ export interface ProofLayerCopyItem {
   ctaLabel?: LocalizedProofCopy;
 }
 
-export const PROOF_LAYER_COPY_MAP: ProofLayerCopyItem[] = [
+const PROOF_LAYER_COPY_MAP: ProofLayerCopyItem[] = [
   {
     assetId: "portfolio-live-site",
     copyStatus: "approved-current",
@@ -152,34 +146,3 @@ export const PROOF_LAYER_COPY_MAP: ProofLayerCopyItem[] = [
 export const APPROVED_CURRENT_PROOF_COPY = PROOF_LAYER_COPY_MAP.filter(
   (item) => item.copyStatus === "approved-current" && item.publicSurfaceAllowed
 );
-
-export const DEFERRED_PROOF_COPY = PROOF_LAYER_COPY_MAP.filter(
-  (item) => item.copyStatus === "draft-deferred"
-);
-
-export const BLOCKED_PROOF_COPY = PROOF_LAYER_COPY_MAP.filter(
-  (item) => item.copyStatus === "blocked"
-);
-
-export const proofLayerCopyMapIsReady = SELECTED_PUBLIC_PROOF_ASSET_IDS.every((assetId) =>
-  APPROVED_CURRENT_PROOF_COPY.some((item) => item.assetId === assetId)
-);
-
-export const proofLayerDeferredCopyIsAligned = DEFERRED_PROOF_ASSET_IDS.every((assetId) =>
-  DEFERRED_PROOF_COPY.some((item) => item.assetId === assetId)
-);
-
-export const proofLayerBlockedCopyIsAligned = EXCLUDED_PROOF_ASSET_IDS.every((assetId) =>
-  BLOCKED_PROOF_COPY.some((item) => item.assetId === assetId)
-);
-
-export const PROOF_LAYER_COPY_MAP_DECISION = {
-  phase: "v2.4-C",
-  status: "copy-map-created",
-  publicActivation: false,
-  readyForControlledUse:
-    proofLayerCopyMapIsReady && proofLayerDeferredCopyIsAligned && proofLayerBlockedCopyIsAligned,
-  decisionSummary:
-    "Proof-layer copy is mapped for selected public-ready assets while deferred and blocked assets remain unavailable for public surfaces.",
-  nextSafeSprint: "v2.4-D-proof-layer-component-staging",
-} as const;

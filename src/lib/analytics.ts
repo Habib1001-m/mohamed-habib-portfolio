@@ -1,6 +1,6 @@
 import { ANALYTICS_CONFIG, SENSITIVE_ANALYTICS_PARAM_KEYS } from "@/config/analytics";
 
-export type AnalyticsCategory =
+type AnalyticsCategory =
   | "engagement"
   | "navigation"
   | "proof"
@@ -10,7 +10,7 @@ export type AnalyticsCategory =
   | "future_motion"
   | "system";
 
-export interface AnalyticsEvent {
+interface AnalyticsEvent {
   eventName: string;
   category: AnalyticsCategory;
   props?: Record<string, unknown>;
@@ -45,7 +45,6 @@ export function track(event: AnalyticsEvent): void {
   const safeProps = sanitizeProps(event.props);
 
   if (ANALYTICS_CONFIG.debugInDevelopment && !isProd()) {
-     
     console.debug(`[habib:analytics]`, {
       eventName: event.eventName,
       category: event.category,

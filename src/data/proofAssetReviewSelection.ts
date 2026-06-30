@@ -5,9 +5,9 @@ import {
   PUBLIC_PROOF_ASSETS,
 } from "./publicProofAssets";
 
-export type ProofAssetSelectionStatus = "selected" | "deferred" | "excluded";
+type ProofAssetSelectionStatus = "selected" | "deferred" | "excluded";
 
-export interface ProofAssetReviewSelectionItem {
+interface ProofAssetReviewSelectionItem {
   assetId: string;
   selectionStatus: ProofAssetSelectionStatus;
   approvedForCurrentPublicUse: boolean;
@@ -15,7 +15,7 @@ export interface ProofAssetReviewSelectionItem {
   reason: string;
 }
 
-export const PROOF_ASSET_REVIEW_SELECTION: ProofAssetReviewSelectionItem[] = [
+const PROOF_ASSET_REVIEW_SELECTION: ProofAssetReviewSelectionItem[] = [
   ...PUBLIC_READY_PROOF_ASSETS.map((asset) => ({
     assetId: asset.id,
     selectionStatus: "selected" as const,
@@ -39,30 +39,10 @@ export const PROOF_ASSET_REVIEW_SELECTION: ProofAssetReviewSelectionItem[] = [
   })),
 ];
 
-export const SELECTED_PUBLIC_PROOF_ASSET_IDS = PROOF_ASSET_REVIEW_SELECTION.filter(
+const SELECTED_PUBLIC_PROOF_ASSET_IDS = PROOF_ASSET_REVIEW_SELECTION.filter(
   (item) => item.selectionStatus === "selected" && item.approvedForCurrentPublicUse
-).map((item) => item.assetId);
-
-export const DEFERRED_PROOF_ASSET_IDS = PROOF_ASSET_REVIEW_SELECTION.filter(
-  (item) => item.selectionStatus === "deferred"
-).map((item) => item.assetId);
-
-export const EXCLUDED_PROOF_ASSET_IDS = PROOF_ASSET_REVIEW_SELECTION.filter(
-  (item) => item.selectionStatus === "excluded"
 ).map((item) => item.assetId);
 
 export const selectedPublicProofAssets = PUBLIC_PROOF_ASSETS.filter((asset) =>
   SELECTED_PUBLIC_PROOF_ASSET_IDS.includes(asset.id)
 );
-
-export const PROOF_ASSET_REVIEW_SELECTION_DECISION = {
-  phase: "v2.4-B",
-  status: "selection-complete",
-  publicActivation: false,
-  selectedCount: SELECTED_PUBLIC_PROOF_ASSET_IDS.length,
-  deferredCount: DEFERRED_PROOF_ASSET_IDS.length,
-  excludedCount: EXCLUDED_PROOF_ASSET_IDS.length,
-  decisionSummary:
-    "Only already public-ready identity, CV, deployment, and repository assets are selected. Case-study, testimonial, booking, and restricted proof remain deferred or excluded.",
-  nextSafeSprint: "v2.4-C-proof-layer-copy-map",
-} as const;

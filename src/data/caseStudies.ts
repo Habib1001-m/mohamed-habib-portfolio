@@ -191,11 +191,3 @@ export const CASE_STUDIES: CaseStudy[] = [
 export const PUBLIC_CASE_STUDIES = FEATURES.caseStudies
   ? CASE_STUDIES.filter((caseStudy) => caseStudy.status === "ready")
   : [];
-
-export function getCaseStudyByProjectId(projectId: string) {
-  return CASE_STUDIES.find((caseStudy) => caseStudy.projectId === projectId) ?? null;
-}
-
-export function getCaseStudyBySlug(slug: string) {
-  return CASE_STUDIES.find((caseStudy) => caseStudy.slug === slug) ?? null;
-}

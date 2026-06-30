@@ -1,4 +1,4 @@
-export type PublicProofAssetArea =
+type PublicProofAssetArea =
   | "identity"
   | "cv"
   | "deployment"
@@ -7,13 +7,13 @@ export type PublicProofAssetArea =
   | "screenshot"
   | "trust-content";
 
-export type PublicProofAssetStatus =
+type PublicProofAssetStatus =
   | "public-ready"
   | "needs-review"
   | "restricted"
   | "blocked";
 
-export interface PublicProofAsset {
+interface PublicProofAsset {
   id: string;
   area: PublicProofAssetArea;
   label: string;
@@ -140,15 +140,3 @@ export const PROOF_ASSETS_NEEDING_REVIEW = PUBLIC_PROOF_ASSETS.filter(
 export const BLOCKED_OR_RESTRICTED_PROOF_ASSETS = PUBLIC_PROOF_ASSETS.filter(
   (asset) => asset.status === "blocked" || asset.status === "restricted"
 );
-
-export const PUBLIC_PROOF_ASSET_INVENTORY_DECISION = {
-  phase: "v2.4-A",
-  status: "inventory-created",
-  publicActivation: false,
-  readyAssetCount: PUBLIC_READY_PROOF_ASSETS.length,
-  reviewAssetCount: PROOF_ASSETS_NEEDING_REVIEW.length,
-  blockedOrRestrictedAssetCount: BLOCKED_OR_RESTRICTED_PROOF_ASSETS.length,
-  decisionSummary:
-    "Public proof assets have been inventoried without activating new public trust surfaces.",
-  nextSafeSprint: "v2.4-B-proof-asset-review-and-selection",
-} as const;

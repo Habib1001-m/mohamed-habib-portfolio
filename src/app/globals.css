@@ -3,18 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Exclude markdown/docs from Tailwind content scanning (prevents class-name false positives) */
-@source not "**/*.md";
-@source not "./docs/**";
-@source not "./worklog*.md";
-
 /* =========================================================================
    v3.1 Cinematic Design System — Mohamed Habib Portfolio
-   Always dark. Brand-kit-reconciled tokens (see docs/BRAND_KIT_RECONCILIATION.md).
+   Always dark, with a warm accent and editorial typography.
    ========================================================================= */
 
 @theme {
-  /* Map shadcn tokens to the cinematic palette so UI components render dark */
+  /* Shared interface tokens mapped to the cinematic palette. */
   --color-background: var(--bg);
   --color-foreground: var(--ink);
   --color-card: var(--bg-elevated);

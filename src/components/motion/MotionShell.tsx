@@ -10,7 +10,7 @@ function prefersReducedMotion(): boolean {
 }
 
 /**
- * Global motion controller (v3.1-B). Wires up scroll reveals for any element
+ * Global motion controller. Wires up scroll reveals for any element
  * carrying a `data-reveal` attribute. Progressive enhancement:
  * - reduced-motion / motion disabled → elements stay visible (no hidden state added).
  * - otherwise → element gets `.reveal` (hidden) then `.is-visible` on intersection.
@@ -25,7 +25,6 @@ export function MotionShell() {
   useEffect(() => {
     const enabled =
       MOTION_CONFIG.enabled &&
-      MOTION_CONFIG.activePrototypes.includes("section-heading-reveal") &&
       !(MOTION_CONFIG.respectReducedMotion && prefersReducedMotion());
     if (!enabled) return;
 
@@ -37,7 +36,6 @@ export function MotionShell() {
     // Group elements to compute stagger indices per group.
     const groupCounters: Record<string, number> = {};
 
-    const observers: IntersectionObserver[] = [];
     const observed: Array<{ el: HTMLElement; observer: IntersectionObserver }> =
       [];
 
@@ -99,7 +97,6 @@ export function MotionShell() {
     return () => {
       observed.forEach(({ observer }) => observer.disconnect());
       sectionObserver.disconnect();
-      void observers;
     };
   }, []);
 

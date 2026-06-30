@@ -166,4 +166,3 @@ export const PORTFOLIO_DATA = {
     shlogan: { en: "WEB · AUTOMATION · AI SYSTEMS", ar: "ويب · أتمتة · أنظمة ذكاء اصطناعي" }
   }
 };
-export default PORTFOLIO_DATA;
