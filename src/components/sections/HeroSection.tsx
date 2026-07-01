@@ -218,9 +218,9 @@ export function HeroSection({ locale }: { locale: Locale }) {
               <div className="ds-kicker">
                 {String(i + 1).padStart(2, "0")}
               </div>
-              <h3 className="mt-3 text-[length:var(--fs-h3)] font-semibold text-ink">
+              <h2 className="mt-3 text-[length:var(--fs-h3)] font-semibold text-ink">
                 {t(p.title, locale)}
-              </h3>
+              </h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                 {t(p.desc, locale)}
               </p>

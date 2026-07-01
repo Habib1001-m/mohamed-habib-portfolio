@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ProofLayerSection } from "@/components/sections/ProofLayerSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { SandboxSection } from "@/components/sections/SandboxSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { TechStackSection } from "@/components/sections/TechStackSection";
@@ -44,6 +45,7 @@ export default async function HomePage({
         <AboutSection locale={loc} />
         <ProjectsSection locale={loc} />
         <ProofLayerSection locale={loc} />
+        <TestimonialsSection locale={loc} />
         <SandboxSection locale={loc} />
         <ExperienceSection locale={loc} />
         <TechStackSection locale={loc} />

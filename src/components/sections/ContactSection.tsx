@@ -6,6 +6,7 @@ import { CONTACT_LINKS } from "@/data/contact";
 import { t, type Locale } from "@/lib/i18n";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { ContactForm } from "@/components/sections/ContactForm";
+import { BookingCTA } from "@/components/sections/BookingCTA";
 import { track } from "@/lib/analytics";
 
 const LINK_ICON: Record<string, React.ElementType> = {
@@ -85,6 +86,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
                 </div>
               </div>
             </div>
+            <BookingCTA locale={locale} />
           </div>
 
           <ContactForm locale={locale} />

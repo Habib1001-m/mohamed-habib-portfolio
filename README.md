@@ -75,12 +75,13 @@ Open [http://localhost:3000/en](http://localhost:3000/en) or [http://localhost:3
 ### Production verification
 
 ```bash
+npm test
 npm run lint
 npx tsc --noEmit
 npm run build
 ```
 
-The production server uses the generated standalone Next.js output:
+The build packages `public/` and Next.js static assets into the generated standalone output automatically. Start that production server with:
 
 ```bash
 npm run start

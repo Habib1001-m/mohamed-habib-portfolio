@@ -95,7 +95,7 @@ export function Navbar({ locale }: { locale: Locale }) {
             data-section-counter
           >
             {String(NAV_IDS.indexOf(active as typeof NAV_IDS[number]) + 1).padStart(2, "0")}
-            <span className="text-ink-faint/50">/0{NAV_IDS.length}</span>
+            <span className="text-ink-faint">/0{NAV_IDS.length}</span>
           </span>
         </Link>
 

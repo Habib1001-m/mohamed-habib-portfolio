@@ -73,7 +73,7 @@ export default async function CaseStudyPage({
     <>
       <CaseStudyProgress />
       <Navbar locale={loc} />
-      <div className="ds-shell pt-28 pb-20">
+      <main id="main" className="ds-shell pt-28 pb-20">
       <Link
         href={`/${loc}#projects`}
         className={`inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink transition-colors ${rtl ? "flex-row-reverse" : ""}`}
@@ -215,7 +215,7 @@ export default async function CaseStudyPage({
         <CaseStudyToc locale={loc} />
       </aside>
       </div>
-      </div>
+      </main>
       <Footer locale={loc} />
     </>
   );
